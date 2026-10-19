@@ -2,7 +2,6 @@
 <html lang="id">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta
@@ -12,13 +11,10 @@
 
   <meta
     name="theme-color"
-    content="#080508"
+    content="#090509"
   >
 
   <title>for ike ♡</title>
-
-
-  <!-- FONT -->
 
   <link
     rel="preconnect"
@@ -36,735 +32,788 @@
     rel="stylesheet"
   >
 
-
-  <!-- CSS -->
-
   <link
     rel="stylesheet"
-    href="./style.css?v=10"
+    href="./style.css?v=20"
   >
-
 </head>
 
 
-<body>
+<body class="locked">
 
-
-  <!-- =====================================
-       BACKGROUND
-  ====================================== -->
-
-  <div
-    class="background"
-    aria-hidden="true"
-  >
-
-    <div class="orb orb-one"></div>
-
-    <div class="orb orb-two"></div>
-
+  <!-- BACKGROUND -->
+  <div class="background" aria-hidden="true">
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
   </div>
 
+  <div id="particles" aria-hidden="true"></div>
 
-  <div
-    id="particles"
-    aria-hidden="true"
-  ></div>
+  <div id="flash" aria-hidden="true"></div>
 
 
-  <div
-    id="pinkFlash"
-    aria-hidden="true"
-  ></div>
-
-
-
-  <!-- =====================================
+  <!-- ==========================================
        WELCOME
-  ====================================== -->
+  =========================================== -->
 
-  <div id="welcomeScreen">
+  <div id="welcome">
 
-    <div class="welcome-card">
-
+    <div class="glass-card welcome-card">
 
       <div class="welcome-heart">
         ♡
       </div>
 
-
-      <p class="tiny">
+      <p class="eyebrow">
         a little thing for you
       </p>
 
-
       <h1>
-
         hai,
-
-        <span class="pink">
-          ike.
-        </span>
-
+        <span>ike.</span>
       </h1>
 
-
-      <p class="welcome-text">
-
+      <p class="description">
         aku bikin sesuatu kecil buat kamu.
-
       </p>
 
-
-      <p class="welcome-small">
-
+      <p class="small-text">
         baca sampai selesai ya :)
-
       </p>
-
 
       <button
-        class="welcome-button"
-        id="enterButton"
+        id="enterBtn"
+        class="primary-btn"
         type="button"
       >
-
         masuk ♡
-
       </button>
-
 
     </div>
 
   </div>
 
 
-
-  <!-- =====================================
-       OPENING
-  ====================================== -->
-
-  <section id="opening">
-
-    <div class="opening-content">
+  <main>
 
 
-      <p class="tiny">
-        for ike
-      </p>
+    <!-- ==========================================
+         OPENING
+    =========================================== -->
 
-
-      <h1>
-
-        hai,
-
-        <span class="pink">
-          ike.
-        </span>
-
-      </h1>
-
-
-      <p class="opening-description">
-
-        ada sesuatu yang pengen aku sampein.
-
-        <br><br>
-
-        mungkin agak berlebihan karena aku malah
-        bikin web, tapi gapapa wkwk.
-
-        <br><br>
-
-        baca sampai selesai ya.
-
-      </p>
-
-
-      <button
-        class="main-button"
-        id="startButton"
-        type="button"
-      >
-
-        ada sesuatu buat kamu ♡
-
-      </button>
-
-
-    </div>
-
-
-
-    <!-- =====================================
-         OPENING CHARACTER SCENE
-    ====================================== -->
-
-    <div
-      class="scene"
-      id="openingScene"
+    <section
+      id="opening"
+      class="section opening-section"
     >
 
-
-      <div
-        class="story-text"
-        id="storyText"
-      ></div>
-
-
-      <div class="ground"></div>
-
-
-
-      <!-- =========================
-           HUSEN
-      ========================== -->
-
-      <div class="person husen">
-
-
-        <div class="name">
-          husen
-        </div>
-
-
-        <div class="character">
-
-
-          <div class="husen-hair"></div>
-
-
-          <div class="head husen-head">
-
-
-            <div class="eye eye-left"></div>
-
-            <div class="eye eye-right"></div>
-
-
-            <div class="blush blush-left"></div>
-
-            <div class="blush blush-right"></div>
-
-
-            <div class="mouth"></div>
-
-
-          </div>
-
-
-          <div class="body">
-
-            <span>
-              ♡
-            </span>
-
-          </div>
-
-
-          <div class="arm arm-left"></div>
-
-          <div class="arm arm-right"></div>
-
-
-          <div class="leg leg-left"></div>
-
-          <div class="leg leg-right"></div>
-
-
-          <div class="flower">
-            🌷
-          </div>
-
-
-        </div>
-
-
-      </div>
-
-
-
-      <!-- =========================
-           IKE
-      ========================== -->
-
-      <div class="person ike">
-
-
-        <div class="name">
-          ike
-        </div>
-
-
-        <div class="character">
-
-
-          <div class="ike-back-hair"></div>
-
-
-          <div class="head ike-head">
-
-
-            <div class="ike-bangs"></div>
-
-
-            <div class="eye eye-left"></div>
-
-            <div class="eye eye-right"></div>
-
-
-            <div class="blush blush-left"></div>
-
-            <div class="blush blush-right"></div>
-
-
-            <div class="mouth"></div>
-
-
-          </div>
-
-
-          <div class="body">
-
-            <span>
-              ♡
-            </span>
-
-          </div>
-
-
-          <div class="arm arm-left"></div>
-
-          <div class="arm arm-right"></div>
-
-
-          <div class="leg leg-left"></div>
-
-          <div class="leg leg-right"></div>
-
-
-        </div>
-
-
-      </div>
-
-
-
-      <!-- HEART -->
-
-      <div class="heart-between">
-        ♥
-      </div>
-
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================
-       APOLOGY / FLOWER
-  ====================================== -->
-
-  <section id="flowerSection">
-
-    <div class="question-card">
-
-
-      <p class="tiny">
-        wait...
-      </p>
-
-
-      <div class="big-flower">
-        🌷
-      </div>
-
-
-      <h2>
-        ike...
-      </h2>
-
-
-      <p class="question-description">
-
-        sebelum lanjut,
-
-        <br>
-
-        aku cuma mau bilang sesuatu dulu.
-
-      </p>
-
-
-      <p class="small-apology">
-
-        aku minta maaf kalau ada sikap
-        atau perkataan aku yang bikin
-        kamu kesel, kecewa, atau kepikiran.
-
-      </p>
-
-
-      <h3>
-
-        maafin aku ya?
-
-      </h3>
-
-
-
-      <!-- BUTTONS -->
-
-      <div
-        class="choice-buttons"
-        id="choiceButtons"
-      >
-
+      <div class="section-content">
+
+        <p class="eyebrow">
+          for ike
+        </p>
+
+        <h1>
+          ada sesuatu yang
+          <span>pengen aku sampein.</span>
+        </h1>
+
+        <p class="description">
+          mungkin agak berlebihan karena
+          aku malah bikin web wkwk.
+          <br><br>
+          tapi gapapa.
+          <br>
+          baca sampai selesai ya.
+        </p>
 
         <button
-          id="yesButton"
-          class="yes-button"
+          id="startBtn"
+          class="primary-btn"
           type="button"
         >
-
-          maafin ♡
-
+          ada sesuatu buat kamu ♡
         </button>
-
-
-        <button
-          id="noButton"
-          class="no-button"
-          type="button"
-        >
-
-          gak
-
-        </button>
-
 
       </div>
 
 
-      <p
-        id="noMessage"
-        class="no-message"
-      ></p>
-
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================
-       HUG SCENE
-  ====================================== -->
-
-  <section id="hugSection">
-
-    <div class="hug-container">
-
-
-      <p class="tiny">
-        thank you
-      </p>
-
-
-      <h2>
-
-        makasih,
-
-        <span class="pink">
-          ike.
-        </span>
-
-      </h2>
-
-
-      <p class="hug-description">
-
-        aku cuma pengen bilang ini dengan baik.
-
-      </p>
-
-
-
-      <!-- HUG -->
+      <!-- OPENING CHARACTERS -->
 
       <div
-        class="scene hug-scene"
-        id="hugScene"
+        id="openingScene"
+        class="character-scene"
       >
+
+        <p
+          id="storyText"
+          class="story-text"
+        ></p>
 
 
         <div class="ground"></div>
-
 
 
         <!-- HUSEN -->
 
         <div class="person husen">
 
-
-          <div class="name">
+          <span class="person-name">
             husen
-          </div>
-
+          </span>
 
           <div class="character">
 
+            <div class="hair husen-hair"></div>
 
-            <div class="husen-hair"></div>
+            <div class="head">
 
+              <div class="eyes">
+                <i></i>
+                <i></i>
+              </div>
 
-            <div class="head husen-head">
-
-
-              <div class="eye eye-left"></div>
-
-              <div class="eye eye-right"></div>
-
-
-              <div class="blush blush-left"></div>
-
-              <div class="blush blush-right"></div>
-
+              <div class="blush left"></div>
+              <div class="blush right"></div>
 
               <div class="mouth"></div>
 
-
             </div>
-
 
             <div class="body">
-
-              <span>
-                ♡
-              </span>
-
+              ♡
             </div>
 
+            <div class="arm left-arm"></div>
+            <div class="arm right-arm"></div>
 
-            <div class="arm arm-left"></div>
-
-            <div class="arm arm-right"></div>
-
-
-            <div class="leg leg-left"></div>
-
-            <div class="leg leg-right"></div>
-
+            <div class="leg left-leg"></div>
+            <div class="leg right-leg"></div>
 
             <div class="flower">
               🌷
             </div>
 
-
           </div>
 
-
         </div>
-
 
 
         <!-- IKE -->
 
         <div class="person ike">
 
-
-          <div class="name">
+          <span class="person-name">
             ike
-          </div>
-
+          </span>
 
           <div class="character">
 
+            <div class="hair ike-hair"></div>
 
-            <div class="ike-back-hair"></div>
-
-
-            <div class="head ike-head">
-
+            <div class="head">
 
               <div class="ike-bangs"></div>
 
+              <div class="eyes">
+                <i></i>
+                <i></i>
+              </div>
 
-              <div class="eye eye-left"></div>
-
-              <div class="eye eye-right"></div>
-
-
-              <div class="blush blush-left"></div>
-
-              <div class="blush blush-right"></div>
-
+              <div class="blush left"></div>
+              <div class="blush right"></div>
 
               <div class="mouth"></div>
 
-
             </div>
-
 
             <div class="body">
-
-              <span>
-                ♡
-              </span>
-
+              ♡
             </div>
 
+            <div class="arm left-arm"></div>
+            <div class="arm right-arm"></div>
 
-            <div class="arm arm-left"></div>
+            <div class="leg left-leg"></div>
+            <div class="leg right-leg"></div>
 
-            <div class="arm arm-right"></div>
+          </div>
+
+        </div>
 
 
-            <div class="leg leg-left"></div>
+        <div class="scene-heart">
+          ♥
+        </div>
 
-            <div class="leg leg-right"></div>
+      </div>
 
+    </section>
+
+
+    <!-- ==========================================
+         APOLOGY
+    =========================================== -->
+
+    <section
+      id="apology"
+      class="section hidden-section"
+    >
+
+      <div class="glass-card apology-card">
+
+        <p class="eyebrow">
+          wait...
+        </p>
+
+        <div class="big-flower">
+          🌷
+        </div>
+
+        <h2>
+          ike...
+        </h2>
+
+        <p class="description">
+          sebelum lanjut,
+          aku mau bilang sesuatu dulu.
+        </p>
+
+        <p class="apology-text">
+          aku minta maaf kalau ada sikap
+          atau perkataan aku yang bikin
+          kamu kesel, kecewa, atau kepikiran.
+        </p>
+
+        <h3>
+          maafin aku ya?
+        </h3>
+
+
+        <div
+          id="choiceArea"
+          class="choice-area"
+        >
+
+          <button
+            id="yesBtn"
+            class="yes-btn"
+            type="button"
+          >
+            maafin ♡
+          </button>
+
+          <button
+            id="noBtn"
+            class="no-btn"
+            type="button"
+          >
+            gak
+          </button>
+
+        </div>
+
+
+        <p
+          id="rejectText"
+          class="reject-text"
+        ></p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         HUG
+    =========================================== -->
+
+    <section
+      id="hug"
+      class="section hidden-section"
+    >
+
+      <div class="section-content">
+
+        <p class="eyebrow">
+          thank you
+        </p>
+
+        <h2>
+          makasih,
+          <span>ike.</span>
+        </h2>
+
+        <p class="description">
+          aku cuma pengen nyampein semuanya
+          dengan baik.
+        </p>
+
+
+        <div
+          id="hugScene"
+          class="character-scene hug-scene"
+        >
+
+          <div class="ground"></div>
+
+
+          <!-- HUSEN -->
+
+          <div class="person husen">
+
+            <span class="person-name">
+              husen
+            </span>
+
+            <div class="character">
+
+              <div class="hair husen-hair"></div>
+
+              <div class="head">
+
+                <div class="eyes">
+                  <i></i>
+                  <i></i>
+                </div>
+
+                <div class="blush left"></div>
+                <div class="blush right"></div>
+
+                <div class="mouth"></div>
+
+              </div>
+
+              <div class="body">
+                ♡
+              </div>
+
+              <div class="arm left-arm"></div>
+              <div class="arm right-arm"></div>
+
+              <div class="leg left-leg"></div>
+              <div class="leg right-leg"></div>
+
+            </div>
 
           </div>
 
 
+          <!-- IKE -->
+
+          <div class="person ike">
+
+            <span class="person-name">
+              ike
+            </span>
+
+            <div class="character">
+
+              <div class="hair ike-hair"></div>
+
+              <div class="head">
+
+                <div class="ike-bangs"></div>
+
+                <div class="eyes">
+                  <i></i>
+                  <i></i>
+                </div>
+
+                <div class="blush left"></div>
+                <div class="blush right"></div>
+
+                <div class="mouth"></div>
+
+              </div>
+
+              <div class="body">
+                ♡
+              </div>
+
+              <div class="arm left-arm"></div>
+              <div class="arm right-arm"></div>
+
+              <div class="leg left-leg"></div>
+              <div class="leg right-leg"></div>
+
+            </div>
+
+          </div>
+
+
+          <div class="scene-heart">
+            ♥
+          </div>
+
+
+          <span class="floating-heart heart-one">
+            ♡
+          </span>
+
+          <span class="floating-heart heart-two">
+            ♥
+          </span>
+
+          <span class="floating-heart heart-three">
+            ♡
+          </span>
+
         </div>
 
 
-
-        <!-- HEARTS -->
-
-        <div class="heart-between">
-          ♥
-        </div>
-
-
-        <div class="hug-heart hug-heart-one">
-          ♡
-        </div>
-
-
-        <div class="hug-heart hug-heart-two">
-          ♥
-        </div>
-
-
-        <div class="hug-heart hug-heart-three">
-          ♡
-        </div>
-
+        <button
+          id="letterBtn"
+          class="primary-btn"
+          type="button"
+        >
+          baca ini juga ya ♡
+        </button>
 
       </div>
 
+    </section>
 
 
-      <button
-        class="main-button"
-        id="openLetterButton"
-        type="button"
-      >
+    <!-- ==========================================
+         LETTER
+    =========================================== -->
 
-        baca ini juga ya ♡
+    <section
+      id="letter"
+      class="section hidden-section"
+    >
 
-      </button>
+      <div class="letter-wrapper">
 
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================
-       LETTER
-  ====================================== -->
-
-  <section id="letter">
-
-    <div class="letter-container">
-
-
-      <div class="letter-title">
-
-
-        <p class="tiny">
+        <p class="eyebrow">
           for ike
         </p>
 
-
         <h2>
-
           aku cuma mau bilang
-
-          <span class="pink">
-            maaf.
-          </span>
-
+          <span>maaf.</span>
         </h2>
 
 
+        <div class="glass-card letter-card">
+
+          <p>
+            Ike,
+          </p>
+
+          <p>
+            aku bikin ini karena rasanya
+            kalau cuma bilang “maaf”
+            lewat chat itu kurang.
+          </p>
+
+          <p>
+            aku tau mungkin ada sikap
+            atau perkataan aku yang bikin
+            kamu kesel, kecewa,
+            atau malah kepikiran.
+          </p>
+
+          <p>
+            dan aku sadar,
+            harusnya aku bisa lebih baik dari itu.
+          </p>
+
+          <p>
+            aku nggak mau cari alasan
+            buat ngebenerin apa yang aku lakuin.
+          </p>
+
+          <p>
+            aku cuma mau jujur kalau aku
+            <span>beneran minta maaf.</span>
+          </p>
+
+          <p>
+            mungkin web kecil ini keliatan
+            agak berlebihan wkwk,
+            tapi gapapa.
+          </p>
+
+          <p>
+            aku cuma pengen kamu tau
+            kalau aku nggak nganggep ini
+            sebagai hal kecil yang bisa
+            aku lupain gitu aja.
+          </p>
+
+          <p>
+            aku masih banyak kurangnya.
+            kadang suka salah ngomong,
+            salah bersikap,
+            atau baru sadar setelah
+            semuanya kejadian.
+          </p>
+
+          <p>
+            jadi...
+          </p>
+
+          <p class="important">
+            maafin aku ya, Ike.
+          </p>
+
+          <p>
+            aku nggak minta semuanya
+            langsung baik-baik aja
+            setelah kamu baca ini.
+          </p>
+
+          <p>
+            aku cuma berharap,
+            pelan-pelan semuanya
+            bisa kembali baik lagi.
+          </p>
+
+        </div>
+
+
+        <button
+          id="continueBtn"
+          class="primary-btn"
+          type="button"
+        >
+          sebelum selesai...
+        </button>
+
       </div>
 
+    </section>
 
 
-      <div class="letter-card">
+    <!-- ==========================================
+         ONE MORE THING
+    =========================================== -->
+
+    <section
+      id="more"
+      class="section hidden-section"
+    >
+
+      <div class="section-content">
+
+        <p class="eyebrow">
+          one more thing
+        </p>
+
+        <h2>
+          ada beberapa hal yang
+          <span>pengen aku bilang.</span>
+        </h2>
 
 
-        <p>
-          Ike,
+        <div class="message-list">
+
+          <p class="message">
+            aku nggak bikin ini supaya
+            kamu harus langsung maafin aku.
+          </p>
+
+          <p class="message">
+            aku juga nggak bikin ini supaya
+            kesalahan aku tiba-tiba hilang.
+          </p>
+
+          <p class="message">
+            aku bikin ini karena aku pengen
+            kamu tau kalau perasaan kamu
+            penting buat aku.
+          </p>
+
+          <p class="message">
+            kalau ada yang bisa aku perbaiki,
+            aku pengen nunjukinnya lewat
+            sikap aku setelah ini.
+          </p>
+
+          <p class="message important">
+            i'm really sorry, ike. ♡
+          </p>
+
+        </div>
+
+
+        <button
+          id="finalBtn"
+          class="primary-btn"
+          type="button"
+        >
+          lanjut ♡
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         FINAL
+    =========================================== -->
+
+    <section
+      id="final"
+      class="section hidden-section"
+    >
+
+      <div class="section-content">
+
+        <p class="eyebrow">
+          one last thing
+        </p>
+
+        <h2>
+          makasih,
+          <span>ike.</span>
+        </h2>
+
+        <p class="description">
+          makasih udah mau baca
+          semuanya sampai sini.
         </p>
 
 
-        <p>
+        <div
+          id="finalScene"
+          class="character-scene final-scene"
+        >
 
-          aku bikin ini karena rasanya kalau cuma
-          bilang “maaf” lewat chat itu kurang.
-
-        </p>
-
-
-        <p>
-
-          aku tau mungkin ada sikap atau perkataan
-          aku yang bikin kamu kesel, kecewa,
-          atau malah kepikiran.
-
-        </p>
+          <div class="ground"></div>
 
 
-        <p>
+          <!-- HUSEN -->
 
-          dan aku sadar,
-          harusnya aku bisa lebih baik dari itu.
+          <div class="person husen">
 
-        </p>
+            <span class="person-name">
+              husen
+            </span>
+
+            <div class="character">
+
+              <div class="hair husen-hair"></div>
+
+              <div class="head">
+
+                <div class="eyes">
+                  <i></i>
+                  <i></i>
+                </div>
+
+                <div class="blush left"></div>
+                <div class="blush right"></div>
+
+                <div class="mouth"></div>
+
+              </div>
+
+              <div class="body">
+                ♡
+              </div>
+
+              <div class="arm left-arm"></div>
+              <div class="arm right-arm"></div>
+
+              <div class="leg left-leg"></div>
+              <div class="leg right-leg"></div>
+
+            </div>
+
+          </div>
 
 
-        <p>
+          <!-- IKE -->
 
-          aku nggak mau cari alasan buat ngebenerin
-          apa yang aku lakuin.
+          <div class="person ike">
 
-        </p>
+            <span class="person-name">
+              ike
+            </span>
+
+            <div class="character">
+
+              <div class="hair ike-hair"></div>
+
+              <div class="head">
+
+                <div class="ike-bangs"></div>
+
+                <div class="eyes">
+                  <i></i>
+                  <i></i>
+                </div>
+
+                <div class="blush left"></div>
+                <div class="blush right"></div>
+
+                <div class="mouth"></div>
+
+              </div>
+
+              <div class="body">
+                ♡
+              </div>
+
+              <div class="arm left-arm"></div>
+              <div class="arm right-arm"></div>
+
+              <div class="leg left-leg"></div>
+              <div class="leg right-leg"></div>
+
+            </div>
+
+          </div>
 
 
-        <p>
+          <div class="scene-heart">
+            ♥
+          </div>
 
-          aku cuma mau jujur kalau aku
-
-          <span class="pink">
-            beneran minta maaf.
-          </span>
-
-        </p>
+        </div>
 
 
-        <p>
+        <div
+          id="finalMessage"
+          class="final-message"
+        >
 
-          mungkin web kecil ini keliatan agak
+          <h3>
+            makasih udah dengerin aku. ♡
+          </h3>
+
+          <p>
+            semoga setelah ini semuanya
+            pelan-pelan bisa jadi lebih baik.
+          </p>
+
+        </div>
+
+
+        <div
+          id="signature"
+          class="signature"
+        >
+          from husen,
+          <br>
+          <span>for ike. ♡</span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <script src="./script.js?v=20"></script>
+
+</body>
+</html>kecil ini keliatan agak
           berlebihan wkwk, tapi gapapa.
 
         </p>
