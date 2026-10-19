@@ -7,7 +7,7 @@ let musicPlaying = false;
 
 
 /* =================================
-   LOADER
+   LOADER + AUTO MUSIC
 ================================= */
 
 window.addEventListener(
@@ -23,12 +23,206 @@ window.addEventListener(
 
     }, 1600);
 
+
+    /*
+      COBA AUTOPLAY MUSIK
+    */
+
+    startMusic();
+
   }
 );
 
 
 /* =================================
    MUSIC
+================================= */
+
+function startMusic() {
+
+  const music =
+    document.getElementById(
+      "backgroundMusic"
+    );
+
+  const player =
+    document.getElementById(
+      "musicPlayer"
+    );
+
+  const status =
+    document.getElementById(
+      "musicStatus"
+    );
+
+
+  if (!music) return;
+
+
+  music.volume = 0.55;
+
+
+  const playPromise =
+    music.play();
+
+
+  if (
+    playPromise !== undefined
+  ) {
+
+    playPromise
+      .then(() => {
+
+        musicPlaying = true;
+
+        player.classList.add(
+          "playing"
+        );
+
+        status.textContent =
+          "now playing";
+
+      })
+
+      .catch(() => {
+
+        /*
+          Browser memblokir autoplay.
+
+          Klik pertama user di halaman
+          bakal langsung nyalain musik.
+        */
+
+        musicPlaying = false;
+
+        status.textContent =
+          "Shape of My Heart ♡";
+
+      });
+
+  }
+
+}
+
+
+/* =================================
+   FALLBACK AUTOPLAY
+
+   Kalau browser blok autoplay,
+   interaksi pertama di halaman
+   langsung memainkan musik.
+================================= */
+
+function unlockMusic() {
+
+  const music =
+    document.getElementById(
+      "backgroundMusic"
+    );
+
+
+  if (!music) return;
+
+
+  if (
+    musicPlaying
+  ) {
+
+    removeMusicUnlock();
+
+    return;
+
+  }
+
+
+  music.volume = 0.55;
+
+
+  music.play()
+    .then(() => {
+
+      musicPlaying = true;
+
+
+      document
+        .getElementById(
+          "musicPlayer"
+        )
+        .classList
+        .add("playing");
+
+
+      document
+        .getElementById(
+          "musicStatus"
+        )
+        .textContent =
+        "now playing";
+
+
+      removeMusicUnlock();
+
+    })
+
+    .catch(() => {
+
+      /*
+        Kalau masih diblokir,
+        biarkan event berikutnya mencoba.
+      */
+
+    });
+
+}
+
+
+/* EVENT UNTUK HP + PC */
+
+document.addEventListener(
+  "pointerdown",
+  unlockMusic
+);
+
+document.addEventListener(
+  "touchstart",
+  unlockMusic,
+  {
+    passive: true
+  }
+);
+
+document.addEventListener(
+  "keydown",
+  unlockMusic
+);
+
+
+/* HAPUS EVENT SETELAH MUSIK BERHASIL */
+
+function removeMusicUnlock() {
+
+  document.removeEventListener(
+    "pointerdown",
+    unlockMusic
+  );
+
+  document.removeEventListener(
+    "touchstart",
+    unlockMusic
+  );
+
+  document.removeEventListener(
+    "keydown",
+    unlockMusic
+  );
+
+}
+
+
+/* =================================
+   MUSIC BUTTON
+
+   Tombol tetap bisa pause/play.
 ================================= */
 
 function toggleMusic() {
@@ -49,7 +243,12 @@ function toggleMusic() {
     );
 
 
-  if (!musicPlaying) {
+  if (!music) return;
+
+
+  if (
+    music.paused
+  ) {
 
     music.play()
       .then(() => {
@@ -62,13 +261,6 @@ function toggleMusic() {
 
         status.textContent =
           "now playing";
-
-      })
-
-      .catch(() => {
-
-        status.textContent =
-          "audio belum ada";
 
       });
 
@@ -98,10 +290,14 @@ function toggleMusic() {
 
 function createParticle() {
 
+  if (!particles) return;
+
+
   const particle =
     document.createElement(
       "span"
     );
+
 
   particle.className =
     "particle";
@@ -125,17 +321,20 @@ function createParticle() {
 
 
   particle.style.left =
-    Math.random() * 100 + "vw";
+    Math.random() * 100 +
+    "vw";
 
 
   particle.style.fontSize =
     Math.random() * 11 +
-    7 + "px";
+    7 +
+    "px";
 
 
   particle.style.animationDuration =
     Math.random() * 7 +
-    8 + "s";
+    8 +
+    "s";
 
 
   particles.appendChild(
@@ -164,7 +363,18 @@ setInterval(
 
 function startStory() {
 
-  if (storyStarted) return;
+  /*
+    Tombol pertama ditekan,
+    pastikan musik sudah hidup.
+  */
+
+  unlockMusic();
+
+
+  if (
+    storyStarted
+  ) return;
+
 
   storyStarted = true;
 
@@ -311,7 +521,7 @@ function startWalking() {
 
 
 /* =================================
-   QUESTION
+   FLOWER QUESTION
 ================================= */
 
 function openFlowerQuestion() {
@@ -372,7 +582,7 @@ function rejectApology() {
 
 
   /*
-    MAAFIN MAKIN GEDE
+    MAAFIN MAKIN BESAR
   */
 
   const yesScale =
@@ -424,10 +634,6 @@ function rejectApology() {
     ];
 
 
-  /*
-    SHAKE
-  */
-
   noButton.animate(
 
     [
@@ -460,7 +666,7 @@ function rejectApology() {
 
 
 /* =================================
-   MAAFIN
+   CLICK "MAAFIN"
 ================================= */
 
 function acceptApology() {
@@ -555,13 +761,18 @@ function revealLetter() {
 
 
   paragraphs.forEach(
-    (paragraph, index) => {
+    (
+      paragraph,
+      index
+    ) => {
 
       setTimeout(() => {
 
-        paragraph.classList.add(
-          "visible"
-        );
+        paragraph
+          .classList
+          .add(
+            "visible"
+          );
 
       }, index * 280);
 
@@ -601,13 +812,18 @@ function openBeforeEnd() {
 
 
     messages.forEach(
-      (message, index) => {
+      (
+        message,
+        index
+      ) => {
 
         setTimeout(() => {
 
-          message.classList.add(
-            "visible"
-          );
+          message
+            .classList
+            .add(
+              "visible"
+            );
 
         }, index * 600);
 
@@ -680,7 +896,9 @@ function openFinal() {
         ".final-message"
       )
       .classList
-      .add("visible");
+      .add(
+        "visible"
+      );
 
 
     heartBurst();
@@ -752,28 +970,32 @@ function heartBurst() {
         (
           25 +
           Math.random() * 50
-        ) + "vw";
+        ) +
+        "vw";
 
 
       heart.style.bottom =
         (
           5 +
           Math.random() * 20
-        ) + "vh";
+        ) +
+        "vh";
 
 
       heart.style.fontSize =
         (
           Math.random() * 18 +
           8
-        ) + "px";
+        ) +
+        "px";
 
 
       heart.style.animationDuration =
         (
           Math.random() * 3 +
           3
-        ) + "s";
+        ) +
+        "s";
 
 
       particles.appendChild(
@@ -792,4 +1014,4 @@ function heartBurst() {
 
   }
 
-      }
+             }
