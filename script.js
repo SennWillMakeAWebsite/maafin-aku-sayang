@@ -1,106 +1,61 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  /* ==================================================
-     ELEMENTS
-  ================================================== */
+  /* =====================================================
+     ELEMENT
+  ===================================================== */
 
-  const welcomeScreen =
-    document.getElementById("welcomeScreen");
+  const welcomeScreen = document.getElementById("welcomeScreen");
+  const enterButton = document.getElementById("enterButton");
 
-  const enterButton =
-    document.getElementById("enterButton");
+  const startButton = document.getElementById("startButton");
+  const openingScene = document.getElementById("openingScene");
+  const storyText = document.getElementById("storyText");
 
-  const opening =
-    document.getElementById("opening");
+  const flowerSection = document.getElementById("flowerSection");
+  const yesButton = document.getElementById("yesButton");
+  const noButton = document.getElementById("noButton");
+  const noMessage = document.getElementById("noMessage");
 
-  const startButton =
-    document.getElementById("startButton");
+  const hugSection = document.getElementById("hugSection");
+  const hugScene = document.getElementById("hugScene");
+  const openLetterButton = document.getElementById("openLetterButton");
 
-  const openingScene =
-    document.getElementById("openingScene");
+  const letter = document.getElementById("letter");
+  const beforeEndButton = document.getElementById("beforeEndButton");
 
-  const storyText =
-    document.getElementById("storyText");
+  const beforeEnd = document.getElementById("beforeEnd");
+  const finalButton = document.getElementById("finalButton");
 
-  const flowerSection =
-    document.getElementById("flowerSection");
+  const final = document.getElementById("final");
+  const finalScene = document.getElementById("finalScene");
 
-  const yesButton =
-    document.getElementById("yesButton");
-
-  const noButton =
-    document.getElementById("noButton");
-
-  const noMessage =
-    document.getElementById("noMessage");
-
-  const hugSection =
-    document.getElementById("hugSection");
-
-  const hugScene =
-    document.getElementById("hugScene");
-
-  const openLetterButton =
-    document.getElementById("openLetterButton");
-
-  const letter =
-    document.getElementById("letter");
-
-  const beforeEndButton =
-    document.getElementById("beforeEndButton");
-
-  const beforeEnd =
-    document.getElementById("beforeEnd");
-
-  const finalButton =
-    document.getElementById("finalButton");
-
-  const final =
-    document.getElementById("final");
-
-  const finalScene =
-    document.getElementById("finalScene");
-
-  const particles =
-    document.getElementById("particles");
-
-  const pinkFlash =
-    document.getElementById("pinkFlash");
+  const particles = document.getElementById("particles");
+  const pinkFlash = document.getElementById("pinkFlash");
 
 
-  /* ==================================================
+  /* =====================================================
      STATE
-  ================================================== */
+  ===================================================== */
 
-  let storyStarted = false;
-
+  let storyRunning = false;
   let apologyAccepted = false;
-
   let noCount = 0;
 
-  let noButtonRemoved = false;
 
-
-  /* ==================================================
-     BASIC HELPERS
-  ================================================== */
+  /* =====================================================
+     HELPER
+  ===================================================== */
 
   function wait(ms) {
-
     return new Promise(function (resolve) {
-
       setTimeout(resolve, ms);
-
     });
-
   }
 
 
-  function smoothScroll(element) {
+  function scrollToSection(element) {
 
-    if (!element) {
-      return;
-    }
+    if (!element) return;
 
     element.scrollIntoView({
       behavior: "smooth",
@@ -110,253 +65,141 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
-  /* ==================================================
+  function showSection(element) {
+
+    if (!element) return;
+
+    element.classList.add("show");
+
+  }
+
+
+  function setStory(text) {
+
+    if (!storyText) return;
+
+    storyText.classList.remove("active");
+
+    setTimeout(function () {
+
+      storyText.textContent = text;
+      storyText.classList.add("active");
+
+    }, 150);
+
+  }
+
+
+  function flash() {
+
+    if (!pinkFlash) return;
+
+    pinkFlash.classList.remove("flash");
+
+    void pinkFlash.offsetWidth;
+
+    pinkFlash.classList.add("flash");
+
+  }
+
+
+  /* =====================================================
      WELCOME
-     DIBUAT SESIMPLE MUNGKIN BIAR TIDAK ERROR
-  ================================================== */
+  ===================================================== */
 
   document.body.classList.add("locked");
 
 
-  if (enterButton && welcomeScreen) {
+  if (enterButton) {
 
-    enterButton.addEventListener("click", function () {
-
-      /*
-        Hilangkan welcome.
-      */
-
-      welcomeScreen.classList.add("hide");
-
-
-      /*
-        Buka scroll.
-      */
+    enterButton.onclick = function () {
 
       document.body.classList.remove("locked");
 
+      if (welcomeScreen) {
 
-      /*
-        Setelah animasi selesai,
-        benar-benar hilangkan overlay.
-      */
+        welcomeScreen.classList.add("hide");
 
-      setTimeout(function () {
+        setTimeout(function () {
+          welcomeScreen.style.display = "none";
+        }, 700);
 
-        welcomeScreen.style.display =
-          "none";
+      }
 
-      }, 800);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
-
-      /*
-        Scroll ke awal halaman.
-      */
-
-      setTimeout(function () {
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-
-      }, 250);
-
-    });
+    };
 
   }
 
 
-  /* ==================================================
-     STORY TEXT
-  ================================================== */
-
-  function showStoryText(text) {
-
-    if (!storyText) {
-      return;
-    }
-
-
-    storyText.classList.remove(
-      "active"
-    );
-
-
-    setTimeout(function () {
-
-      storyText.textContent =
-        text;
-
-
-      storyText.classList.add(
-        "active"
-      );
-
-    }, 200);
-
-  }
-
-
-  function hideStoryText() {
-
-    if (!storyText) {
-      return;
-    }
-
-
-    storyText.classList.remove(
-      "active"
-    );
-
-  }
-
-
-  /* ==================================================
-     PINK FLASH
-  ================================================== */
-
-  function flashPink() {
-
-    if (!pinkFlash) {
-      return;
-    }
-
-
-    pinkFlash.classList.remove(
-      "flash"
-    );
-
-
-    void pinkFlash.offsetWidth;
-
-
-    pinkFlash.classList.add(
-      "flash"
-    );
-
-  }
-
-
-  /* ==================================================
+  /* =====================================================
      PARTICLES
-  ================================================== */
+  ===================================================== */
 
-  function createParticle() {
+  function makeParticle() {
 
-    if (!particles) {
+    if (!particles) return;
+
+    if (particles.children.length > 20) {
       return;
     }
 
 
-    /*
-      Biar DOM tidak dipenuhi partikel
-      sampai browser HP minta pensiun.
-    */
+    const particle = document.createElement("span");
 
-    if (
-      particles.children.length > 25
-    ) {
-      return;
-    }
-
-
-    const particle =
-      document.createElement("span");
-
-
-    const symbols = [
-      "♡",
-      "♡",
-      "♥"
-    ];
-
-
-    particle.className =
-      "particle";
-
+    particle.className = "particle";
 
     particle.textContent =
-      symbols[
-        Math.floor(
-          Math.random() *
-          symbols.length
-        )
-      ];
-
+      Math.random() > 0.75 ? "♥" : "♡";
 
     particle.style.left =
       Math.random() * 100 + "%";
 
-
     particle.style.fontSize =
-      (
-        9 +
-        Math.random() * 11
-      ) + "px";
-
+      9 + Math.random() * 10 + "px";
 
     particle.style.animationDuration =
-      (
-        7 +
-        Math.random() * 4
-      ) + "s";
+      7 + Math.random() * 4 + "s";
 
 
-    particles.appendChild(
-      particle
-    );
+    particles.appendChild(particle);
 
 
     setTimeout(function () {
-
       particle.remove();
-
     }, 12000);
 
   }
 
 
-  setInterval(
-    createParticle,
-    900
-  );
+  setInterval(makeParticle, 1000);
 
 
-  for (
-    let i = 0;
-    i < 6;
-    i++
-  ) {
-
-    setTimeout(
-      createParticle,
-      i * 300
-    );
-
-  }
-
-
-  /* ==================================================
+  /* =====================================================
      HEART BURST
-  ================================================== */
+  ===================================================== */
 
-  function createHeartBurst(
-    x,
-    y,
-    amount
-  ) {
+  function heartBurst(element, amount = 12) {
 
-    if (!amount) {
-      amount = 12;
-    }
+    if (!element) return;
 
 
-    for (
-      let i = 0;
-      i < amount;
-      i++
-    ) {
+    const rect =
+      element.getBoundingClientRect();
+
+
+    const centerX =
+      rect.left + rect.width / 2;
+
+    const centerY =
+      rect.top + rect.height / 2;
+
+
+    for (let i = 0; i < amount; i++) {
 
       const heart =
         document.createElement("span");
@@ -367,316 +210,689 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
       heart.textContent =
-        i % 3 === 0
-          ? "♥"
-          : "♡";
+        i % 3 === 0 ? "♥" : "♡";
 
 
       heart.style.left =
-        x + "px";
-
+        centerX + "px";
 
       heart.style.top =
-        y + "px";
+        centerY + "px";
 
 
-      document.body.appendChild(
-        heart
-      );
+      document.body.appendChild(heart);
 
 
       const angle =
-        (
-          Math.PI * 2 /
-          amount
-        ) * i;
+        Math.PI * 2 * i / amount;
 
 
       const distance =
-        65 +
-        Math.random() * 85;
+        60 + Math.random() * 80;
 
 
-      const moveX =
-        Math.cos(angle) *
-        distance;
+      const x =
+        Math.cos(angle) * distance;
 
+      const y =
+        Math.sin(angle) * distance;
 
-      const moveY =
-        Math.sin(angle) *
-        distance;
-
-
-      const rotation =
-        -30 +
-        Math.random() * 60;
-
-
-      const scale =
-        0.8 +
-        Math.random() * 0.5;
-
-
-      /*
-        Web Animations API.
-        Kalau tidak tersedia,
-        hati tetap dihapus dan web
-        tidak ikut mati.
-      */
 
       if (heart.animate) {
 
         heart.animate(
-
           [
             {
               transform:
-                "translate(-50%, -50%) scale(0.3)",
-
+                "translate(-50%, -50%) scale(.3)",
               opacity: 0
             },
 
             {
               transform:
                 "translate(-50%, -50%) scale(1)",
-
               opacity: 1,
-
-              offset: 0.18
+              offset: 0.2
             },
 
             {
               transform:
-                "translate(" +
-                "calc(-50% + " +
-                moveX +
-                "px), " +
-                "calc(-50% + " +
-                moveY +
-                "px)" +
-                ") " +
-                "scale(" +
-                scale +
-                ") " +
-                "rotate(" +
-                rotation +
-                "deg)",
-
+                `translate(
+                  calc(-50% + ${x}px),
+                  calc(-50% + ${y}px)
+                )
+                scale(1.2)`,
               opacity: 0
             }
           ],
-
           {
-            duration:
-              950 +
-              Math.random() * 450,
-
-            easing:
-              "cubic-bezier(.17,.67,.35,1)",
-
-            fill:
-              "forwards"
+            duration: 1100,
+            easing: "ease-out",
+            fill: "forwards"
           }
-
         );
 
       }
 
 
       setTimeout(function () {
-
         heart.remove();
-
-      }, 1600);
+      }, 1300);
 
     }
 
   }
 
 
-  /* ==================================================
+  /* =====================================================
      START STORY
-  ================================================== */
+  ===================================================== */
 
   if (startButton) {
 
-    startButton.addEventListener(
-      "click",
-      async function () {
+    startButton.onclick = async function () {
 
-        if (storyStarted) {
-          return;
+      if (storyRunning) return;
+
+      storyRunning = true;
+
+
+      startButton.disabled = true;
+
+      startButton.style.opacity = ".55";
+
+
+      /*
+        1. MULAI CERITA
+      */
+
+      setStory(
+        "jadi... aku datang bawa sesuatu kecil buat kamu."
+      );
+
+
+      scrollToSection(openingScene);
+
+
+      await wait(1200);
+
+
+      /*
+        2. HUSEN JALAN
+      */
+
+      if (openingScene) {
+
+        openingScene.classList.add(
+          "walking"
+        );
+
+      }
+
+
+      setStory(
+        "bentar, aku kesana dulu..."
+      );
+
+
+      await wait(400);
+
+
+      /*
+        3. MENDEKAT KE IKE
+      */
+
+      if (openingScene) {
+
+        openingScene.classList.add(
+          "together"
+        );
+
+      }
+
+
+      await wait(1300);
+
+
+      /*
+        4. BERHENTI JALAN
+      */
+
+      if (openingScene) {
+
+        openingScene.classList.remove(
+          "walking"
+        );
+
+      }
+
+
+      /*
+        5. KASIH BUNGA
+      */
+
+      setStory(
+        "ini buat kamu 🌷"
+      );
+
+
+      if (openingScene) {
+
+        openingScene.classList.add(
+          "giving-flower"
+        );
+
+      }
+
+
+      await wait(1000);
+
+
+      heartBurst(
+        openingScene,
+        8
+      );
+
+
+      await wait(1100);
+
+
+      /*
+        6. LANJUT KE PERTANYAAN
+      */
+
+      setStory(
+        "terus... aku mau nanya sesuatu."
+      );
+
+
+      await wait(1200);
+
+
+      /*
+        7. TAMPILKAN SECTION MAAF
+      */
+
+      showSection(
+        flowerSection
+      );
+
+
+      await wait(200);
+
+
+      scrollToSection(
+        flowerSection
+      );
+
+
+      storyText?.classList.remove(
+        "active"
+      );
+
+    };
+
+  }
+
+
+  /* =====================================================
+     TOMBOL GAK
+  ===================================================== */
+
+  const rejectMessages = [
+    "yahh 🥲",
+    "masih gak?",
+    "aku minta maaf beneran...",
+    "bunganya masih aku pegang 🌷",
+    "maafinnya udah gede banget 😭"
+  ];
+
+
+  if (noButton && yesButton) {
+
+    noButton.onclick = function () {
+
+      if (apologyAccepted) return;
+
+
+      noCount++;
+
+
+      /*
+        MA-AFIN MEMBESAR
+      */
+
+      const yesScale =
+        Math.min(
+          2.6,
+          1 + noCount * 0.32
+        );
+
+
+      yesButton.style.transform =
+        `scale(${yesScale})`;
+
+
+      /*
+        GAK MENGECIL
+      */
+
+      const noScale =
+        Math.max(
+          0.45,
+          1 - noCount * 0.12
+        );
+
+
+      noButton.style.transform =
+        `scale(${noScale})`;
+
+
+      /*
+        PESAN
+      */
+
+      if (noMessage) {
+
+        const index =
+          Math.min(
+            noCount - 1,
+            rejectMessages.length - 1
+          );
+
+
+        noMessage.textContent =
+          rejectMessages[index];
+
+      }
+
+
+      /*
+        OPACITY TOMBOL GAK
+      */
+
+      noButton.style.opacity =
+        Math.max(
+          0.35,
+          1 - noCount * 0.13
+        );
+
+
+      /*
+        SUDAH MENTOK
+      */
+
+      if (noCount >= 5) {
+
+        yesButton.style.transform =
+          "scale(2.6)";
+
+
+        noButton.classList.add(
+          "disappear"
+        );
+
+
+        noButton.disabled = true;
+
+
+        if (noMessage) {
+
+          noMessage.textContent =
+            "oke... tombol gak-nya nyerah 😭";
+
         }
 
 
-        storyStarted = true;
+        setTimeout(function () {
+
+          noButton.style.display =
+            "none";
+
+        }, 450);
+
+      }
+
+    };
+
+  }
 
 
-        startButton.disabled =
+  /* =====================================================
+     MAAFIN
+  ===================================================== */
+
+  if (yesButton) {
+
+    yesButton.onclick = async function () {
+
+      if (apologyAccepted) return;
+
+
+      apologyAccepted = true;
+
+
+      yesButton.disabled = true;
+
+
+      /*
+        Hilangkan tombol gak.
+      */
+
+      if (noButton) {
+
+        noButton.classList.add(
+          "disappear"
+        );
+
+
+        noButton.disabled = true;
+
+
+        setTimeout(function () {
+
+          noButton.style.display =
+            "none";
+
+        }, 400);
+
+      }
+
+
+      /*
+        YES kembali normal.
+      */
+
+      yesButton.style.transform =
+        "scale(1.08)";
+
+
+      yesButton.textContent =
+        "makasih ♡";
+
+
+      if (noMessage) {
+
+        noMessage.textContent =
+          "makasih udah mau dengerin aku :)";
+
+      }
+
+
+      flash();
+
+      heartBurst(
+        yesButton,
+        18
+      );
+
+
+      await wait(800);
+
+
+      /*
+        TAMPILKAN PELUKAN
+      */
+
+      showSection(
+        hugSection
+      );
+
+
+      await wait(200);
+
+
+      scrollToSection(
+        hugSection
+      );
+
+
+      await wait(600);
+
+
+      /*
+        MULAI ANIMASI PELUK
+      */
+
+      if (hugScene) {
+
+        hugScene.classList.add(
+          "hugging"
+        );
+
+      }
+
+
+      await wait(900);
+
+
+      heartBurst(
+        hugScene,
+        14
+      );
+
+    };
+
+  }
+
+
+  /* =====================================================
+     BUKA SURAT
+  ===================================================== */
+
+  if (openLetterButton) {
+
+    openLetterButton.onclick =
+      async function () {
+
+
+        openLetterButton.disabled =
           true;
 
 
-        startButton.style.opacity =
-          "0.55";
+        flash();
 
 
-        smoothScroll(
-          openingScene
+        showSection(
+          letter
         );
 
 
-        await wait(450);
+        await wait(200);
 
 
-        showStoryText(
-          "jadi... aku datang bawa sesuatu kecil buat kamu."
-        );
-
-
-        await wait(1500);
-
-
-        if (openingScene) {
-
-          openingScene.classList.add(
-            "walking"
-          );
-
-        }
-
-
-        showStoryText(
-          "bentar, aku kesana dulu..."
+        scrollToSection(
+          letter
         );
 
 
         await wait(400);
 
 
-        if (openingScene) {
-
-          openingScene.classList.add(
-            "together"
+        const paragraphs =
+          document.querySelectorAll(
+            ".letter-card p"
           );
 
-        }
 
+        paragraphs.forEach(
+          function (paragraph, index) {
 
-        await wait(1200);
+            setTimeout(function () {
 
+              paragraph.classList.add(
+                "reveal"
+              );
 
-        if (openingScene) {
+            }, index * 220);
 
-          openingScene.classList.remove(
-            "walking"
-          );
-
-        }
-
-
-        showStoryText(
-          "ini buat kamu 🌷"
+          }
         );
 
-
-        if (openingScene) {
-
-          openingScene.classList.add(
-            "giving-flower"
-          );
-
-        }
-
-
-        await wait(1200);
-
-
-        if (openingScene) {
-
-          const rect =
-            openingScene
-              .getBoundingClientRect();
-
-
-          createHeartBurst(
-            rect.left +
-            rect.width / 2,
-
-            rect.top +
-            rect.height / 2,
-
-            8
-          );
-
-        }
-
-
-        await wait(1300);
-
-
-        showStoryText(
-          "terus... ada satu hal lagi."
-        );
-
-
-        await wait(1300);
-
-
-        hideStoryText();
-
-
-        if (flowerSection) {
-
-          flowerSection.classList.add(
-            "show"
-          );
-
-        }
-
-
-        await wait(250);
-
-
-        smoothScroll(
-          flowerSection
-        );
-
-      }
-    );
+      };
 
   }
 
 
-  /* ==================================================
-     NO BUTTON
-  ================================================== */
+  /* =====================================================
+     SEBELUM SELESAI
+  ===================================================== */
 
-  const noMessages = [
+  if (beforeEndButton) {
 
-    "yahh 🥲",
-
-    "masih gak?",
-
-    "aku minta maaf beneran...",
-
-    "bunganya masih aku pegang 🌷",
-
-    "maafinnya udah gede banget 😭"
-
-  ];
+    beforeEndButton.onclick =
+      async function () {
 
 
-  if (
-    noButton &&
-    yesButton
-  ) {
+        beforeEndButton.disabled =
+          true;
 
-    noButton.addEventListener(
-      "click",
-      function () {
 
-        if (
-          apologyAccepted ||
+        showSection(
+          beforeEnd
+        );
+
+
+        await wait(200);
+
+
+        scrollToSection(
+          beforeEnd
+        );
+
+
+        await wait(400);
+
+
+        const messages =
+          document.querySelectorAll(
+            ".message-line"
+          );
+
+
+        messages.forEach(
+          function (message, index) {
+
+            setTimeout(function () {
+
+              message.classList.add(
+                "reveal"
+              );
+
+            }, index * 400);
+
+          }
+        );
+
+      };
+
+  }
+
+
+  /* =====================================================
+     FINAL
+  ===================================================== */
+
+  if (finalButton) {
+
+    finalButton.onclick =
+      async function () {
+
+
+        finalButton.disabled =
+          true;
+
+
+        flash();
+
+
+        showSection(
+          final
+        );
+
+
+        await wait(200);
+
+
+        scrollToSection(
+          final
+        );
+
+
+        await wait(600);
+
+
+        /*
+          KARAKTER MENDEKAT
+        */
+
+        if (finalScene) {
+
+          finalScene.classList.add(
+            "final-together"
+          );
+
+        }
+
+
+        await wait(900);
+
+
+        heartBurst(
+          finalScene,
+          15
+        );
+
+
+        await wait(400);
+
+
+        /*
+          PESAN FINAL
+        */
+
+        const finalMessage =
+          document.querySelector(
+            ".final-message"
+          );
+
+
+        if (finalMessage) {
+
+          finalMessage.classList.add(
+            "reveal"
+          );
+
+        }
+
+
+        await wait(700);
+
+
+        /*
+          SIGNATURE
+        */
+
+        const signature =
+          document.querySelector(
+            ".signature"
+          );
+
+
+        if (signature) {
+
+          signature.classList.add(
+            "reveal"
+          );
+
+        }
+
+      };
+
+  }
+
+
+});ccepted ||
           noButtonRemoved
         ) {
           return;
