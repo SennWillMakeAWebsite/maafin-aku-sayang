@@ -1,119 +1,83 @@
 "use strict";
 
-
-/* =====================================================
-   MA-AFIN AKU SAYANG V2
-   SCRIPT BARU TOTAL
-===================================================== */
+/* =========================================================
+   FOR IKE ♡
+   SCRIPT.JS V30
+========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  console.log("SENN V2: script loaded");
+  console.log("FOR IKE V30 LOADED");
 
 
-  /* ===================================================
+  /* =======================================================
      ELEMENTS
-  =================================================== */
+  ======================================================= */
 
-  const welcome =
-    document.getElementById("welcome");
+  const welcome = document.getElementById("welcome");
+  const enterBtn = document.getElementById("enterBtn");
 
-  const enterBtn =
-    document.getElementById("enterBtn");
+  const startBtn = document.getElementById("startBtn");
+  const openingScene = document.getElementById("openingScene");
+  const storyText = document.getElementById("storyText");
 
+  const apology = document.getElementById("apology");
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const rejectText = document.getElementById("rejectText");
 
-  const startBtn =
-    document.getElementById("startBtn");
+  const hug = document.getElementById("hug");
+  const hugScene = document.getElementById("hugScene");
+  const letterBtn = document.getElementById("letterBtn");
 
-  const openingScene =
-    document.getElementById("openingScene");
+  const letter = document.getElementById("letter");
+  const continueBtn = document.getElementById("continueBtn");
 
-  const storyText =
-    document.getElementById("storyText");
+  const more = document.getElementById("more");
+  const finalBtn = document.getElementById("finalBtn");
 
+  const finalSection = document.getElementById("final");
+  const finalScene = document.getElementById("finalScene");
+  const finalMessage = document.getElementById("finalMessage");
+  const signature = document.getElementById("signature");
 
-  const apology =
-    document.getElementById("apology");
-
-  const yesBtn =
-    document.getElementById("yesBtn");
-
-  const noBtn =
-    document.getElementById("noBtn");
-
-  const rejectText =
-    document.getElementById("rejectText");
-
-
-  const hug =
-    document.getElementById("hug");
-
-  const hugScene =
-    document.getElementById("hugScene");
-
-  const letterBtn =
-    document.getElementById("letterBtn");
+  const particles = document.getElementById("particles");
+  const flash = document.getElementById("flash");
 
 
-  const letter =
-    document.getElementById("letter");
-
-  const continueBtn =
-    document.getElementById("continueBtn");
-
-
-  const more =
-    document.getElementById("more");
-
-  const finalBtn =
-    document.getElementById("finalBtn");
-
-
-  const final =
-    document.getElementById("final");
-
-  const finalScene =
-    document.getElementById("finalScene");
-
-  const finalMessage =
-    document.getElementById("finalMessage");
-
-  const signature =
-    document.getElementById("signature");
-
-
-  const particles =
-    document.getElementById("particles");
-
-  const flash =
-    document.getElementById("flash");
-
-
-  /* ===================================================
+  /* =======================================================
      STATE
-  =================================================== */
+  ======================================================= */
 
+  let entered = false;
   let storyRunning = false;
-
-  let apologyAccepted = false;
-
+  let accepted = false;
   let rejectCount = 0;
-
   let noRemoved = false;
 
+  let letterOpened = false;
+  let moreOpened = false;
+  let finalOpened = false;
 
-  /* ===================================================
-     BASIC HELPERS
-  =================================================== */
+
+  /* =======================================================
+     HELPERS
+  ======================================================= */
 
   function wait(ms) {
-
     return new Promise(function (resolve) {
-
       setTimeout(resolve, ms);
-
     });
+  }
 
+
+  function showSection(element) {
+
+    if (!element) {
+      return;
+    }
+
+    element.classList.add("show");
   }
 
 
@@ -122,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!element) {
       return;
     }
-
 
     try {
 
@@ -134,46 +97,24 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (error) {
 
       element.scrollIntoView();
-
     }
-
   }
 
 
-  function showSection(element) {
-
-    if (!element) {
-      return;
-    }
-
-
-    element.classList.add("show");
-
-  }
-
-
-  /* ===================================================
-     STORY TEXT
-  =================================================== */
-
-  function showStory(text) {
+  function setStory(text) {
 
     if (!storyText) {
       return;
     }
 
-
     storyText.classList.remove("show");
-
 
     setTimeout(function () {
 
       storyText.textContent = text;
-
       storyText.classList.add("show");
 
     }, 120);
-
   }
 
 
@@ -183,15 +124,96 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-
     storyText.classList.remove("show");
-
   }
 
 
-  /* ===================================================
-     SCREEN FLASH
-  =================================================== */
+  /* =======================================================
+     ENTER
+  ======================================================= */
+
+  function enterWebsite() {
+
+    if (entered) {
+      return;
+    }
+
+    entered = true;
+
+    console.log("ENTER CLICKED");
+
+    /*
+      Lepaskan scroll.
+    */
+
+    document.body.classList.remove("locked");
+
+
+    /*
+      Hilangkan welcome.
+    */
+
+    if (welcome) {
+
+      welcome.classList.add("hide");
+
+      welcome.style.pointerEvents = "none";
+
+      setTimeout(function () {
+
+        welcome.style.display = "none";
+
+      }, 750);
+    }
+
+
+    /*
+      Pastikan kembali ke bagian atas.
+    */
+
+    setTimeout(function () {
+
+      try {
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      } catch (error) {
+
+        window.scrollTo(0, 0);
+      }
+
+    }, 100);
+  }
+
+
+  if (enterBtn) {
+
+    enterBtn.addEventListener("click", enterWebsite);
+
+    enterBtn.addEventListener("touchend", function (event) {
+
+      /*
+        Backup untuk browser mobile tertentu.
+        entered mencegah fungsi jalan dua kali.
+      */
+
+      event.preventDefault();
+
+      enterWebsite();
+    });
+
+  } else {
+
+    console.error("enterBtn TIDAK DITEMUKAN");
+  }
+
+
+  /* =======================================================
+     FLASH
+  ======================================================= */
 
   function pinkFlash() {
 
@@ -199,347 +221,169 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-
-    flash.classList.remove("active");
-
-
-    /*
-      Memaksa browser restart animasi.
-    */
-
-    void flash.offsetWidth;
-
-
-    flash.classList.add("active");
-
-
-    setTimeout(function () {
+    try {
 
       flash.classList.remove("active");
 
-    }, 700);
+      void flash.offsetWidth;
 
+      flash.classList.add("active");
+
+      setTimeout(function () {
+
+        flash.classList.remove("active");
+
+      }, 700);
+
+    } catch (error) {
+
+      console.log("Flash dilewati.");
+    }
   }
 
 
-  /* ===================================================
-     WELCOME
-  =================================================== */
-
-  /*
-    Body dikunci saat welcome tampil.
-  */
-
-  document.body.classList.add("locked");
-
-
-  if (enterBtn) {
-
-    enterBtn.addEventListener(
-      "click",
-      function () {
-
-        console.log(
-          "SENN V2: enter clicked"
-        );
-
-
-        /*
-          Yang PALING penting dilakukan dulu.
-          Buka halaman.
-        */
-
-        document.body.classList.remove(
-          "locked"
-        );
-
-
-        if (welcome) {
-
-          welcome.classList.add(
-            "hide"
-          );
-
-
-          /*
-            Setelah fade selesai,
-            overlay dibuang total.
-          */
-
-          setTimeout(function () {
-
-            welcome.style.display =
-              "none";
-
-          }, 800);
-
-        }
-
-
-        /*
-          Scroll kembali ke opening.
-        */
-
-        setTimeout(function () {
-
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
-
-        }, 150);
-
-      }
-    );
-
-  } else {
-
-    console.error(
-      "SENN V2 ERROR: #enterBtn tidak ditemukan"
-    );
-
-  }
-
-
-  /* ===================================================
-     BACKGROUND PARTICLES
-  =================================================== */
+  /* =======================================================
+     PARTICLES
+  ======================================================= */
 
   function createParticle() {
 
-    /*
-      Kalau partikel error,
-      tombol lain tidak boleh ikut mati.
-    */
+    if (!particles) {
+      return;
+    }
 
     try {
 
-      if (!particles) {
+      if (particles.children.length >= 20) {
         return;
       }
 
+      const particle = document.createElement("span");
 
-      /*
-        Jangan biarkan DOM dipenuhi
-        ratusan hati.
-      */
+      particle.className = "particle";
 
-      if (
-        particles.children.length >= 24
-      ) {
-        return;
+      if (Math.random() > 0.75) {
+        particle.textContent = "♥";
+      } else {
+        particle.textContent = "♡";
       }
-
-
-      const particle =
-        document.createElement("span");
-
-
-      particle.className =
-        "particle";
-
-
-      const random =
-        Math.random();
-
-
-      particle.textContent =
-        random > 0.78
-          ? "♥"
-          : "♡";
-
 
       particle.style.left =
-        (
-          Math.random() * 100
-        ) + "%";
-
+        Math.floor(Math.random() * 100) + "%";
 
       particle.style.fontSize =
-        (
-          9 +
-          Math.random() * 11
-        ) + "px";
-
+        (9 + Math.random() * 10) + "px";
 
       particle.style.animationDuration =
-        (
-          7 +
-          Math.random() * 5
-        ) + "s";
+        (7 + Math.random() * 5) + "s";
 
-
-      particle.style.opacity =
-        (
-          0.3 +
-          Math.random() * 0.5
-        );
-
-
-      particles.appendChild(
-        particle
-      );
+      particles.appendChild(particle);
 
 
       setTimeout(function () {
 
-        if (
-          particle &&
-          particle.parentNode
-        ) {
-
-          particle.remove();
-
+        if (particle.parentNode) {
+          particle.parentNode.removeChild(particle);
         }
 
       }, 13000);
 
-
     } catch (error) {
 
-      console.error(
-        "Particle error:",
-        error
-      );
-
+      console.log("Particle dilewati.");
     }
-
   }
 
 
   /*
-    Beberapa partikel saat load.
+    Jalankan partikel SETELAH event tombol utama
+    sudah terpasang.
   */
 
-  for (
-    let i = 0;
-    i < 7;
-    i++
-  ) {
+  for (let i = 0; i < 5; i++) {
 
     setTimeout(
       createParticle,
-      i * 250
+      i * 400
     );
-
   }
 
 
   setInterval(
     createParticle,
-    950
+    1100
   );
 
 
-  /* ===================================================
+  /* =======================================================
      HEART BURST
-  =================================================== */
+  ======================================================= */
 
-  function heartBurst(
-    target,
-    amount
-  ) {
+  function heartBurst(target, amount) {
+
+    if (!target) {
+      return;
+    }
+
+    amount = amount || 10;
 
     try {
-
-      if (!target) {
-        return;
-      }
-
-
-      amount =
-        amount || 12;
-
 
       const rect =
         target.getBoundingClientRect();
 
-
       const centerX =
-        rect.left +
-        rect.width / 2;
-
+        rect.left + (rect.width / 2);
 
       const centerY =
-        rect.top +
-        rect.height / 2;
+        rect.top + (rect.height / 2);
 
 
-      for (
-        let i = 0;
-        i < amount;
-        i++
-      ) {
+      for (let i = 0; i < amount; i++) {
 
         const heart =
-          document.createElement(
-            "span"
-          );
-
+          document.createElement("span");
 
         heart.className =
           "burst-heart";
 
-
         heart.textContent =
-          i % 3 === 0
-            ? "♥"
-            : "♡";
-
+          i % 3 === 0 ? "♥" : "♡";
 
         heart.style.left =
           centerX + "px";
 
-
         heart.style.top =
           centerY + "px";
 
-
-        document.body.appendChild(
-          heart
-        );
+        document.body.appendChild(heart);
 
 
         const angle =
-          (
-            Math.PI *
-            2 *
-            i
-          ) / amount;
-
+          (Math.PI * 2 * i) / amount;
 
         const distance =
-          55 +
-          Math.random() *
-          85;
+          50 + Math.random() * 80;
 
+        const x =
+          Math.cos(angle) * distance;
 
-        const moveX =
-          Math.cos(angle) *
-          distance;
-
-
-        const moveY =
-          Math.sin(angle) *
-          distance;
+        const y =
+          Math.sin(angle) * distance;
 
 
         /*
-          Browser modern:
-          animasikan burst.
+          Pakai Web Animations kalau tersedia.
         */
 
-        if (
-          typeof heart.animate ===
-          "function"
-        ) {
+        if (typeof heart.animate === "function") {
 
           heart.animate(
 
             [
               {
                 transform:
-                  "translate(-50%, -50%) scale(.3)",
+                  "translate(-50%, -50%) scale(0.3)",
 
                 opacity: 0
               },
@@ -557,12 +401,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 transform:
                   "translate(" +
                   "calc(-50% + " +
-                  moveX +
-                  "px)," +
+                  x +
+                  "px), " +
                   "calc(-50% + " +
-                  moveY +
-                  "px)" +
-                  ") scale(1.15)",
+                  y +
+                  "px)) scale(1.15)",
 
                 opacity: 0
               }
@@ -570,58 +413,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
             {
               duration:
-                900 +
-                Math.random() *
-                400,
+                850 + Math.random() * 350,
 
-              easing:
-                "ease-out",
+              easing: "ease-out",
 
-              fill:
-                "forwards"
+              fill: "forwards"
             }
-
           );
 
+        } else {
+
+          /*
+            Fallback browser lama.
+          */
+
+          heart.style.transition =
+            "all 900ms ease-out";
+
+          setTimeout(function () {
+
+            heart.style.transform =
+              "translate(" +
+              x +
+              "px," +
+              y +
+              "px)";
+
+            heart.style.opacity = "0";
+
+          }, 20);
         }
 
 
         setTimeout(function () {
 
-          if (
-            heart &&
-            heart.parentNode
-          ) {
-
-            heart.remove();
-
+          if (heart.parentNode) {
+            heart.parentNode.removeChild(heart);
           }
 
-        }, 1500);
-
+        }, 1400);
       }
-
 
     } catch (error) {
 
-      /*
-        Burst cuma kosmetik.
-        Kalau gagal, flow tetap lanjut.
-      */
-
-      console.error(
-        "Heart burst error:",
-        error
-      );
-
+      console.log("Heart burst dilewati.");
     }
-
   }
 
 
-  /* ===================================================
+  /* =======================================================
      START STORY
-  =================================================== */
+  ======================================================= */
 
   if (startBtn) {
 
@@ -629,43 +471,31 @@ document.addEventListener("DOMContentLoaded", function () {
       "click",
       async function () {
 
-        /*
-          Cegah double click.
-        */
-
         if (storyRunning) {
           return;
         }
 
-
         storyRunning = true;
-
-
-        console.log(
-          "SENN V2: story started"
-        );
-
 
         startBtn.disabled = true;
 
-        startBtn.style.opacity =
-          "0.55";
+        startBtn.style.opacity = "0.55";
 
 
         /*
-          SCROLL KE KARAKTER
+          Arahkan ke karakter.
         */
 
-        scrollToElement(
-          openingScene
-        );
+        scrollToElement(openingScene);
+
+        await wait(400);
 
 
         /*
-          CERITA 1
+          CERITA PERTAMA
         */
 
-        showStory(
+        setStory(
           "jadi... aku datang bawa sesuatu kecil buat kamu."
         );
 
@@ -675,6 +505,655 @@ document.addEventListener("DOMContentLoaded", function () {
 
         /*
           HUSEN MULAI JALAN
+        */
+
+        if (openingScene) {
+
+          openingScene.classList.add(
+            "walking"
+          );
+        }
+
+
+        setStory(
+          "bentar, aku kesana dulu..."
+        );
+
+
+        await wait(450);
+
+
+        /*
+          BERGERAK KE IKE
+        */
+
+        if (openingScene) {
+
+          openingScene.classList.add(
+            "together"
+          );
+        }
+
+
+        await wait(1700);
+
+
+        /*
+          BERHENTI
+        */
+
+        if (openingScene) {
+
+          openingScene.classList.remove(
+            "walking"
+          );
+        }
+
+
+        await wait(300);
+
+
+        /*
+          KASIH BUNGA
+        */
+
+        setStory(
+          "ini buat kamu 🌷"
+        );
+
+
+        if (openingScene) {
+
+          openingScene.classList.add(
+            "give-flower"
+          );
+        }
+
+
+        await wait(900);
+
+
+        heartBurst(
+          openingScene,
+          8
+        );
+
+
+        await wait(1200);
+
+
+        /*
+          PERTANYAAN
+        */
+
+        setStory(
+          "terus... aku mau nanya sesuatu."
+        );
+
+
+        await wait(1400);
+
+
+        hideStory();
+
+
+        /*
+          BUKA APOLOGY
+        */
+
+        showSection(apology);
+
+
+        await wait(250);
+
+
+        scrollToElement(apology);
+      }
+    );
+
+  } else {
+
+    console.error(
+      "startBtn TIDAK DITEMUKAN"
+    );
+  }
+
+
+  /* =======================================================
+     BUTTON "GAK"
+  ======================================================= */
+
+  const rejectMessages = [
+    "yahh 🥲",
+    "masih gak?",
+    "aku minta maaf beneran...",
+    "bunganya masih aku pegang 🌷",
+    "maafinnya udah gede banget 😭"
+  ];
+
+
+  if (noBtn && yesBtn) {
+
+    noBtn.addEventListener(
+      "click",
+      function () {
+
+        if (
+          accepted ||
+          noRemoved
+        ) {
+          return;
+        }
+
+
+        rejectCount++;
+
+
+        /*
+          YES MEMBESAR
+        */
+
+        const yesScale =
+          Math.min(
+            2.5,
+            1 + (rejectCount * 0.30)
+          );
+
+
+        yesBtn.style.transform =
+          "scale(" +
+          yesScale +
+          ")";
+
+
+        /*
+          NO MENGECIL
+        */
+
+        const noScale =
+          Math.max(
+            0.4,
+            1 - (rejectCount * 0.12)
+          );
+
+
+        noBtn.style.transform =
+          "scale(" +
+          noScale +
+          ")";
+
+
+        /*
+          NO MEMUDAR
+        */
+
+        const opacity =
+          Math.max(
+            0.3,
+            1 - (rejectCount * 0.13)
+          );
+
+
+        noBtn.style.opacity =
+          opacity;
+
+
+        /*
+          TEKS
+        */
+
+        if (rejectText) {
+
+          let messageIndex =
+            rejectCount - 1;
+
+          if (
+            messageIndex >=
+            rejectMessages.length
+          ) {
+
+            messageIndex =
+              rejectMessages.length - 1;
+          }
+
+
+          rejectText.textContent =
+            rejectMessages[messageIndex];
+        }
+
+
+        heartBurst(
+          yesBtn,
+          4
+        );
+
+
+        /*
+          5 KALI GAK:
+          TOMBOL GAK HILANG.
+        */
+
+        if (rejectCount >= 5) {
+
+          noRemoved = true;
+
+          noBtn.disabled = true;
+
+          noBtn.classList.add(
+            "disappear"
+          );
+
+
+          yesBtn.style.transform =
+            "scale(2.5)";
+
+
+          if (rejectText) {
+
+            rejectText.textContent =
+              "oke... tombol gak-nya nyerah 😭";
+          }
+
+
+          setTimeout(function () {
+
+            noBtn.style.display =
+              "none";
+
+          }, 450);
+        }
+      }
+    );
+  }
+
+
+  /* =======================================================
+     BUTTON "MAAFIN ♡"
+  ======================================================= */
+
+  if (yesBtn) {
+
+    yesBtn.addEventListener(
+      "click",
+      async function () {
+
+        if (accepted) {
+          return;
+        }
+
+        accepted = true;
+
+
+        /*
+          Normalisasi tombol.
+        */
+
+        yesBtn.style.transform =
+          "scale(1.05)";
+
+        yesBtn.textContent =
+          "makasih ♡";
+
+        yesBtn.disabled =
+          true;
+
+
+        /*
+          Hilangkan tombol GAK.
+        */
+
+        if (noBtn) {
+
+          noRemoved = true;
+
+          noBtn.disabled = true;
+
+          noBtn.classList.add(
+            "disappear"
+          );
+
+
+          setTimeout(function () {
+
+            noBtn.style.display =
+              "none";
+
+          }, 400);
+        }
+
+
+        if (rejectText) {
+
+          rejectText.textContent =
+            "makasih udah mau dengerin aku :)";
+        }
+
+
+        pinkFlash();
+
+        heartBurst(
+          yesBtn,
+          16
+        );
+
+
+        await wait(800);
+
+
+        /*
+          BUKA HUG.
+        */
+
+        showSection(hug);
+
+
+        await wait(250);
+
+
+        scrollToElement(hug);
+
+
+        await wait(700);
+
+
+        /*
+          PELUKAN.
+        */
+
+        if (hugScene) {
+
+          hugScene.classList.add(
+            "hugging"
+          );
+        }
+
+
+        await wait(900);
+
+
+        heartBurst(
+          hugScene,
+          12
+        );
+      }
+    );
+
+  } else {
+
+    console.error(
+      "yesBtn TIDAK DITEMUKAN"
+    );
+  }
+
+
+  /* =======================================================
+     LETTER
+  ======================================================= */
+
+  if (letterBtn) {
+
+    letterBtn.addEventListener(
+      "click",
+      async function () {
+
+        if (letterOpened) {
+          return;
+        }
+
+        letterOpened = true;
+
+        letterBtn.disabled = true;
+
+
+        pinkFlash();
+
+
+        showSection(letter);
+
+
+        await wait(250);
+
+
+        scrollToElement(letter);
+
+
+        await wait(450);
+
+
+        /*
+          PARAGRAF MUNCUL SATU-SATU.
+        */
+
+        const paragraphs =
+          document.querySelectorAll(
+            ".letter-card p"
+          );
+
+
+        for (
+          let i = 0;
+          i < paragraphs.length;
+          i++
+        ) {
+
+          (function (index) {
+
+            setTimeout(function () {
+
+              paragraphs[index]
+                .classList
+                .add("reveal");
+
+            }, index * 220);
+
+          })(i);
+        }
+      }
+    );
+
+  } else {
+
+    console.error(
+      "letterBtn TIDAK DITEMUKAN"
+    );
+  }
+
+
+  /* =======================================================
+     MORE
+  ======================================================= */
+
+  if (continueBtn) {
+
+    continueBtn.addEventListener(
+      "click",
+      async function () {
+
+        if (moreOpened) {
+          return;
+        }
+
+        moreOpened = true;
+
+        continueBtn.disabled = true;
+
+
+        showSection(more);
+
+
+        await wait(250);
+
+
+        scrollToElement(more);
+
+
+        await wait(450);
+
+
+        const messages =
+          document.querySelectorAll(
+            ".message"
+          );
+
+
+        for (
+          let i = 0;
+          i < messages.length;
+          i++
+        ) {
+
+          (function (index) {
+
+            setTimeout(function () {
+
+              messages[index]
+                .classList
+                .add("reveal");
+
+            }, index * 400);
+
+          })(i);
+        }
+      }
+    );
+
+  } else {
+
+    console.error(
+      "continueBtn TIDAK DITEMUKAN"
+    );
+  }
+
+
+  /* =======================================================
+     FINAL
+  ======================================================= */
+
+  if (finalBtn) {
+
+    finalBtn.addEventListener(
+      "click",
+      async function () {
+
+        if (finalOpened) {
+          return;
+        }
+
+        finalOpened = true;
+
+        finalBtn.disabled = true;
+
+
+        pinkFlash();
+
+
+        /*
+          BUKA FINAL SECTION.
+        */
+
+        showSection(
+          finalSection
+        );
+
+
+        await wait(250);
+
+
+        scrollToElement(
+          finalSection
+        );
+
+
+        await wait(700);
+
+
+        /*
+          HUSEN + IKE MENDEKAT.
+        */
+
+        if (finalScene) {
+
+          finalScene.classList.add(
+            "together"
+          );
+        }
+
+
+        await wait(1200);
+
+
+        heartBurst(
+          finalScene,
+          15
+        );
+
+
+        await wait(450);
+
+
+        /*
+          PESAN AKHIR.
+        */
+
+        if (finalMessage) {
+
+          finalMessage.classList.add(
+            "reveal"
+          );
+        }
+
+
+        await wait(900);
+
+
+        /*
+          SIGNATURE.
+        */
+
+        if (signature) {
+
+          signature.classList.add(
+            "reveal"
+          );
+        }
+      }
+    );
+
+  } else {
+
+    console.error(
+      "finalBtn TIDAK DITEMUKAN"
+    );
+  }
+
+
+  /* =======================================================
+     FINAL DEBUG CHECK
+  ======================================================= */
+
+  console.log(
+    "V30 ELEMENT CHECK:",
+    {
+      welcome: !!welcome,
+      enterBtn: !!enterBtn,
+      startBtn: !!startBtn,
+      openingScene: !!openingScene,
+      apology: !!apology,
+      yesBtn: !!yesBtn,
+      noBtn: !!noBtn,
+      hug: !!hug,
+      letterBtn: !!letterBtn,
+      continueBtn: !!continueBtn,
+      finalBtn: !!finalBtn
+    }
+  );
+
+
+  console.log(
+    "FOR IKE V30 READY ♡"
+  );
+
+});       HUSEN MULAI JALAN
         */
 
         if (openingScene) {
