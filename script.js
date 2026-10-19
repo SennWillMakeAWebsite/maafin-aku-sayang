@@ -1,49 +1,51 @@
 const particles =
-  document.getElementById(
-    "particles"
-  );
-
+  document.getElementById("particles");
 
 const music =
-  document.getElementById(
-    "backgroundMusic"
-  );
-
+  document.getElementById("backgroundMusic");
 
 const musicPlayer =
-  document.getElementById(
-    "musicPlayer"
-  );
-
+  document.getElementById("musicPlayer");
 
 const musicStatus =
-  document.getElementById(
-    "musicStatus"
-  );
-
+  document.getElementById("musicStatus");
 
 const audioError =
-  document.getElementById(
-    "audioError"
-  );
+  document.getElementById("audioError");
 
 
 let storyStarted = false;
-
 let noCount = 0;
-
 let musicPlaying = false;
-
+let enteringWebsite = false;
 
 
 /* =================================
-   AUDIO SETTINGS
+   AUDIO SETUP
 ================================= */
 
 if (music) {
 
-  music.volume = 0.6;
+  /*
+    Volume background music.
+    0.45 = 45%
+  */
 
+  music.volume = 0.45;
+
+
+  /*
+    Paksa loop juga lewat JS.
+    HTML sudah punya loop,
+    ini cuma pengaman tambahan.
+  */
+
+  music.loop = true;
+
+
+  /*
+    Kalau musik berhasil PLAY.
+  */
 
   music.addEventListener(
     "play",
@@ -51,19 +53,30 @@ if (music) {
 
       musicPlaying = true;
 
-      musicPlayer
-        .classList
-        .add(
-          "playing"
-        );
+
+      if (musicPlayer) {
+
+        musicPlayer
+          .classList
+          .add("playing");
+
+      }
 
 
-      musicStatus.textContent =
-        "now playing";
+      if (musicStatus) {
+
+        musicStatus.textContent =
+          "now playing";
+
+      }
 
     }
   );
 
+
+  /*
+    Kalau musik PAUSE.
+  */
 
   music.addEventListener(
     "pause",
@@ -71,29 +84,58 @@ if (music) {
 
       musicPlaying = false;
 
-      musicPlayer
-        .classList
-        .remove(
-          "playing"
-        );
+
+      if (musicPlayer) {
+
+        musicPlayer
+          .classList
+          .remove("playing");
+
+      }
 
 
-      musicStatus.textContent =
-        "paused";
+      if (musicStatus) {
+
+        musicStatus.textContent =
+          "paused";
+
+      }
 
     }
   );
 
 
+  /*
+    Kalau audio gagal dimuat.
+  */
+
   music.addEventListener(
     "error",
     () => {
 
-      audioError.textContent =
-        "musiknya belum kebaca :( cek file shape-of-my-heart.mp3";
+      musicPlaying = false;
 
-      musicStatus.textContent =
-        "audio error";
+
+      if (musicPlayer) {
+
+        musicPlayer
+          .classList
+          .remove("playing");
+
+      }
+
+
+      if (musicStatus) {
+
+        musicStatus.textContent =
+          "tap to play";
+
+      }
+
+
+      console.log(
+        "Audio gagal dimuat. Cek file shape-of-my-heart.mp3"
+      );
 
     }
   );
@@ -101,12 +143,27 @@ if (music) {
 }
 
 
-
 /* =================================
-   ENTER WEBSITE + PLAY MUSIC
+   ENTER WEBSITE
+
+   PENTING:
+   Website TETAP masuk walaupun
+   musik gagal diputar.
 ================================= */
 
 function enterWebsite() {
+
+  /*
+    Cegah double click.
+  */
+
+  if (enteringWebsite) {
+    return;
+  }
+
+
+  enteringWebsite = true;
+
 
   const welcome =
     document.getElementById(
@@ -120,108 +177,181 @@ function enterWebsite() {
     );
 
 
-  button.textContent =
-    "sebentar... ♡";
+  /*
+    Ubah tulisan sebentar.
+  */
+
+  if (button) {
+
+    button.innerHTML =
+      "masuk... ♡";
+
+    button.style.pointerEvents =
+      "none";
+
+  }
 
 
   /*
-    Karena fungsi ini dipanggil
-    langsung dari klik user,
-    browser seharusnya mengizinkan
-    musik bersuara.
+    =================================
+    COBA PUTAR MUSIK
+
+    TIDAK ditunggu untuk masuk web.
+    =================================
   */
 
-  music
-    .play()
+  if (music) {
 
-    .then(() => {
+    music.currentTime = 0;
 
-      musicPlaying = true;
+    music.volume = 0.45;
 
+    music.loop = true;
+
+
+    const playPromise =
+      music.play();
+
+
+    if (
+      playPromise !== undefined
+    ) {
+
+      playPromise
+        .then(() => {
+
+          musicPlaying = true;
+
+
+          if (musicPlayer) {
+
+            musicPlayer
+              .classList
+              .add("playing");
+
+          }
+
+
+          if (musicStatus) {
+
+            musicStatus.textContent =
+              "now playing";
+
+          }
+
+        })
+
+        .catch(error => {
+
+          /*
+            MUSIK GAGAL?
+
+            Tidak masalah.
+            Web tetap masuk.
+          */
+
+          console.log(
+            "Musik belum bisa diputar:",
+            error
+          );
+
+
+          musicPlaying = false;
+
+
+          if (musicStatus) {
+
+            musicStatus.textContent =
+              "tap to play";
+
+          }
+
+        });
+
+    }
+
+  }
+
+
+  /*
+    =================================
+    MASUK WEBSITE
+
+    Tidak tergantung musik.
+    =================================
+  */
+
+  setTimeout(() => {
+
+    if (welcome) {
+
+      welcome
+        .classList
+        .add("hide");
+
+    }
+
+
+    if (musicPlayer) {
 
       musicPlayer
         .classList
-        .add(
-          "playing"
-        );
+        .add("show");
+
+    }
 
 
-      musicStatus.textContent =
-        "now playing";
+    pinkFlash();
+
+    heartBurst();
 
 
-      audioError.textContent =
-        "";
+    /*
+      Reset scroll ke atas.
+    */
 
+    window.scrollTo({
 
-      /*
-        Baru masuk setelah musik
-        berhasil dimainkan.
-      */
+      top: 0,
 
-      setTimeout(() => {
-
-        welcome
-          .classList
-          .add(
-            "hide"
-          );
-
-
-        musicPlayer
-          .classList
-          .add(
-            "show"
-          );
-
-
-        heartBurst();
-
-      }, 350);
-
-    })
-
-
-    .catch(error => {
-
-      console.error(
-        "Audio gagal:",
-        error
-      );
-
-
-      /*
-        Kalau file musik tidak
-        ditemukan atau browser gagal
-        membacanya, jangan pura-pura
-        seolah musik sedang jalan.
-      */
-
-      button.textContent =
-        "coba nyalain lagi ♫";
-
-
-      audioError.textContent =
-        "musiknya belum kebaca. pastiin file shape-of-my-heart.mp3 ada di folder yang sama.";
+      behavior: "smooth"
 
     });
+
+
+  }, 450);
 
 }
 
 
-
 /* =================================
-   MUSIC TOGGLE
+   MUSIC BUTTON
 ================================= */
 
 function toggleMusic() {
 
   if (!music) {
+
+    console.log(
+      "Elemen audio tidak ditemukan."
+    );
+
     return;
+
   }
 
 
+  /*
+    Kalau sedang pause,
+    coba play.
+  */
+
   if (music.paused) {
+
+    music.volume = 0.45;
+
+    music.loop = true;
+
 
     music
       .play()
@@ -231,32 +361,48 @@ function toggleMusic() {
         musicPlaying = true;
 
 
-        musicPlayer
-          .classList
-          .add(
-            "playing"
-          );
+        if (musicPlayer) {
+
+          musicPlayer
+            .classList
+            .add("playing");
+
+        }
 
 
-        musicStatus.textContent =
-          "now playing";
+        if (musicStatus) {
+
+          musicStatus.textContent =
+            "now playing";
+
+        }
 
       })
 
-
       .catch(error => {
 
-        console.error(
+        console.log(
+          "Audio gagal dimainkan:",
           error
         );
 
 
-        musicStatus.textContent =
-          "audio error";
+        if (musicStatus) {
+
+          musicStatus.textContent =
+            "audio gak kebaca";
+
+        }
 
       });
 
   }
+
+
+  /*
+    Kalau sedang main,
+    pause.
+  */
 
   else {
 
@@ -266,20 +412,64 @@ function toggleMusic() {
     musicPlaying = false;
 
 
-    musicPlayer
-      .classList
-      .remove(
-        "playing"
-      );
+    if (musicPlayer) {
+
+      musicPlayer
+        .classList
+        .remove("playing");
+
+    }
 
 
-    musicStatus.textContent =
-      "paused";
+    if (musicStatus) {
+
+      musicStatus.textContent =
+        "paused";
+
+    }
 
   }
 
 }
 
+
+/* =================================
+   PASTIKAN AUDIO LOOP
+================================= */
+
+if (music) {
+
+  music.addEventListener(
+    "ended",
+    () => {
+
+      /*
+        Ini sebenarnya jarang terpanggil
+        karena music.loop = true.
+
+        Tapi tetap dibuat fallback.
+      */
+
+      music.currentTime = 0;
+
+
+      music
+        .play()
+        .catch(() => {
+
+          if (musicStatus) {
+
+            musicStatus.textContent =
+              "tap to play";
+
+          }
+
+        });
+
+    }
+  );
+
+}
 
 
 /* =================================
@@ -332,16 +522,20 @@ function createParticle() {
 
 
   particle.style.fontSize =
-    Math.random() *
-    11 +
-    7 +
+    (
+      Math.random() *
+      11 +
+      7
+    ) +
     "px";
 
 
   particle.style.animationDuration =
-    Math.random() *
-    7 +
-    8 +
+    (
+      Math.random() *
+      7 +
+      8
+    ) +
     "s";
 
 
@@ -359,12 +553,10 @@ function createParticle() {
 }
 
 
-
 setInterval(
   createParticle,
   650
 );
-
 
 
 /* =================================
@@ -387,16 +579,20 @@ function startStory() {
     );
 
 
-  button.textContent =
-    "bentar ya... ♡";
+  if (button) {
+
+    button.textContent =
+      "bentar ya... ♡";
 
 
-  button.style.opacity =
-    ".45";
+    button.style.opacity =
+      ".45";
 
 
-  button.style.pointerEvents =
-    "none";
+    button.style.pointerEvents =
+      "none";
+
+  }
 
 
   const texts = [
@@ -415,7 +611,6 @@ function startStory() {
   let index = 0;
 
 
-
   function nextText() {
 
     const text =
@@ -424,11 +619,14 @@ function startStory() {
       );
 
 
+    if (!text) {
+      return;
+    }
+
+
     text
       .classList
-      .remove(
-        "active"
-      );
+      .remove("active");
 
 
     setTimeout(() => {
@@ -439,9 +637,7 @@ function startStory() {
 
       text
         .classList
-        .add(
-          "active"
-        );
+        .add("active");
 
 
       index++;
@@ -465,9 +661,7 @@ function startStory() {
 
           text
             .classList
-            .remove(
-              "active"
-            );
+            .remove("active");
 
 
           startWalking();
@@ -486,7 +680,6 @@ function startStory() {
 }
 
 
-
 /* =================================
    WALKING
 ================================= */
@@ -499,20 +692,21 @@ function startWalking() {
     );
 
 
+  if (!scene) {
+    return;
+  }
+
+
   scene
     .classList
-    .add(
-      "walking"
-    );
+    .add("walking");
 
 
   setTimeout(() => {
 
     scene
       .classList
-      .add(
-        "together"
-      );
+      .add("together");
 
   }, 300);
 
@@ -521,9 +715,7 @@ function startWalking() {
 
     scene
       .classList
-      .remove(
-        "walking"
-      );
+      .remove("walking");
 
   }, 2600);
 
@@ -535,7 +727,6 @@ function startWalking() {
   }, 4200);
 
 }
-
 
 
 /* =================================
@@ -550,19 +741,22 @@ function openFlowerQuestion() {
     );
 
 
+  if (!section) {
+    return;
+  }
+
+
   section.style.display =
     "flex";
 
 
   section.scrollIntoView({
 
-    behavior:
-      "smooth"
+    behavior: "smooth"
 
   });
 
 }
-
 
 
 /* =================================
@@ -592,9 +786,19 @@ function rejectApology() {
     );
 
 
+  if (
+    !noButton ||
+    !yesButton ||
+    !message
+  ) {
+
+    return;
+
+  }
+
+
   /*
-    Tombol GAK makin kecil,
-    tapi tetap ada.
+    Tombol GAK mengecil.
   */
 
   const noScale =
@@ -610,7 +814,7 @@ function rejectApology() {
 
 
   /*
-    Tombol MAAFIN makin besar.
+    Tombol MAAFIN membesar.
   */
 
   const yesScale =
@@ -675,38 +879,32 @@ function rejectApology() {
     [
 
       {
-        translate:
-          "0 0"
+        translate: "0 0"
       },
 
       {
-        translate:
-          "-4px 0"
+        translate: "-4px 0"
       },
 
       {
-        translate:
-          "4px 0"
+        translate: "4px 0"
       },
 
       {
-        translate:
-          "0 0"
+        translate: "0 0"
       }
 
     ],
 
     {
 
-      duration:
-        180
+      duration: 180
 
     }
 
   );
 
 }
-
 
 
 /* =================================
@@ -733,28 +931,39 @@ function acceptApology() {
     );
 
 
-  yes.textContent =
-    "♡";
+  if (yes) {
+
+    yes.textContent =
+      "♡";
 
 
-  yes.style.pointerEvents =
-    "none";
+    yes.style.pointerEvents =
+      "none";
+
+  }
 
 
-  no.style.opacity =
-    "0";
+  if (no) {
+
+    no.style.opacity =
+      "0";
 
 
-  no.style.pointerEvents =
-    "none";
+    no.style.pointerEvents =
+      "none";
+
+  }
 
 
-  message.textContent =
-    "makasih udah mau dengerin aku ♡";
+  if (message) {
+
+    message.textContent =
+      "makasih udah mau dengerin aku ♡";
+
+  }
 
 
   pinkFlash();
-
 
   heartBurst();
 
@@ -766,7 +975,6 @@ function acceptApology() {
   }, 1800);
 
 }
-
 
 
 /* =================================
@@ -781,14 +989,18 @@ function openLetter() {
     );
 
 
+  if (!letter) {
+    return;
+  }
+
+
   letter.style.display =
     "flex";
 
 
   letter.scrollIntoView({
 
-    behavior:
-      "smooth"
+    behavior: "smooth"
 
   });
 
@@ -802,7 +1014,6 @@ function openLetter() {
   );
 
 }
-
 
 
 function revealLetter() {
@@ -824,9 +1035,7 @@ function revealLetter() {
 
         paragraph
           .classList
-          .add(
-            "visible"
-          );
+          .add("visible");
 
       }, index * 280);
 
@@ -835,7 +1044,6 @@ function revealLetter() {
   );
 
 }
-
 
 
 /* =================================
@@ -850,14 +1058,18 @@ function openBeforeEnd() {
     );
 
 
+  if (!section) {
+    return;
+  }
+
+
   section.style.display =
     "flex";
 
 
   section.scrollIntoView({
 
-    behavior:
-      "smooth"
+    behavior: "smooth"
 
   });
 
@@ -881,9 +1093,7 @@ function openBeforeEnd() {
 
           message
             .classList
-            .add(
-              "visible"
-            );
+            .add("visible");
 
         }, index * 600);
 
@@ -894,6 +1104,219 @@ function openBeforeEnd() {
   }, 700);
 
 }
+
+
+/* =================================
+   FINAL
+================================= */
+
+function openFinal() {
+
+  const final =
+    document.getElementById(
+      "final"
+    );
+
+
+  const scene =
+    document.getElementById(
+      "finalScene"
+    );
+
+
+  if (
+    !final ||
+    !scene
+  ) {
+
+    return;
+
+  }
+
+
+  final.style.display =
+    "flex";
+
+
+  final.scrollIntoView({
+
+    behavior: "smooth"
+
+  });
+
+
+  setTimeout(() => {
+
+    scene
+      .classList
+      .add("walking");
+
+  }, 900);
+
+
+  setTimeout(() => {
+
+    scene
+      .classList
+      .add("together");
+
+  }, 1200);
+
+
+  setTimeout(() => {
+
+    scene
+      .classList
+      .remove("walking");
+
+  }, 3500);
+
+
+  setTimeout(() => {
+
+    const finalMessage =
+      document.querySelector(
+        ".final-message"
+      );
+
+
+    if (finalMessage) {
+
+      finalMessage
+        .classList
+        .add("visible");
+
+    }
+
+
+    heartBurst();
+
+  }, 4100);
+
+}
+
+
+/* =================================
+   PINK FLASH
+================================= */
+
+function pinkFlash() {
+
+  const flash =
+    document.getElementById(
+      "pinkFlash"
+    );
+
+
+  if (!flash) {
+    return;
+  }
+
+
+  flash
+    .classList
+    .add("active");
+
+
+  setTimeout(() => {
+
+    flash
+      .classList
+      .remove("active");
+
+  }, 450);
+
+}
+
+
+/* =================================
+   HEART BURST
+================================= */
+
+function heartBurst() {
+
+  if (!particles) {
+    return;
+  }
+
+
+  for (
+    let i = 0;
+    i < 50;
+    i++
+  ) {
+
+    setTimeout(() => {
+
+      const heart =
+        document.createElement(
+          "span"
+        );
+
+
+      heart.className =
+        "particle";
+
+
+      heart.textContent =
+        Math.random() > .3
+          ? "♥"
+          : "♡";
+
+
+      heart.style.left =
+        (
+          25 +
+          Math.random() *
+          50
+        ) +
+        "vw";
+
+
+      heart.style.bottom =
+        (
+          5 +
+          Math.random() *
+          20
+        ) +
+        "vh";
+
+
+      heart.style.fontSize =
+        (
+          Math.random() *
+          18 +
+          8
+        ) +
+        "px";
+
+
+      heart.style.animationDuration =
+        (
+          Math.random() *
+          3 +
+          3
+        ) +
+        "s";
+
+
+      particles.appendChild(
+        heart
+      );
+
+
+      setTimeout(() => {
+
+        heart.remove();
+
+      }, 7000);
+
+
+    }, i * 35);
+
+  }
+
+    }}
 
 
 
