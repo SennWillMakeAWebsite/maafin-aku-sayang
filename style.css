@@ -3,8 +3,8 @@
   --pink-light: #ff86c0;
   --pink-soft: #ffc5e1;
 
-  --skin: #ffe1d3;
-  --skin-shadow: #efbba9;
+  --skin: #ffe7dc;
+  --skin-shadow: #f2c8b8;
 
   --hair: #2a1720;
 
@@ -12,6 +12,11 @@
   --text: #fff7fb;
   --muted: #cdbac4;
 }
+
+
+/* =================================
+   RESET
+================================= */
 
 * {
   margin: 0;
@@ -28,7 +33,9 @@ body {
 
   overflow-x: hidden;
 
-  font-family: "Poppins", sans-serif;
+  font-family:
+    "Poppins",
+    sans-serif;
 
   color: var(--text);
 
@@ -51,9 +58,9 @@ button {
 }
 
 
-/* ==============================
+/* =================================
    BACKGROUND
-============================== */
+================================= */
 
 .background {
   position: fixed;
@@ -76,7 +83,9 @@ button {
   opacity: .22;
 
   animation:
-    orbFloat 10s ease-in-out infinite alternate;
+    orbFloat 10s
+    ease-in-out
+    infinite alternate;
 }
 
 .orb-one {
@@ -112,9 +121,9 @@ button {
 }
 
 
-/* ==============================
+/* =================================
    LOADER
-============================== */
+================================= */
 
 #loader {
   position: fixed;
@@ -123,7 +132,6 @@ button {
   z-index: 9999;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
@@ -134,7 +142,6 @@ button {
 
 #loader.hide {
   opacity: 0;
-
   visibility: hidden;
 }
 
@@ -149,7 +156,8 @@ button {
 
   text-shadow:
     0 0 15px var(--pink),
-    0 0 40px rgba(255,79,163,.6);
+    0 0 40px
+    rgba(255, 79, 163, .6);
 
   animation:
     basicBeat 1.1s infinite;
@@ -174,9 +182,9 @@ button {
 }
 
 
-/* ==============================
+/* =================================
    MUSIC
-============================== */
+================================= */
 
 .music-player {
   position: fixed;
@@ -189,16 +197,17 @@ button {
 
 .music-button {
   display: flex;
-
   align-items: center;
 
   gap: 10px;
 
   padding:
-    8px 13px 8px 9px;
+    8px 13px
+    8px 9px;
 
   border:
-    1px solid rgba(255, 119, 185, .22);
+    1px solid
+    rgba(255, 119, 185, .22);
 
   border-radius: 999px;
 
@@ -215,14 +224,24 @@ button {
   transition: .3s ease;
 }
 
+.music-button:hover {
+  border-color:
+    rgba(255, 119, 185, .5);
+
+  box-shadow:
+    0 0 25px
+    rgba(255, 79, 163, .15);
+}
+
 #musicIcon {
   width: 32px;
   height: 32px;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
+
+  flex-shrink: 0;
 
   border-radius: 50%;
 
@@ -234,7 +253,8 @@ button {
     );
 
   box-shadow:
-    0 0 15px rgba(255,79,163,.25);
+    0 0 15px
+    rgba(255, 79, 163, .25);
 }
 
 .music-info {
@@ -257,7 +277,8 @@ button {
   font-size: 8px;
 }
 
-.music-player.playing #musicIcon {
+.music-player.playing
+#musicIcon {
   animation:
     musicBeat 1.1s infinite;
 }
@@ -268,15 +289,16 @@ button {
     transform: scale(1.12);
 
     box-shadow:
-      0 0 25px rgba(255,79,163,.6);
+      0 0 25px
+      rgba(255, 79, 163, .6);
   }
 
 }
 
 
-/* ==============================
+/* =================================
    PARTICLES
-============================== */
+================================= */
 
 #particles {
   position: fixed;
@@ -295,13 +317,15 @@ button {
   bottom: -40px;
 
   color:
-    rgba(255,120,185,.65);
+    rgba(255, 120, 185, .65);
 
   text-shadow:
-    0 0 12px rgba(255,79,163,.8);
+    0 0 12px
+    rgba(255, 79, 163, .8);
 
   animation:
-    floatParticle linear forwards;
+    floatParticle
+    linear forwards;
 }
 
 @keyframes floatParticle {
@@ -332,9 +356,9 @@ button {
 }
 
 
-/* ==============================
+/* =================================
    GENERAL
-============================== */
+================================= */
 
 section {
   position: relative;
@@ -369,13 +393,14 @@ section {
   color: var(--pink-light);
 
   text-shadow:
-    0 0 10px rgba(255,79,163,.65);
+    0 0 10px
+    rgba(255, 79, 163, .65);
 }
 
 
-/* ==============================
+/* =================================
    BUTTON
-============================== */
+================================= */
 
 .main-button {
   margin-top: 30px;
@@ -384,14 +409,15 @@ section {
     14px 25px;
 
   border:
-    1px solid rgba(255,106,180,.45);
+    1px solid
+    rgba(255, 106, 180, .45);
 
   border-radius: 999px;
 
   color: white;
 
   background:
-    rgba(255,79,163,.08);
+    rgba(255, 79, 163, .08);
 
   backdrop-filter:
     blur(15px);
@@ -407,16 +433,17 @@ section {
     translateY(-3px);
 
   background:
-    rgba(255,79,163,.16);
+    rgba(255, 79, 163, .16);
 
   box-shadow:
-    0 0 30px rgba(255,79,163,.25);
+    0 0 30px
+    rgba(255, 79, 163, .25);
 }
 
 
-/* ==============================
+/* =================================
    OPENING
-============================== */
+================================= */
 
 #opening {
   flex-direction: column;
@@ -434,7 +461,11 @@ section {
   margin-top: 12px;
 
   font-size:
-    clamp(45px,11vw,85px);
+    clamp(
+      45px,
+      11vw,
+      85px
+    );
 
   line-height: 1;
 
@@ -455,15 +486,18 @@ section {
 }
 
 
-/* ==============================
+/* =================================
    SCENE
-============================== */
+================================= */
 
 .scene {
   position: relative;
 
   width:
-    min(700px,100%);
+    min(
+      700px,
+      100%
+    );
 
   height: 250px;
 
@@ -486,18 +520,19 @@ section {
     linear-gradient(
       90deg,
       transparent,
-      rgba(255,91,170,.5),
+      rgba(255, 91, 170, .5),
       transparent
     );
 
   box-shadow:
-    0 0 15px rgba(255,79,163,.6);
+    0 0 15px
+    rgba(255, 79, 163, .6);
 }
 
 
-/* ==============================
-   CHARACTER
-============================== */
+/* =================================
+   PERSON
+================================= */
 
 .person {
   position: absolute;
@@ -508,11 +543,16 @@ section {
   height: 165px;
 
   transition:
-    left 2.2s cubic-bezier(.65,0,.35,1),
-    right 2.2s cubic-bezier(.65,0,.35,1);
+    left 2.2s
+    cubic-bezier(.65, 0, .35, 1),
+
+    right 2.2s
+    cubic-bezier(.65, 0, .35, 1);
 
   animation:
-    idle 3s ease-in-out infinite;
+    idle 3s
+    ease-in-out
+    infinite;
 }
 
 .husen {
@@ -546,6 +586,8 @@ section {
   font-size: 10px;
 
   letter-spacing: 1px;
+
+  text-align: center;
 }
 
 .character {
@@ -556,9 +598,9 @@ section {
 }
 
 
-/* ==============================
-   SKIN
-============================== */
+/* =================================
+   HUSEN FACE
+================================= */
 
 .head {
   position: absolute;
@@ -569,44 +611,28 @@ section {
   width: 53px;
   height: 56px;
 
-  border-radius: 48%;
+  border-radius:
+    48% 48% 46% 46%;
 
   background:
     linear-gradient(
       135deg,
-      var(--skin),
-      var(--skin-shadow)
+      #ffe8dd 0%,
+      #ffd8c8 55%,
+      #f3c5b4 100%
     );
 
   box-shadow:
-    inset -4px -5px 7px
-    rgba(140,75,65,.06);
+    inset -4px -5px 8px
+    rgba(145, 72, 62, .06);
 
-  z-index: 5;
+  z-index: 10;
 }
 
 
-/*
-   PENTING:
-   wajah Ike menggunakan skin
-   yang sama dengan Husen.
-*/
-
-.ike .head {
-  background:
-    linear-gradient(
-      135deg,
-      #ffe4d7,
-      #f2c3b1
-    );
-
-  z-index: 5;
-}
-
-
-/* ==============================
+/* =================================
    HUSEN HAIR
-============================== */
+================================= */
 
 .husen .hair {
   position: absolute;
@@ -618,78 +644,175 @@ section {
   height: 34px;
 
   border-radius:
-    45px 45px 15px 15px;
+    45px 45px
+    15px 15px;
 
   background:
     linear-gradient(
       135deg,
-      #39252e,
+      #3c2831,
       #190f14
     );
 
-  z-index: 7;
+  z-index: 11;
 }
 
 
-/* ==============================
-   IKE HAIR
+/* =================================
+   IKE
 
-   Rambut belakang sengaja berada
-   DI BELAKANG kepala supaya wajah
-   tidak terlihat hitam.
-============================== */
+   Rambut belakang:
+   z-index 1
+
+   kepala:
+   z-index 10
+
+   poni:
+   z-index 11
+
+   Jadi muka TIDAK ditutup rambut.
+================================= */
+
+.ike .character {
+  isolation: isolate;
+}
+
+
+/* RAMBUT BELAKANG */
 
 .ike-back-hair {
   position: absolute;
 
-  top: 1px;
-  left: 10px;
+  top: 0;
+  left: 8px;
 
-  width: 65px;
-  height: 82px;
+  width: 69px;
+  height: 90px;
 
   border-radius:
-    42px 42px 28px 28px;
+    40px 40px
+    25px 25px;
 
   background:
     linear-gradient(
-      135deg,
-      #3b2630,
-      #190f15
+      145deg,
+      #49303a 0%,
+      #2d1a23 50%,
+      #160c11 100%
     );
 
   z-index: 1;
 }
 
 
-/* PONI */
+/* WAJAH IKE */
+
+.ike .head {
+  position: absolute;
+
+  top: 9px;
+  left: 16px;
+
+  width: 53px;
+  height: 57px;
+
+  border-radius:
+    48% 48%
+    46% 46%;
+
+  /*
+     WARNA WAJAH IKE
+     sengaja dibuat terang.
+  */
+
+  background:
+    #ffe4d8 !important;
+
+  background-image:
+    linear-gradient(
+      135deg,
+      #fff0e8 0%,
+      #ffe2d4 55%,
+      #f6cbbb 100%
+    ) !important;
+
+  box-shadow:
+    inset -3px -4px 7px
+    rgba(150, 75, 65, .07),
+
+    0 3px 10px
+    rgba(0, 0, 0, .12);
+
+  z-index: 10 !important;
+}
+
+
+/* PONI IKE */
 
 .ike-bangs {
   position: absolute;
 
-  top: -3px;
-  left: 2px;
+  top: -2px;
+  left: 1px;
 
-  width: 49px;
-  height: 15px;
+  width: 51px;
+  height: 16px;
 
   border-radius:
-    30px 30px 13px 13px;
+    30px 30px
+    12px 12px;
 
   background:
     linear-gradient(
-      135deg,
-      #3b2630,
-      #190f15
+      145deg,
+      #49303a,
+      #201218
     );
 
-  z-index: 2;
+  z-index: 11;
 }
 
 
-/* ==============================
-   FACE
-============================== */
+/*
+   sedikit bentuk rambut
+   di sisi kiri dan kanan.
+*/
+
+.ike .head::before,
+.ike .head::after {
+  content: "";
+
+  position: absolute;
+
+  top: 5px;
+
+  width: 7px;
+  height: 25px;
+
+  background:
+    #2a1820;
+
+  z-index: 11;
+}
+
+.ike .head::before {
+  left: -2px;
+
+  border-radius:
+    8px 2px 8px 8px;
+}
+
+.ike .head::after {
+  right: -2px;
+
+  border-radius:
+    2px 8px 8px 8px;
+}
+
+
+/* =================================
+   EYES
+================================= */
 
 .eye {
   position: absolute;
@@ -701,9 +824,10 @@ section {
 
   border-radius: 50%;
 
-  background: #432b34;
+  background:
+    #50323d;
 
-  z-index: 6;
+  z-index: 12;
 }
 
 .eye-left {
@@ -713,6 +837,11 @@ section {
 .eye-right {
   right: 15px;
 }
+
+
+/* =================================
+   BLUSH
+================================= */
 
 .blush {
   position: absolute;
@@ -725,9 +854,9 @@ section {
   border-radius: 50%;
 
   background:
-    rgba(255,112,150,.35);
+    rgba(255, 110, 148, .32);
 
-  z-index: 6;
+  z-index: 12;
 }
 
 .blush-left {
@@ -738,11 +867,16 @@ section {
   right: 7px;
 }
 
+
+/* =================================
+   MOUTH
+================================= */
+
 .mouth {
   position: absolute;
 
   left: 50%;
-  top: 42px;
+  top: 43px;
 
   width: 7px;
   height: 3px;
@@ -751,17 +885,18 @@ section {
     translateX(-50%);
 
   border-bottom:
-    1px solid rgba(90,45,55,.6);
+    1px solid
+    rgba(100, 50, 60, .6);
 
   border-radius: 50%;
 
-  z-index: 6;
+  z-index: 12;
 }
 
 
-/* ==============================
-   COUPLE CLOTHES
-============================== */
+/* =================================
+   COUPLE OUTFIT
+================================= */
 
 .body {
   position: absolute;
@@ -773,30 +908,40 @@ section {
   height: 77px;
 
   border-radius:
-    22px 22px 13px 13px;
+    22px 22px
+    13px 13px;
 
   background:
     linear-gradient(
       180deg,
-      #ff78b8,
-      #c9327c
+      #ff7fbb 0%,
+      #ed559c 45%,
+      #c72f79 100%
     );
 
   border:
-    1px solid rgba(255,211,232,.25);
+    1px solid
+    rgba(255, 215, 234, .28);
 
   box-shadow:
-    0 0 18px rgba(255,79,163,.14);
+    0 0 18px
+    rgba(255, 79, 163, .14);
 
   z-index: 3;
 }
+
+
+/*
+   Outfit Ike dibuat SAMA.
+*/
 
 .ike .body {
   background:
     linear-gradient(
       180deg,
-      #ff78b8,
-      #c9327c
+      #ff7fbb 0%,
+      #ed559c 45%,
+      #c72f79 100%
     );
 }
 
@@ -818,9 +963,9 @@ section {
 }
 
 
-/* ==============================
+/* =================================
    ARMS
-============================== */
+================================= */
 
 .arm {
   position: absolute;
@@ -834,11 +979,30 @@ section {
 
   background:
     linear-gradient(
-      #ff7dbb 55%,
-      #f6c9b8 55%
+      to bottom,
+      #ff7fbb 0%,
+      #ff7fbb 54%,
+      #ffe1d4 55%,
+      #f3c5b4 100%
     );
 
   z-index: 2;
+}
+
+
+/*
+   Tangan Ike juga terang.
+*/
+
+.ike .arm {
+  background:
+    linear-gradient(
+      to bottom,
+      #ff7fbb 0%,
+      #ff7fbb 54%,
+      #ffe6da 55%,
+      #f4c8b8 100%
+    );
 }
 
 .arm-left {
@@ -856,12 +1020,725 @@ section {
 }
 
 
-/* ==============================
+/* =================================
    LEGS
-============================== */
+================================= */
 
 .leg {
   position: absolute;
+
+  top: 128px;
+
+  width: 15px;
+  height: 38px;
+
+  border-radius:
+    8px 8px
+    4px 4px;
+
+  background:
+    #382431;
+
+  z-index: 2;
+}
+
+.leg-left {
+  left: 24px;
+}
+
+.leg-right {
+  right: 24px;
+}
+
+
+/* =================================
+   WALKING
+================================= */
+
+.scene.walking
+.husen {
+  animation:
+    walking .32s
+    ease-in-out
+    infinite alternate;
+}
+
+@keyframes walking {
+
+  from {
+    transform:
+      translateY(0)
+      rotate(-1deg);
+  }
+
+  to {
+    transform:
+      translateY(-7px)
+      rotate(1deg);
+  }
+
+}
+
+.scene.together
+.husen {
+  left:
+    calc(50% - 95px);
+}
+
+.scene.together
+.ike {
+  right:
+    calc(50% - 95px);
+}
+
+
+/* =================================
+   FLOWER
+================================= */
+
+.flower {
+  position: absolute;
+
+  top: 72px;
+  right: -17px;
+
+  font-size: 30px;
+
+  opacity: 0;
+
+  transform:
+    translateY(15px)
+    rotate(-20deg)
+    scale(.6);
+
+  transition:
+    1s ease 1.4s;
+
+  z-index: 20;
+}
+
+.scene.together
+.flower {
+  opacity: 1;
+
+  transform:
+    translateY(0)
+    rotate(10deg)
+    scale(1);
+}
+
+
+/* =================================
+   HEART BETWEEN
+================================= */
+
+.heart-between {
+  position: absolute;
+
+  left: 50%;
+  top: 70px;
+
+  transform:
+    translate(-50%, 10px)
+    scale(.3);
+
+  color: var(--pink);
+
+  font-size: 22px;
+
+  opacity: 0;
+
+  text-shadow:
+    0 0 20px
+    var(--pink);
+
+  transition:
+    1s ease 1.7s;
+}
+
+.scene.together
+.heart-between {
+  opacity: 1;
+
+  transform:
+    translate(-50%, 0)
+    scale(1);
+
+  animation:
+    heartBetween
+    1.3s infinite
+    2.5s;
+}
+
+@keyframes heartBetween {
+
+  50% {
+    transform:
+      translate(-50%, 0)
+      scale(1.25);
+  }
+
+}
+
+
+/* =================================
+   STORY
+================================= */
+
+.story-text {
+  position: absolute;
+
+  top: -10px;
+  left: 50%;
+
+  width: 100%;
+
+  transform:
+    translateX(-50%)
+    translateY(10px);
+
+  color: #d2bec8;
+
+  font-size: 12px;
+
+  opacity: 0;
+
+  transition: .6s ease;
+}
+
+.story-text.active {
+  opacity: 1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+
+/* =================================
+   FLOWER QUESTION
+================================= */
+
+#flowerSection {
+  display: none;
+
+  text-align: center;
+}
+
+.question-card {
+  width:
+    min(
+      430px,
+      100%
+    );
+
+  padding:
+    40px 25px;
+
+  border:
+    1px solid
+    rgba(255, 111, 181, .2);
+
+  border-radius: 28px;
+
+  background:
+    rgba(255, 255, 255, .035);
+
+  backdrop-filter:
+    blur(20px);
+
+  box-shadow:
+    0 25px 90px
+    rgba(0, 0, 0, .4);
+}
+
+.big-flower {
+  margin:
+    18px 0 8px;
+
+  font-size: 58px;
+
+  animation:
+    flowerFloat
+    2.4s ease-in-out
+    infinite;
+}
+
+@keyframes flowerFloat {
+
+  50% {
+    transform:
+      translateY(-7px)
+      rotate(5deg);
+  }
+
+}
+
+.question-card h2 {
+  font-size: 35px;
+
+  font-weight: 500;
+}
+
+.question-description {
+  margin-top: 5px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.small-apology {
+  max-width: 330px;
+
+  margin:
+    22px auto;
+
+  color: #e0d0d8;
+
+  font-size: 12px;
+
+  line-height: 1.9;
+}
+
+.question-card h3 {
+  font-size: 21px;
+
+  font-weight: 500;
+}
+
+
+/* =================================
+   YES / NO
+================================= */
+
+.choice-buttons {
+  min-height: 130px;
+
+  margin-top: 15px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 13px;
+}
+
+.yes-button,
+.no-button {
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transform-origin: center;
+
+  transition:
+    transform .35s
+    cubic-bezier(.16, 1, .3, 1),
+
+    opacity .35s,
+
+    box-shadow .35s;
+}
+
+.yes-button {
+  padding:
+    13px 22px;
+
+  border: 0;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4fa3,
+      #ff7dbc
+    );
+
+  box-shadow:
+    0 0 25px
+    rgba(255, 79, 163, .25);
+}
+
+.no-button {
+  padding:
+    12px 20px;
+
+  color: #d0bdc6;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, .1);
+
+  background:
+    rgba(255, 255, 255, .05);
+}
+
+.no-message {
+  min-height: 22px;
+
+  color: #bda8b2;
+
+  font-size: 11px;
+}
+
+
+/* =================================
+   LETTER
+================================= */
+
+#letter {
+  display: none;
+}
+
+.letter-container {
+  width:
+    min(
+      650px,
+      100%
+    );
+
+  text-align: center;
+}
+
+.letter-title {
+  margin-bottom: 30px;
+}
+
+.letter-title h2 {
+  margin-top: 10px;
+
+  font-size:
+    clamp(
+      28px,
+      7vw,
+      45px
+    );
+
+  font-weight: 500;
+}
+
+.letter-card {
+  padding: 35px;
+
+  text-align: left;
+
+  border:
+    1px solid
+    rgba(255, 111, 181, .2);
+
+  border-radius: 27px;
+
+  background:
+    rgba(255, 255, 255, .035);
+
+  backdrop-filter:
+    blur(20px);
+
+  box-shadow:
+    0 25px 90px
+    rgba(0, 0, 0, .35);
+}
+
+.letter-card p {
+  margin-bottom: 22px;
+
+  color: #dfd1d8;
+
+  font-size: 13px;
+
+  line-height: 2;
+
+  opacity: 0;
+
+  transform:
+    translateY(15px);
+
+  transition: .8s ease;
+}
+
+.letter-card p.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* =================================
+   BEFORE END
+================================= */
+
+#beforeEnd {
+  display: none;
+
+  text-align: center;
+}
+
+.before-container {
+  width:
+    min(
+      620px,
+      100%
+    );
+}
+
+.before-container h2 {
+  margin-top: 12px;
+
+  font-size:
+    clamp(
+      28px,
+      7vw,
+      48px
+    );
+
+  font-weight: 500;
+}
+
+.small-messages {
+  margin-top: 45px;
+}
+
+.message-line {
+  max-width: 530px;
+
+  margin:
+    25px auto;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  line-height: 1.9;
+
+  opacity: 0;
+
+  transform:
+    translateY(20px);
+
+  transition: .8s ease;
+}
+
+.message-line.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* =================================
+   FINAL
+================================= */
+
+#final {
+  display: none;
+
+  text-align: center;
+}
+
+.final-container {
+  width:
+    min(
+      650px,
+      100%
+    );
+}
+
+.final-container h2 {
+  margin-top: 10px;
+
+  font-size:
+    clamp(
+      35px,
+      9vw,
+      60px
+    );
+
+  font-weight: 500;
+}
+
+.final-description {
+  margin-top: 15px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+}
+
+.final-message {
+  opacity: 0;
+
+  transform:
+    translateY(20px);
+
+  transition: 1s ease;
+}
+
+.final-message.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+.final-message h3 {
+  color: var(--pink-light);
+
+  font-size: 21px;
+
+  font-weight: 500;
+
+  text-shadow:
+    0 0 20px
+    rgba(255, 79, 163, .4);
+}
+
+.final-message p {
+  margin-top: 8px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.signature {
+  margin-top: 50px;
+
+  color: #917e88;
+
+  font-size: 11px;
+
+  line-height: 2;
+
+  letter-spacing: 1px;
+}
+
+.signature span {
+  color: var(--pink-light);
+}
+
+
+/* =================================
+   PINK FLASH
+================================= */
+
+#pinkFlash {
+  position: fixed;
+  inset: 0;
+
+  z-index: 900;
+
+  background:
+    rgba(255, 79, 163, .15);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: .4s;
+}
+
+#pinkFlash.active {
+  opacity: 1;
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (
+  max-width: 520px
+) {
+
+  section {
+    padding:
+      55px 17px;
+  }
+
+
+  .music-player {
+    top: 10px;
+    right: 10px;
+  }
+
+
+  .music-button {
+    padding:
+      6px 9px;
+  }
+
+
+  #musicIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+
+  .music-title {
+    font-size: 8px;
+  }
+
+
+  .scene {
+    height: 225px;
+
+    margin-top: 40px;
+  }
+
+
+  .person {
+    scale: .85;
+  }
+
+
+  .husen {
+    left: 0;
+  }
+
+
+  .ike {
+    right: 0;
+  }
+
+
+  .scene.together
+  .husen {
+    left:
+      calc(50% - 82px);
+  }
+
+
+  .scene.together
+  .ike {
+    right:
+      calc(50% - 82px);
+  }
+
+
+  .letter-card {
+    padding:
+      27px 21px;
+  }
+
+
+  .letter-card p {
+    font-size: 12.5px;
+
+    line-height: 1.9;
+  }
+
+
+  .question-card {
+    padding:
+      35px 18px;
+  }
+
+  }position: absolute;
 
   top: 128px;
 
