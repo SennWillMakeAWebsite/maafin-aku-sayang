@@ -1,0 +1,1266 @@
+:root {
+  --pink: #ff4fa3;
+  --pink-light: #ff83bd;
+  --pink-soft: #ffc4e0;
+  --dark: #080508;
+  --text: #fff7fb;
+  --muted: #cbb9c2;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  font-family: "Poppins", sans-serif;
+
+  color: var(--text);
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 62, 157, .18),
+      transparent 35%
+    ),
+    #080508;
+}
+
+button {
+  font-family: inherit;
+}
+
+
+/* ===================================
+   BACKGROUND
+=================================== */
+
+.background {
+  position: fixed;
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  z-index: -5;
+}
+
+.orb {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(100px);
+
+  opacity: .22;
+
+  animation:
+    orbFloat 10s ease-in-out infinite alternate;
+}
+
+.orb-one {
+  width: 350px;
+  height: 350px;
+
+  left: -160px;
+  top: -100px;
+
+  background: #ff248d;
+}
+
+.orb-two {
+  width: 450px;
+  height: 450px;
+
+  right: -250px;
+  bottom: -150px;
+
+  background: #d72b87;
+
+  animation-delay: -4s;
+}
+
+@keyframes orbFloat {
+  to {
+    transform:
+      translate(60px, 40px)
+      scale(1.2);
+  }
+}
+
+
+/* ===================================
+   LOADER
+=================================== */
+
+#loader {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #070407;
+
+  z-index: 9999;
+
+  transition: 1s ease;
+}
+
+#loader.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-content {
+  text-align: center;
+}
+
+.loader-heart {
+  color: var(--pink);
+
+  font-size: 36px;
+
+  text-shadow:
+    0 0 15px var(--pink),
+    0 0 40px rgba(255, 79, 163, .6);
+
+  animation:
+    heartbeat 1.2s infinite;
+}
+
+.loader-content p {
+  margin-top: 15px;
+
+  color: #c9a9b8;
+
+  font-size: 10px;
+
+  letter-spacing: 4px;
+}
+
+
+/* ===================================
+   PARTICLES
+=================================== */
+
+#particles {
+  position: fixed;
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  z-index: 100;
+}
+
+.particle {
+  position: absolute;
+
+  bottom: -40px;
+
+  color: rgba(255, 115, 183, .6);
+
+  text-shadow:
+    0 0 12px rgba(255, 79, 163, .8);
+
+  animation:
+    floatParticle linear forwards;
+}
+
+@keyframes floatParticle {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(0)
+      rotate(0deg)
+      scale(.7);
+  }
+
+  15% {
+    opacity: .8;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateY(-115vh)
+      translateX(40px)
+      rotate(45deg)
+      scale(1.2);
+  }
+
+}
+
+
+/* ===================================
+   GENERAL
+=================================== */
+
+section {
+  min-height: 100vh;
+
+  width: 100%;
+
+  padding:
+    65px 20px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+.tiny {
+  color: var(--pink-light);
+
+  opacity: .7;
+
+  font-size: 10px;
+
+  letter-spacing: 5px;
+
+  text-transform: uppercase;
+}
+
+.pink,
+.important-text {
+  color: var(--pink-light);
+
+  text-shadow:
+    0 0 10px rgba(255, 79, 163, .7);
+}
+
+
+/* ===================================
+   OPENING
+=================================== */
+
+#opening {
+  flex-direction: column;
+
+  text-align: center;
+}
+
+.opening-content {
+  position: relative;
+
+  z-index: 5;
+}
+
+.opening-content h1 {
+  margin-top: 12px;
+
+  font-size:
+    clamp(45px, 11vw, 85px);
+
+  line-height: 1;
+
+  font-weight: 500;
+}
+
+.opening-description {
+  max-width: 480px;
+
+  margin:
+    20px auto 0;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  line-height: 1.9;
+}
+
+
+/* ===================================
+   BUTTON
+=================================== */
+
+.main-button {
+  margin-top: 30px;
+
+  padding:
+    14px 25px;
+
+  border:
+    1px solid rgba(255, 106, 180, .45);
+
+  border-radius: 999px;
+
+  color: white;
+
+  background:
+    rgba(255, 79, 163, .08);
+
+  backdrop-filter:
+    blur(15px);
+
+  cursor: pointer;
+
+  transition:
+    .35s ease;
+
+  box-shadow:
+    0 0 20px rgba(255, 79, 163, .08);
+}
+
+.main-button:hover {
+  transform:
+    translateY(-3px);
+
+  background:
+    rgba(255, 79, 163, .16);
+
+  box-shadow:
+    0 0 30px rgba(255, 79, 163, .25);
+}
+
+
+/* ===================================
+   CHARACTER SCENE
+=================================== */
+
+.scene {
+  position: relative;
+
+  width:
+    min(700px, 100%);
+
+  height: 250px;
+
+  margin-top: 45px;
+}
+
+.ground {
+  position: absolute;
+
+  left: 50%;
+  bottom: 20px;
+
+  transform:
+    translateX(-50%);
+
+  width: 85%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 91, 170, .5),
+      transparent
+    );
+
+  box-shadow:
+    0 0 15px rgba(255, 79, 163, .6);
+}
+
+
+/* ===================================
+   CHARACTERS
+=================================== */
+
+.person {
+  position: absolute;
+
+  bottom: 22px;
+
+  width: 85px;
+  height: 165px;
+
+  transition:
+    left 2.2s cubic-bezier(.65, 0, .35, 1),
+    right 2.2s cubic-bezier(.65, 0, .35, 1);
+
+  animation:
+    characterIdle 3s ease-in-out infinite;
+}
+
+.husen {
+  left: 7%;
+}
+
+.ike {
+  right: 7%;
+
+  animation-delay: -.7s;
+}
+
+@keyframes characterIdle {
+
+  50% {
+    transform:
+      translateY(-4px);
+  }
+
+}
+
+
+/* NAME */
+
+.name {
+  position: absolute;
+
+  width: 100%;
+
+  top: -18px;
+
+  color: #d3bec9;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+}
+
+
+/* CHARACTER */
+
+.character {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+/* SKIN */
+
+.head {
+  position: absolute;
+
+  width: 53px;
+  height: 56px;
+
+  top: 8px;
+  left: 16px;
+
+  border-radius: 48%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffe8dc,
+      #f4c8b6
+    );
+
+  box-shadow:
+    inset -5px -5px 8px
+    rgba(157, 85, 75, .07);
+
+  z-index: 3;
+}
+
+
+/* HAIR */
+
+.hair {
+  position: absolute;
+
+  width: 59px;
+  height: 34px;
+
+  top: 2px;
+  left: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #3a2530,
+      #190f15
+    );
+
+  border-radius:
+    45px 45px 15px 15px;
+
+  z-index: 4;
+}
+
+.ike .hair {
+  height: 69px;
+
+  border-radius:
+    45px 45px 27px 27px;
+}
+
+
+/* EYES */
+
+.eye {
+  position: absolute;
+
+  top: 27px;
+
+  width: 4px;
+  height: 5px;
+
+  background: #432a33;
+
+  border-radius: 50%;
+}
+
+.eye-left {
+  left: 15px;
+}
+
+.eye-right {
+  right: 15px;
+}
+
+
+/* BLUSH */
+
+.blush {
+  position: absolute;
+
+  width: 8px;
+  height: 3px;
+
+  top: 38px;
+
+  background:
+    rgba(255, 117, 154, .35);
+
+  border-radius: 50%;
+}
+
+.blush-left {
+  left: 7px;
+}
+
+.blush-right {
+  right: 7px;
+}
+
+
+/* ===================================
+   COUPLE OUTFIT
+=================================== */
+
+.body {
+  position: absolute;
+
+  width: 57px;
+  height: 77px;
+
+  top: 59px;
+  left: 14px;
+
+  border-radius:
+    22px 22px 13px 13px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ff76b7,
+      #ca347d
+    );
+
+  border:
+    1px solid rgba(255, 211, 232, .22);
+
+  box-shadow:
+    0 0 18px rgba(255, 79, 163, .14);
+
+  z-index: 2;
+}
+
+.ike .body {
+  background:
+    linear-gradient(
+      180deg,
+      #ff91c6,
+      #d8478c
+    );
+}
+
+.body span {
+  position: absolute;
+
+  left: 50%;
+  top: 18px;
+
+  transform:
+    translateX(-50%);
+
+  color: white;
+
+  font-size: 14px;
+
+  text-shadow:
+    0 0 8px white;
+}
+
+
+/* ARMS */
+
+.arm {
+  position: absolute;
+
+  width: 13px;
+  height: 55px;
+
+  top: 67px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      #ff81bd 55%,
+      #f5cbbb 55%
+    );
+
+  z-index: 1;
+}
+
+.arm-left {
+  left: 8px;
+
+  transform:
+    rotate(7deg);
+}
+
+.arm-right {
+  right: 8px;
+
+  transform:
+    rotate(-7deg);
+}
+
+
+/* LEGS */
+
+.leg {
+  position: absolute;
+
+  width: 15px;
+  height: 38px;
+
+  top: 128px;
+
+  border-radius:
+    8px 8px 4px 4px;
+
+  background: #382431;
+}
+
+.leg-left {
+  left: 24px;
+}
+
+.leg-right {
+  right: 24px;
+}
+
+
+/* ===================================
+   WALK
+=================================== */
+
+.scene.walking .husen {
+  animation:
+    walking .32s ease-in-out infinite alternate;
+}
+
+@keyframes walking {
+
+  from {
+    transform:
+      translateY(0)
+      rotate(-1deg);
+  }
+
+  to {
+    transform:
+      translateY(-7px)
+      rotate(1deg);
+  }
+
+}
+
+.scene.together .husen {
+  left:
+    calc(50% - 95px);
+}
+
+.scene.together .ike {
+  right:
+    calc(50% - 95px);
+}
+
+
+/* FLOWER */
+
+.flower {
+  position: absolute;
+
+  top: 72px;
+  right: -17px;
+
+  font-size: 30px;
+
+  opacity: 0;
+
+  transform:
+    translateY(15px)
+    rotate(-20deg)
+    scale(.6);
+
+  transition:
+    1s ease 1.4s;
+
+  z-index: 10;
+}
+
+.scene.together .flower {
+  opacity: 1;
+
+  transform:
+    translateY(0)
+    rotate(10deg)
+    scale(1);
+}
+
+
+/* HEART BETWEEN */
+
+.heart-between {
+  position: absolute;
+
+  left: 50%;
+  top: 70px;
+
+  transform:
+    translate(-50%, 10px)
+    scale(.3);
+
+  color: var(--pink);
+
+  font-size: 22px;
+
+  opacity: 0;
+
+  text-shadow:
+    0 0 20px var(--pink);
+
+  transition:
+    1s ease 1.7s;
+}
+
+.scene.together .heart-between {
+  opacity: 1;
+
+  transform:
+    translate(-50%, 0)
+    scale(1);
+
+  animation:
+    heartbeat 1.3s infinite 2.5s;
+}
+
+@keyframes heartbeat {
+
+  50% {
+    transform:
+      translate(-50%, 0)
+      scale(1.25);
+  }
+
+}
+
+
+/* ===================================
+   STORY TEXT
+=================================== */
+
+.story-text {
+  position: absolute;
+
+  width: 100%;
+
+  top: -10px;
+  left: 50%;
+
+  transform:
+    translateX(-50%)
+    translateY(10px);
+
+  color: #d2bec8;
+
+  font-size: 12px;
+
+  opacity: 0;
+
+  transition:
+    .6s ease;
+}
+
+.story-text.active {
+  opacity: 1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+
+/* ===================================
+   FLOWER QUESTION
+=================================== */
+
+#flowerSection {
+  display: none;
+
+  text-align: center;
+}
+
+.question-card {
+  width:
+    min(420px, 100%);
+
+  padding:
+    40px 25px;
+
+  border:
+    1px solid rgba(255, 111, 181, .2);
+
+  border-radius: 28px;
+
+  background:
+    rgba(255, 255, 255, .035);
+
+  backdrop-filter:
+    blur(20px);
+
+  box-shadow:
+    0 25px 90px rgba(0, 0, 0, .4);
+}
+
+.big-flower {
+  margin:
+    20px 0 10px;
+
+  font-size: 55px;
+
+  animation:
+    flowerFloat 2.5s ease-in-out infinite;
+}
+
+@keyframes flowerFloat {
+
+  50% {
+    transform:
+      translateY(-7px)
+      rotate(5deg);
+  }
+
+}
+
+.question-card h2 {
+  font-size: 35px;
+
+  font-weight: 500;
+}
+
+.question-description {
+  margin:
+    8px auto 25px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+
+  line-height: 1.8;
+}
+
+.question-card h3 {
+  font-size: 21px;
+
+  font-weight: 500;
+}
+
+
+/* CHOICES */
+
+.choice-buttons {
+  min-height: 120px;
+
+  margin-top: 20px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+}
+
+.yes-button,
+.no-button {
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition:
+    transform .4s cubic-bezier(.16, 1, .3, 1),
+    opacity .4s,
+    box-shadow .4s;
+
+  transform-origin: center;
+}
+
+.yes-button {
+  padding:
+    13px 22px;
+
+  border: 0;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4fa3,
+      #ff7dbc
+    );
+
+  box-shadow:
+    0 0 25px rgba(255, 79, 163, .25);
+}
+
+.no-button {
+  padding:
+    12px 20px;
+
+  color: #d0bdc6;
+
+  border:
+    1px solid rgba(255, 255, 255, .1);
+
+  background:
+    rgba(255, 255, 255, .05);
+}
+
+.no-message {
+  min-height: 22px;
+
+  color: #bda8b2;
+
+  font-size: 11px;
+}
+
+
+/* ===================================
+   LETTER
+=================================== */
+
+#letter {
+  display: none;
+}
+
+.letter-container {
+  width:
+    min(650px, 100%);
+
+  text-align: center;
+}
+
+.letter-title {
+  margin-bottom: 30px;
+}
+
+.letter-title h2 {
+  margin-top: 10px;
+
+  font-size:
+    clamp(28px, 7vw, 45px);
+
+  font-weight: 500;
+}
+
+.letter-card {
+  padding: 35px;
+
+  text-align: left;
+
+  border:
+    1px solid rgba(255, 111, 181, .2);
+
+  border-radius: 27px;
+
+  background:
+    rgba(255, 255, 255, .035);
+
+  backdrop-filter:
+    blur(20px);
+
+  box-shadow:
+    0 25px 90px rgba(0, 0, 0, .35);
+}
+
+.letter-card p {
+  margin-bottom: 22px;
+
+  color: #dfd1d8;
+
+  font-size: 13px;
+
+  line-height: 2;
+
+  opacity: 0;
+
+  transform:
+    translateY(15px);
+
+  transition:
+    .8s ease;
+}
+
+.letter-card p.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* ===================================
+   BEFORE END
+=================================== */
+
+#beforeEnd {
+  display: none;
+
+  text-align: center;
+}
+
+.before-container {
+  width:
+    min(620px, 100%);
+}
+
+.before-container h2 {
+  margin-top: 12px;
+
+  font-size:
+    clamp(28px, 7vw, 48px);
+
+  font-weight: 500;
+}
+
+.small-messages {
+  margin-top: 45px;
+}
+
+.message-line {
+  max-width: 530px;
+
+  margin:
+    25px auto;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  line-height: 1.9;
+
+  opacity: 0;
+
+  transform:
+    translateY(20px);
+
+  transition:
+    .8s ease;
+}
+
+.message-line.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* ===================================
+   FINAL
+=================================== */
+
+#final {
+  display: none;
+
+  text-align: center;
+}
+
+.final-container {
+  width:
+    min(650px, 100%);
+}
+
+.final-container h2 {
+  margin-top: 10px;
+
+  font-size:
+    clamp(35px, 9vw, 60px);
+
+  font-weight: 500;
+}
+
+.final-description {
+  margin-top: 15px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+}
+
+.final-message {
+  opacity: 0;
+
+  transform:
+    translateY(20px);
+
+  transition:
+    1s ease;
+}
+
+.final-message.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+.final-message h3 {
+  color: var(--pink-light);
+
+  font-size: 21px;
+
+  font-weight: 500;
+
+  text-shadow:
+    0 0 20px rgba(255, 79, 163, .4);
+}
+
+.final-message p {
+  margin-top: 8px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.signature {
+  margin-top: 50px;
+
+  color: #917e88;
+
+  font-size: 11px;
+
+  line-height: 2;
+
+  letter-spacing: 1px;
+}
+
+.signature span {
+  color: var(--pink-light);
+}
+
+
+/* ===================================
+   FLASH
+=================================== */
+
+#pinkFlash {
+  position: fixed;
+  inset: 0;
+
+  z-index: 500;
+
+  background:
+    rgba(255, 79, 163, .15);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    .4s;
+}
+
+#pinkFlash.active {
+  opacity: 1;
+}
+
+
+/* ===================================
+   MOBILE
+=================================== */
+
+@media (max-width: 520px) {
+
+  section {
+    padding:
+      50px 17px;
+  }
+
+  .scene {
+    height: 225px;
+
+    margin-top: 35px;
+  }
+
+  .person {
+    scale: .85;
+  }
+
+  .husen {
+    left: 0;
+  }
+
+  .ike {
+    right: 0;
+  }
+
+  .scene.together .husen {
+    left:
+      calc(50% - 82px);
+  }
+
+  .scene.together .ike {
+    right:
+      calc(50% - 82px);
+  }
+
+  .letter-card {
+    padding:
+      27px 21px;
+  }
+
+  .letter-card p {
+    font-size: 12.5px;
+
+    line-height: 1.9;
+  }
+
+  .question-card {
+    padding:
+      35px 18px;
+  }
+
+  }
