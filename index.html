@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8">
 
@@ -11,7 +10,7 @@
 
   <meta
     name="theme-color"
-    content="#080508"
+    content="#090609"
   >
 
   <title>for ike ♡</title>
@@ -34,23 +33,17 @@
 
   <link
     rel="stylesheet"
-    href="./style.css?v=31"
+    href="./style.css?v=40"
   >
 </head>
-
 
 <body>
 
   <!-- BACKGROUND -->
-
-  <div
-    class="background"
-    aria-hidden="true"
-  >
-    <div class="glow glow-one"></div>
-    <div class="glow glow-two"></div>
+  <div class="background" aria-hidden="true">
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
   </div>
-
 
   <div
     id="particles"
@@ -58,76 +51,60 @@
   ></div>
 
 
-  <div
-    id="flash"
-    aria-hidden="true"
-  ></div>
-
-
   <main>
 
-
-    <!-- =========================================
-         APOLOGY
-    ========================================== -->
+    <!-- ========================================
+         1. APOLOGY
+    ========================================= -->
 
     <section
       id="apology"
-      class="section"
+      class="page active"
     >
 
-      <div class="glass-card apology-card">
+      <div class="card apology-card">
 
         <p class="eyebrow">
-          for ike
+          FOR IKE
         </p>
 
-
-        <div class="big-flower">
+        <div class="flower">
           🌷
         </div>
-
 
         <h1>
           hai,
           <span>ike.</span>
         </h1>
 
-
-        <p class="description">
+        <p class="subtitle">
           ada sesuatu yang pengen aku sampein.
         </p>
 
-
-        <p class="apology-text">
-          aku minta maaf kalau ada sikap
-          atau perkataan aku yang bikin
-          kamu kesel, kecewa, atau kepikiran.
+        <p class="apology-copy">
+          aku minta maaf kalau ada sikap atau
+          perkataan aku yang bikin kamu kesel,
+          kecewa, atau kepikiran.
         </p>
 
-
-        <h3>
+        <h2 class="question">
           maafin aku ya?
-        </h3>
+        </h2>
 
 
-        <div
-          id="choiceArea"
-          class="choice-area"
-        >
+        <div class="choices">
 
           <button
             id="yesBtn"
-            class="yes-btn"
+            class="button button-primary"
             type="button"
           >
             maafin ♡
           </button>
 
-
           <button
             id="noBtn"
-            class="no-btn"
+            class="button button-secondary"
             type="button"
           >
             gak
@@ -147,57 +124,48 @@
 
 
 
-    <!-- =========================================
-         AFTER YES
-    ========================================== -->
+    <!-- ========================================
+         2. AFTER ACCEPT
+    ========================================= -->
 
     <section
       id="hug"
-      class="section hidden-section"
+      class="page"
     >
 
-      <div class="section-content">
+      <div class="content">
 
         <p class="eyebrow">
-          thank you
+          THANK YOU
         </p>
-
 
         <h2>
           makasih,
-          <span>ike.</span>
+          <span>ike ♡</span>
         </h2>
 
-
-        <p class="description">
-          makasih udah mau dengerin aku.
+        <p class="subtitle">
+          sini bentar...
         </p>
 
 
         <!-- CHARACTER SCENE -->
-
         <div
           id="hugScene"
-          class="character-scene hug-scene"
+          class="character-scene"
         >
 
-          <div class="ground"></div>
-
-
           <!-- HUSEN -->
-
           <div class="person husen">
 
-            <span class="person-name">
+            <p class="person-name">
               husen
-            </span>
-
+            </p>
 
             <div class="character">
 
               <div class="hair husen-hair"></div>
 
-
               <div class="head">
 
                 <div class="eyes">
@@ -205,113 +173,122 @@
                   <i></i>
                 </div>
 
-
-                <div class="blush left"></div>
-                <div class="blush right"></div>
-
+                <div class="blush blush-left"></div>
+                <div class="blush blush-right"></div>
 
                 <div class="mouth"></div>
 
               </div>
 
 
-              <div class="body">
+              <div class="torso">
                 ♡
               </div>
 
 
-              <div class="arm left-arm"></div>
-              <div class="arm right-arm"></div>
+              <!-- TANGAN KIRI -->
+              <div class="arm arm-left">
+                <div class="hand"></div>
+              </div>
+
+              <!-- TANGAN KANAN -->
+              <div class="arm arm-right">
+                <div class="hand"></div>
+              </div>
 
 
-              <div class="leg left-leg"></div>
-              <div class="leg right-leg"></div>
+              <div class="leg leg-left"></div>
+              <div class="leg leg-right"></div>
 
             </div>
 
           </div>
 
 
-
           <!-- IKE -->
-
           <div class="person ike">
 
-            <span class="person-name">
+            <p class="person-name">
               ike
-            </span>
-
+            </p>
 
             <div class="character">
 
-              <div class="hair ike-hair"></div>
-
+              <div class="ike-back-hair"></div>
 
               <div class="head">
 
                 <div class="ike-bangs"></div>
 
-
                 <div class="eyes">
                   <i></i>
                   <i></i>
                 </div>
 
-
-                <div class="blush left"></div>
-                <div class="blush right"></div>
-
+                <div class="blush blush-left"></div>
+                <div class="blush blush-right"></div>
 
                 <div class="mouth"></div>
 
               </div>
 
 
-              <div class="body">
+              <div class="torso">
                 ♡
               </div>
 
 
-              <div class="arm left-arm"></div>
-              <div class="arm right-arm"></div>
+              <!-- TANGAN KIRI -->
+              <div class="arm arm-left">
+                <div class="hand"></div>
+              </div>
+
+              <!-- TANGAN KANAN -->
+              <div class="arm arm-right">
+                <div class="hand"></div>
+              </div>
 
 
-              <div class="leg left-leg"></div>
-              <div class="leg right-leg"></div>
+              <div class="leg leg-left"></div>
+              <div class="leg leg-right"></div>
 
             </div>
 
           </div>
 
 
-          <div class="scene-heart">
+          <div
+            class="center-heart"
+            aria-hidden="true"
+          >
             ♥
           </div>
 
 
-          <span class="floating-heart heart-one">
+          <span class="float-heart heart-a">
             ♡
           </span>
 
-
-          <span class="floating-heart heart-two">
+          <span class="float-heart heart-b">
             ♥
           </span>
 
-
-          <span class="floating-heart heart-three">
+          <span class="float-heart heart-c">
             ♡
           </span>
+
+
+          <div class="ground"></div>
 
         </div>
 
 
         <button
           id="letterBtn"
-          class="primary-btn"
+          class="button button-primary next-button"
           type="button"
         >
-          baca ini juga ya ♡
+          ada sesuatu buat kamu
         </button>
 
       </div>
@@ -320,124 +297,64 @@
 
 
 
-    <!-- =========================================
-         LETTER
-    ========================================== -->
+    <!-- ========================================
+         3. LETTER
+    ========================================= -->
 
     <section
       id="letter"
-      class="section hidden-section"
+      class="page"
     >
 
-      <div class="letter-wrapper">
+      <div class="content letter-content">
 
         <p class="eyebrow">
-          for ike
+          A SMALL LETTER
         </p>
 
-
         <h2>
-          aku cuma mau bilang
-          <span>maaf.</span>
+          buat
+          <span>ike.</span>
         </h2>
 
 
-        <div class="glass-card letter-card">
+        <article class="card letter-card">
 
           <p>
-            Ike,
+            aku tahu kata maaf mungkin kedengerannya
+            sederhana.
           </p>
-
 
           <p>
-            aku bikin ini karena rasanya
-            kalau cuma bilang “maaf”
-            lewat chat itu kurang.
+            tapi aku gak mau cuma bilang maaf terus
+            nganggep semuanya langsung selesai.
           </p>
-
 
           <p>
-            aku tau mungkin ada sikap
-            atau perkataan aku yang bikin
-            kamu kesel, kecewa,
-            atau malah kepikiran.
+            kalau ada sikap atau perkataan aku yang
+            bikin kamu kesel, kecewa, atau kepikiran,
+            aku beneran minta maaf.
           </p>
-
 
           <p>
-            dan aku sadar,
-            harusnya aku bisa lebih baik dari itu.
+            aku juga sadar kadang aku masih salah
+            dalam bersikap dan gak selalu ngerti
+            semuanya dengan benar.
           </p>
 
-
-          <p>
-            aku nggak mau cari alasan
-            buat ngebenerin apa yang aku lakuin.
+          <p class="letter-highlight">
+            makasih karena udah mau dengerin aku.
           </p>
 
-
-          <p>
-            aku cuma mau jujur kalau aku
-            <span>beneran minta maaf.</span>
-          </p>
-
-
-          <p>
-            mungkin web kecil ini keliatan
-            agak berlebihan wkwk,
-            tapi gapapa.
-          </p>
-
-
-          <p>
-            aku cuma pengen kamu tau
-            kalau aku nggak nganggep ini
-            sebagai hal kecil yang bisa
-            aku lupain gitu aja.
-          </p>
-
-
-          <p>
-            aku masih banyak kurangnya.
-            kadang suka salah ngomong,
-            salah bersikap,
-            atau baru sadar setelah
-            semuanya kejadian.
-          </p>
-
-
-          <p>
-            jadi...
-          </p>
-
-
-          <p class="important">
-            maafin aku ya, Ike.
-          </p>
-
-
-          <p>
-            aku nggak minta semuanya
-            langsung baik-baik aja
-            setelah kamu baca ini.
-          </p>
-
-
-          <p>
-            aku cuma berharap,
-            pelan-pelan semuanya
-            bisa kembali baik lagi.
-          </p>
-
-        </div>
+        </article>
 
 
         <button
           id="continueBtn"
-          class="primary-btn"
+          class="button button-primary"
           type="button"
         >
-          sebelum selesai...
+          lanjut
         </button>
 
       </div>
@@ -446,69 +363,52 @@
 
 
 
-    <!-- =========================================
-         MORE MESSAGE
-    ========================================== -->
+    <!-- ========================================
+         4. MORE
+    ========================================= -->
 
     <section
       id="more"
-      class="section hidden-section"
+      class="page"
     >
 
-      <div class="section-content">
+      <div class="content">
 
         <p class="eyebrow">
-          one more thing
+          ONE MORE THING
         </p>
 
-
         <h2>
-          ada beberapa hal yang
-          <span>pengen aku bilang.</span>
+          dan satu hal lagi...
         </h2>
 
 
-        <div class="message-list">
+        <div class="messages">
 
-          <p class="message">
-            aku nggak bikin ini supaya
-            kamu harus langsung maafin aku.
-          </p>
+          <div class="message">
+            aku gak mau maksa kamu buat langsung
+            lupa sama hal yang bikin kamu kesel.
+          </div>
 
+          <div class="message">
+            aku cuma pengen kamu tahu kalau aku
+            sadar dan mau belajar dari kesalahan itu.
+          </div>
 
-          <p class="message">
-            aku juga nggak bikin ini supaya
-            kesalahan aku tiba-tiba hilang.
-          </p>
-
-
-          <p class="message">
-            aku bikin ini karena aku pengen
-            kamu tau kalau perasaan kamu
-            penting buat aku.
-          </p>
-
-
-          <p class="message">
-            kalau ada yang bisa aku perbaiki,
-            aku pengen nunjukinnya lewat
-            sikap aku setelah ini.
-          </p>
-
-
-          <p class="message important">
-            i'm really sorry, ike. ♡
-          </p>
+          <div class="message important">
+            semoga setelah ini semuanya bisa jadi
+            lebih baik ♡
+          </div>
 
         </div>
 
 
         <button
           id="finalBtn"
-          class="primary-btn"
+          class="button button-primary"
           type="button"
         >
-          lanjut ♡
+          terakhir
         </button>
 
       </div>
@@ -517,87 +417,53 @@
 
 
 
-    <!-- =========================================
-         FINAL
-    ========================================== -->
+    <!-- ========================================
+         5. FINAL
+    ========================================= -->
 
     <section
       id="final"
-      class="section hidden-section"
+      class="page"
     >
 
-      <div class="section-content">
+      <div class="content">
 
         <p class="eyebrow">
-          one last thing
+          THE END
         </p>
 
+        <div class="final-heart">
+          ♡
+        </div>
 
         <h2>
-          makasih,
+          makasih udah sampai sini,
           <span>ike.</span>
         </h2>
 
-
-        <p class="description">
-          makasih udah mau baca
-          semuanya sampai sini.
+        <p class="subtitle final-copy">
+          itu aja yang pengen aku sampein.
+          semoga hari kamu tetap baik setelah ini.
         </p>
 
 
+        <div class="signature">
+          made by husen
+          <br>
+          <span>for ike ♡</span>
+        </div>
 
-        <!-- FINAL CHARACTER SCENE -->
+      </div>
 
-        <div
-          id="finalScene"
-          class="character-scene final-scene"
-        >
+    </section>
 
-          <div class="ground"></div>
-
-
-
-          <!-- HUSEN -->
-
-          <div class="person husen">
-
-            <span class="person-name">
-              husen
-            </span>
+  </main>
 
 
-            <div class="character">
+  <script src="./script.js?v=40"></script>
 
-              <div class="hair husen-hair"></div>
-
-
-              <div class="head">
-
-                <div class="eyes">
-                  <i></i>
-                  <i></i>
-                </div>
-
-
-                <div class="blush left"></div>
-                <div class="blush right"></div>
-
-
-                <div class="mouth"></div>
-
-              </div>
-
-
-              <div class="body">
-                ♡
-              </div>
-
-
-              <div class="arm left-arm"></div>
-              <div class="arm right-arm"></div>
-
-
-              <div class="leg left-leg"></div>
+</body>
+</html>           <div class="leg left-leg"></div>
               <div class="leg right-leg"></div>
 
             </div>
