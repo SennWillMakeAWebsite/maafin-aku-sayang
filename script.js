@@ -1,6 +1,6 @@
 /* =========================================
    FOR IKE ♡
-   FULL SCRIPT.JS
+   SCRIPT.JS
 ========================================= */
 
 
@@ -11,17 +11,8 @@
 const particles =
   document.getElementById("particles");
 
-const music =
-  document.getElementById("backgroundMusic");
-
-const musicPlayer =
-  document.getElementById("musicPlayer");
-
-const musicStatus =
-  document.getElementById("musicStatus");
-
-const audioError =
-  document.getElementById("audioError");
+const pinkFlashElement =
+  document.getElementById("pinkFlash");
 
 const welcomeScreen =
   document.getElementById("welcomeScreen");
@@ -29,54 +20,69 @@ const welcomeScreen =
 const enterButton =
   document.getElementById("enterButton");
 
+const audioError =
+  document.getElementById("audioError");
+
+
+/* MUSIC */
+
+const music =
+  document.getElementById("backgroundMusic");
+
+const musicPlayer =
+  document.getElementById("musicPlayer");
+
+const musicButton =
+  document.getElementById("musicButton");
+
+const musicStatus =
+  document.getElementById("musicStatus");
+
+
+/* STORY */
+
+const startButton =
+  document.getElementById("startButton");
+
+const yesButton =
+  document.getElementById("yesButton");
+
+const noButton =
+  document.getElementById("noButton");
+
+const beforeEndButton =
+  document.getElementById("beforeEndButton");
+
+const finalButton =
+  document.getElementById("finalButton");
+
 
 /* =========================================
    VARIABLES
 ========================================= */
 
+let websiteEntered = false;
+
 let storyStarted = false;
 
 let noCount = 0;
 
-let musicPlaying = false;
-
-let websiteEntered = false;
-
 
 /* =========================================
-   AUDIO INITIAL SETUP
+   MUSIC SETUP
 ========================================= */
 
 if (music) {
 
-  music.volume = 0.55;
+  music.volume = 0.45;
 
   music.loop = true;
-
-  /*
-    Paksa browser load audio.
-  */
-
-  try {
-
-    music.load();
-
-  }
-
-  catch (error) {
-
-    console.log(
-      "Audio load error:",
-      error
-    );
-
-  }
 
 }
 
 
 /* =========================================
-   AUDIO EVENTS
+   MUSIC EVENTS
 ========================================= */
 
 if (music) {
@@ -84,9 +90,6 @@ if (music) {
   music.addEventListener(
     "playing",
     function () {
-
-      musicPlaying = true;
-
 
       if (musicPlayer) {
 
@@ -120,9 +123,6 @@ if (music) {
     "pause",
     function () {
 
-      musicPlaying = false;
-
-
       if (musicPlayer) {
 
         musicPlayer.classList.remove(
@@ -150,7 +150,7 @@ if (music) {
       if (musicStatus) {
 
         musicStatus.textContent =
-          "loading music...";
+          "loading...";
 
       }
 
@@ -168,7 +168,7 @@ if (music) {
       ) {
 
         musicStatus.textContent =
-          "tap to play";
+          "ready";
 
       }
 
@@ -180,13 +180,24 @@ if (music) {
     "error",
     function () {
 
-      musicPlaying = false;
+      console.error(
+        "Audio gagal dimuat."
+      );
+
+
+      if (musicPlayer) {
+
+        musicPlayer.classList.remove(
+          "playing"
+        );
+
+      }
 
 
       if (musicStatus) {
 
         musicStatus.textContent =
-          "music unavailable";
+          "audio error";
 
       }
 
@@ -194,14 +205,9 @@ if (music) {
       if (audioError) {
 
         audioError.textContent =
-          "file musiknya gak kebaca";
+          "musiknya belum kebaca :(";
 
       }
-
-
-      console.log(
-        "Audio gagal dibaca."
-      );
 
     }
   );
@@ -216,7 +222,7 @@ if (music) {
 function enterWebsite() {
 
   /*
-    Jangan jalankan dua kali.
+    Cegah double click.
   */
 
   if (websiteEntered) {
@@ -230,42 +236,80 @@ function enterWebsite() {
 
 
   /*
-    ================================
-    1. PLAY MUSIK LANGSUNG
+    PENTING:
 
-    Ini dilakukan PALING AWAL
-    karena fungsi ini berasal dari
-    klik user.
+    Website dibuka LANGSUNG.
 
-    Jangan pakai await.
-    Jangan tunggu loading.
-    ================================
+    Kita tidak menunggu:
+    - audio load
+    - audio play
+    - promise
+    - event canplay
+
+    Jadi kalau MP3 bermasalah,
+    website tetap masuk.
+  */
+
+  if (welcomeScreen) {
+
+    welcomeScreen.classList.add(
+      "hide"
+    );
+
+  }
+
+
+  if (musicPlayer) {
+
+    musicPlayer.classList.add(
+      "show"
+    );
+
+  }
+
+
+  /*
+    Efek masuk.
+  */
+
+  pinkFlash();
+
+  heartBurst();
+
+
+  /*
+    Coba nyalakan musik.
+
+    Karena fungsi ini dipanggil
+    langsung dari klik user,
+    browser mengizinkan audio
+    jauh lebih konsisten.
   */
 
   if (music) {
 
-    music.volume = 0.55;
+    music.volume = 0.45;
 
     music.loop = true;
 
 
     try {
 
-      const playResult =
+      const playPromise =
         music.play();
 
 
       if (
-        playResult &&
-        typeof playResult.catch ===
+        playPromise &&
+        typeof playPromise.catch ===
         "function"
       ) {
 
-        playResult.catch(
+        playPromise.catch(
           function (error) {
 
-            console.log(
-              "Play ditolak:",
+            console.error(
+              "Musik gagal dimainkan:",
               error
             );
 
@@ -286,10 +330,18 @@ function enterWebsite() {
 
     catch (error) {
 
-      console.log(
-        "Music play error:",
+      console.error(
+        "Music error:",
         error
       );
+
+
+      if (musicStatus) {
+
+        musicStatus.textContent =
+          "tap to play";
+
+      }
 
     }
 
@@ -297,101 +349,45 @@ function enterWebsite() {
 
 
   /*
-    ================================
-    2. TUTUP WELCOME LANGSUNG
+    Hapus welcome dari DOM
+    setelah animasi selesai.
 
-    Tidak peduli musik sukses/gagal.
-    ================================
-  */
-
-  if (welcomeScreen) {
-
-    welcomeScreen.style.opacity =
-      "0";
-
-
-    welcomeScreen.style.visibility =
-      "hidden";
-
-
-    welcomeScreen.style.pointerEvents =
-      "none";
-
-  }
-
-
-  /*
-    ================================
-    3. TAMPILKAN MUSIC PLAYER
-    ================================
-  */
-
-  if (musicPlayer) {
-
-    musicPlayer.classList.add(
-      "show"
-    );
-
-
-    musicPlayer.style.opacity =
-      "1";
-
-
-    musicPlayer.style.pointerEvents =
-      "auto";
-
-  }
-
-
-  /*
-    ================================
-    4. KEMBALIKAN KE ATAS
-    ================================
-  */
-
-  window.scrollTo(
-    0,
-    0
-  );
-
-
-  /*
-    ================================
-    5. EFFECT MASUK
-    ================================
+    Jadi overlay mustahil
+    masih menutupi website.
   */
 
   setTimeout(
     function () {
 
-      pinkFlash();
+      if (welcomeScreen) {
 
-      heartBurst();
+        welcomeScreen.style.display =
+          "none";
+
+      }
 
     },
-    150
+    800
   );
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 
 }
 
 
 /* =========================================
-   EXTRA EVENT UNTUK ENTER BUTTON
-
-   Jadi walaupun onclick HTML
-   bermasalah, JS tetap memasang
-   click listener sendiri.
+   ENTER BUTTON
 ========================================= */
 
 if (enterButton) {
 
   enterButton.addEventListener(
     "click",
-    function () {
-
-      enterWebsite();
-
-    }
+    enterWebsite
   );
 
 }
@@ -405,89 +401,51 @@ function toggleMusic() {
 
   if (!music) {
 
-    if (musicStatus) {
-
-      musicStatus.textContent =
-        "audio not found";
-
-    }
-
     return;
 
   }
 
 
   /*
-    Kalau musik pause,
+    Kalau sedang pause:
     PLAY.
   */
 
   if (music.paused) {
 
-    music.volume = 0.55;
-
-    music.loop = true;
+    music.volume = 0.45;
 
 
     try {
 
-      const playResult =
+      const playPromise =
         music.play();
 
 
       if (
-        playResult &&
-        typeof playResult.then ===
+        playPromise &&
+        typeof playPromise.catch ===
         "function"
       ) {
 
-        playResult
+        playPromise.catch(
+          function (error) {
 
-          .then(
-            function () {
-
-              musicPlaying = true;
-
-
-              if (musicPlayer) {
-
-                musicPlayer
-                  .classList
-                  .add(
-                    "playing"
-                  );
-
-              }
+            console.error(
+              "Gagal play audio:",
+              error
+            );
 
 
-              if (musicStatus) {
+            if (musicStatus) {
 
-                musicStatus.textContent =
-                  "now playing";
-
-              }
+              musicStatus.textContent =
+                "audio error";
 
             }
-          )
 
-          .catch(
-            function (error) {
-
-              console.log(
-                "Audio gagal play:",
-                error
-              );
-
-
-              if (musicStatus) {
-
-                musicStatus.textContent =
-                  "audio gak kebaca";
-
-              }
-
-            }
-          );
+          }
+        );
 
       }
 
@@ -495,17 +453,9 @@ function toggleMusic() {
 
     catch (error) {
 
-      console.log(
+      console.error(
         error
       );
-
-
-      if (musicStatus) {
-
-        musicStatus.textContent =
-          "audio error";
-
-      }
 
     }
 
@@ -513,7 +463,7 @@ function toggleMusic() {
 
 
   /*
-    Kalau musik sedang main,
+    Kalau sedang play:
     PAUSE.
   */
 
@@ -521,62 +471,20 @@ function toggleMusic() {
 
     music.pause();
 
-
-    musicPlaying = false;
-
-
-    if (musicPlayer) {
-
-      musicPlayer
-        .classList
-        .remove(
-          "playing"
-        );
-
-    }
-
-
-    if (musicStatus) {
-
-      musicStatus.textContent =
-        "paused";
-
-    }
-
   }
 
 }
 
 
 /* =========================================
-   AUDIO LOOP FALLBACK
+   MUSIC BUTTON
 ========================================= */
 
-if (music) {
+if (musicButton) {
 
-  music.addEventListener(
-    "ended",
-    function () {
-
-      music.currentTime =
-        0;
-
-
-      try {
-
-        music.play();
-
-      }
-
-      catch (error) {
-
-        console.log(
-          error
-        );
-
-      }
-
-    }
+  musicButton.addEventListener(
+    "click",
+    toggleMusic
   );
 
 }
@@ -618,15 +526,13 @@ function createParticle() {
   ];
 
 
-  const randomSymbol =
-    Math.floor(
-      Math.random() *
-      symbols.length
-    );
-
-
   particle.textContent =
-    symbols[randomSymbol];
+    symbols[
+      Math.floor(
+        Math.random() *
+        symbols.length
+      )
+    ];
 
 
   particle.style.left =
@@ -672,6 +578,10 @@ function createParticle() {
 }
 
 
+/*
+  Background particles.
+*/
+
 setInterval(
   createParticle,
   650
@@ -694,23 +604,17 @@ function startStory() {
   storyStarted = true;
 
 
-  const button =
-    document.getElementById(
-      "startButton"
-    );
+  if (startButton) {
 
-
-  if (button) {
-
-    button.textContent =
+    startButton.textContent =
       "bentar ya... ♡";
 
 
-    button.style.opacity =
+    startButton.style.opacity =
       ".45";
 
 
-    button.style.pointerEvents =
+    startButton.style.pointerEvents =
       "none";
 
   }
@@ -729,19 +633,18 @@ function startStory() {
   ];
 
 
-  let index =
-    0;
+  let index = 0;
 
 
   function nextText() {
 
-    const text =
+    const storyText =
       document.getElementById(
         "storyText"
       );
 
 
-    if (!text) {
+    if (!storyText) {
 
       startWalking();
 
@@ -750,7 +653,7 @@ function startStory() {
     }
 
 
-    text.classList.remove(
+    storyText.classList.remove(
       "active"
     );
 
@@ -758,11 +661,11 @@ function startStory() {
     setTimeout(
       function () {
 
-        text.textContent =
+        storyText.textContent =
           texts[index];
 
 
-        text.classList.add(
+        storyText.classList.add(
           "active"
         );
 
@@ -787,7 +690,7 @@ function startStory() {
           setTimeout(
             function () {
 
-              text.classList.remove(
+              storyText.classList.remove(
                 "active"
               );
 
@@ -813,10 +716,871 @@ function startStory() {
 
 
 /* =========================================
+   START BUTTON
+========================================= */
+
+if (startButton) {
+
+  startButton.addEventListener(
+    "click",
+    startStory
+  );
+
+}
+
+
+/* =========================================
    WALKING
 ========================================= */
 
 function startWalking() {
+
+  const scene =
+    document.getElementById(
+      "openingScene"
+    );
+
+
+  if (!scene) {
+
+    openFlowerQuestion();
+
+    return;
+
+  }
+
+
+  /*
+    Husen mulai jalan.
+  */
+
+  scene.classList.add(
+    "walking"
+  );
+
+
+  /*
+    Mendekat.
+  */
+
+  setTimeout(
+    function () {
+
+      scene.classList.add(
+        "together"
+      );
+
+    },
+    300
+  );
+
+
+  /*
+    Berhenti jalan.
+  */
+
+  setTimeout(
+    function () {
+
+      scene.classList.remove(
+        "walking"
+      );
+
+    },
+    2600
+  );
+
+
+  /*
+    Buka pertanyaan.
+  */
+
+  setTimeout(
+    openFlowerQuestion,
+    4200
+  );
+
+}
+
+
+/* =========================================
+   FLOWER QUESTION
+========================================= */
+
+function openFlowerQuestion() {
+
+  const section =
+    document.getElementById(
+      "flowerSection"
+    );
+
+
+  if (!section) {
+
+    return;
+
+  }
+
+
+  section.style.display =
+    "flex";
+
+
+  section.scrollIntoView({
+
+    behavior:
+      "smooth",
+
+    block:
+      "start"
+
+  });
+
+}
+
+
+/* =========================================
+   CLICK "GAK"
+========================================= */
+
+function rejectApology() {
+
+  noCount++;
+
+
+  const message =
+    document.getElementById(
+      "noMessage"
+    );
+
+
+  if (
+    !noButton ||
+    !yesButton
+  ) {
+
+    return;
+
+  }
+
+
+  /*
+    Tombol gak mengecil.
+
+    Tapi tetap bisa diklik.
+    Jadi pilihan tetap ada.
+  */
+
+  const noScale =
+    Math.max(
+      .35,
+      1 -
+      noCount *
+      .12
+    );
+
+
+  /*
+    Tombol maafin membesar.
+  */
+
+  const yesScale =
+    Math.min(
+      1.85,
+      1 +
+      noCount *
+      .13
+    );
+
+
+  noButton.style.transform =
+    `scale(${noScale})`;
+
+
+  yesButton.style.transform =
+    `scale(${yesScale})`;
+
+
+  /*
+    Pesan setiap klik.
+  */
+
+  const messages = [
+
+    "yahh... 🥲",
+
+    "masih gak? 😭",
+
+    "aku minta maaf beneran...",
+
+    "bunganya ikut sedih 🌷",
+
+    "tombol maafnya malah makin gede 😭",
+
+    "oke oke... aku masih minta maaf.",
+
+    "aku ngerti kok 🥲",
+
+    "🌷♡"
+
+  ];
+
+
+  if (message) {
+
+    const messageIndex =
+      Math.min(
+        noCount - 1,
+        messages.length - 1
+      );
+
+
+    message.textContent =
+      messages[
+        messageIndex
+      ];
+
+  }
+
+
+  /*
+    Shake kecil.
+  */
+
+  if (
+    typeof noButton.animate ===
+    "function"
+  ) {
+
+    noButton.animate(
+
+      [
+
+        {
+          transform:
+            `scale(${noScale}) translateX(0)`
+        },
+
+        {
+          transform:
+            `scale(${noScale}) translateX(-4px)`
+        },
+
+        {
+          transform:
+            `scale(${noScale}) translateX(4px)`
+        },
+
+        {
+          transform:
+            `scale(${noScale}) translateX(0)`
+        }
+
+      ],
+
+      {
+
+        duration:
+          180
+
+      }
+
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   NO BUTTON
+========================================= */
+
+if (noButton) {
+
+  noButton.addEventListener(
+    "click",
+    rejectApology
+  );
+
+}
+
+
+/* =========================================
+   ACCEPT APOLOGY
+========================================= */
+
+function acceptApology() {
+
+  const message =
+    document.getElementById(
+      "noMessage"
+    );
+
+
+  /*
+    Tombol YES berubah.
+  */
+
+  if (yesButton) {
+
+    yesButton.textContent =
+      "♡";
+
+
+    yesButton.style.pointerEvents =
+      "none";
+
+  }
+
+
+  /*
+    Tombol NO hilang.
+  */
+
+  if (noButton) {
+
+    noButton.style.opacity =
+      "0";
+
+
+    noButton.style.pointerEvents =
+      "none";
+
+  }
+
+
+  /*
+    Pesan.
+  */
+
+  if (message) {
+
+    message.textContent =
+      "makasih udah mau dengerin aku ♡";
+
+  }
+
+
+  /*
+    Effects.
+  */
+
+  pinkFlash();
+
+  heartBurst();
+
+
+  /*
+    Lanjut surat.
+  */
+
+  setTimeout(
+    openLetter,
+    1800
+  );
+
+}
+
+
+/* =========================================
+   YES BUTTON
+========================================= */
+
+if (yesButton) {
+
+  yesButton.addEventListener(
+    "click",
+    acceptApology
+  );
+
+}
+
+
+/* =========================================
+   OPEN LETTER
+========================================= */
+
+function openLetter() {
+
+  const letter =
+    document.getElementById(
+      "letter"
+    );
+
+
+  if (!letter) {
+
+    return;
+
+  }
+
+
+  letter.style.display =
+    "flex";
+
+
+  letter.scrollIntoView({
+
+    behavior:
+      "smooth",
+
+    block:
+      "start"
+
+  });
+
+
+  setTimeout(
+    revealLetter,
+    700
+  );
+
+}
+
+
+/* =========================================
+   REVEAL LETTER
+========================================= */
+
+function revealLetter() {
+
+  const paragraphs =
+    document.querySelectorAll(
+      ".letter-card p"
+    );
+
+
+  paragraphs.forEach(
+    function (
+      paragraph,
+      index
+    ) {
+
+      setTimeout(
+        function () {
+
+          paragraph.classList.add(
+            "visible"
+          );
+
+        },
+
+        index *
+        280
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   OPEN BEFORE END
+========================================= */
+
+function openBeforeEnd() {
+
+  const section =
+    document.getElementById(
+      "beforeEnd"
+    );
+
+
+  if (!section) {
+
+    return;
+
+  }
+
+
+  section.style.display =
+    "flex";
+
+
+  section.scrollIntoView({
+
+    behavior:
+      "smooth",
+
+    block:
+      "start"
+
+  });
+
+
+  setTimeout(
+    function () {
+
+      const messages =
+        document.querySelectorAll(
+          ".message-line"
+        );
+
+
+      messages.forEach(
+        function (
+          message,
+          index
+        ) {
+
+          setTimeout(
+            function () {
+
+              message.classList.add(
+                "visible"
+              );
+
+            },
+
+            index *
+            600
+          );
+
+        }
+      );
+
+    },
+
+    700
+  );
+
+}
+
+
+/* =========================================
+   BEFORE END BUTTON
+========================================= */
+
+if (beforeEndButton) {
+
+  beforeEndButton.addEventListener(
+    "click",
+    openBeforeEnd
+  );
+
+}
+
+
+/* =========================================
+   OPEN FINAL
+========================================= */
+
+function openFinal() {
+
+  const final =
+    document.getElementById(
+      "final"
+    );
+
+
+  const scene =
+    document.getElementById(
+      "finalScene"
+    );
+
+
+  if (!final) {
+
+    return;
+
+  }
+
+
+  final.style.display =
+    "flex";
+
+
+  final.scrollIntoView({
+
+    behavior:
+      "smooth",
+
+    block:
+      "start"
+
+  });
+
+
+  /*
+    Final character animation.
+  */
+
+  if (scene) {
+
+    setTimeout(
+      function () {
+
+        scene.classList.add(
+          "walking"
+        );
+
+      },
+
+      900
+    );
+
+
+    setTimeout(
+      function () {
+
+        scene.classList.add(
+          "together"
+        );
+
+      },
+
+      1200
+    );
+
+
+    setTimeout(
+      function () {
+
+        scene.classList.remove(
+          "walking"
+        );
+
+      },
+
+      3500
+    );
+
+  }
+
+
+  /*
+    Final message.
+  */
+
+  setTimeout(
+    function () {
+
+      const finalMessage =
+        document.querySelector(
+          ".final-message"
+        );
+
+
+      if (finalMessage) {
+
+        finalMessage.classList.add(
+          "visible"
+        );
+
+      }
+
+
+      heartBurst();
+
+    },
+
+    4100
+  );
+
+}
+
+
+/* =========================================
+   FINAL BUTTON
+========================================= */
+
+if (finalButton) {
+
+  finalButton.addEventListener(
+    "click",
+    openFinal
+  );
+
+}
+
+
+/* =========================================
+   PINK FLASH
+========================================= */
+
+function pinkFlash() {
+
+  if (!pinkFlashElement) {
+
+    return;
+
+  }
+
+
+  pinkFlashElement.classList.add(
+    "active"
+  );
+
+
+  setTimeout(
+    function () {
+
+      pinkFlashElement.classList.remove(
+        "active"
+      );
+
+    },
+
+    450
+  );
+
+}
+
+
+/* =========================================
+   HEART BURST
+========================================= */
+
+function heartBurst() {
+
+  if (!particles) {
+
+    return;
+
+  }
+
+
+  for (
+    let i = 0;
+    i < 45;
+    i++
+  ) {
+
+    setTimeout(
+      function () {
+
+        const heart =
+          document.createElement(
+            "span"
+          );
+
+
+        heart.className =
+          "particle";
+
+
+        heart.textContent =
+          Math.random() > .3
+            ? "♥"
+            : "♡";
+
+
+        heart.style.left =
+          (
+            25 +
+            Math.random() *
+            50
+          ) +
+          "vw";
+
+
+        heart.style.bottom =
+          (
+            5 +
+            Math.random() *
+            20
+          ) +
+          "vh";
+
+
+        heart.style.fontSize =
+          (
+            Math.random() *
+            18 +
+            8
+          ) +
+          "px";
+
+
+        heart.style.animationDuration =
+          (
+            Math.random() *
+            3 +
+            3
+          ) +
+          "s";
+
+
+        particles.appendChild(
+          heart
+        );
+
+
+        setTimeout(
+          function () {
+
+            heart.remove();
+
+          },
+
+          7000
+        );
+
+      },
+
+      i *
+      35
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   INITIAL CHECK
+========================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    /*
+      Pastikan welcome muncul
+      setiap halaman pertama dibuka.
+    */
+
+    if (welcomeScreen) {
+
+      welcomeScreen.classList.remove(
+        "hide"
+      );
+
+
+      welcomeScreen.style.display =
+        "flex";
+
+    }
+
+
+    /*
+      Player belum tampil.
+    */
+
+    if (musicPlayer) {
+
+      musicPlayer.classList.remove(
+        "show"
+      );
+
+    }
+
+
+    /*
+      Status awal musik.
+    */
+
+    if (musicStatus) {
+
+      musicStatus.textContent =
+        "paused";
+
+    }
+
+  }
+);) {
 
   const scene =
     document.getElementById(
