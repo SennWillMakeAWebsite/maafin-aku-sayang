@@ -1259,55 +1259,50 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   );
+/* =========================================================
+   INITIAL STATE
+========================================================= */
 
-
-  /* =========================================================
-     INITIAL STATE
-  ========================================================= */
-
-  scenes.forEach(
-    (scene, index) => {
-      const active =
-        scene.classList.contains(
-          "scene--active"
-        );
-
-
-      scene.setAttribute(
-        "aria-hidden",
-        active
-          ? "false"
-          : "true"
+scenes.forEach(
+  (scene, index) => {
+    const active =
+      scene.classList.contains(
+        "scene--active"
       );
 
+    scene.setAttribute(
+      "aria-hidden",
+      active
+        ? "false"
+        : "true"
+    );
 
-      if (active) {
-        currentSceneIndex =
-          index;
-      }
+    if (active) {
+      currentSceneIndex =
+        index;
     }
-  );
+  }
+);
+
+updateProgress(
+  currentSceneIndex
+);
+
+resetQuestion();
+
+resetEnvelope();
+
+resetMemoryCards();
+
+resetIntroVisuals();
 
 
-  updateProgress(
-    currentSceneIndex
-  );
+/* =========================================================
+   START
+========================================================= */
 
+window.setTimeout(() => {
+  runIntroAnimation();
+}, 350);
 
-  resetQuestion();
-
-  resetEnvelope();
-
-  resetMemoryCards();
-
-  resetIntroVisuals();
-
-
-  /* =========================================================
-     START
-  ========================================================= */
-
-  window.setTimeout(() => {
-    runIntroAnimation();
-  }, 350);
 });
