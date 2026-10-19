@@ -1266,8 +1266,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================================================= */
 
   scenes.forEach(
-    (scene, inde
-     x) => {
+    (scene, index) => {
       const active =
         scene.classList.contains(
           "scene--active"
