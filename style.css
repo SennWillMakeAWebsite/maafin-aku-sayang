@@ -1,10 +1,16 @@
 :root {
   --pink: #ff4fa3;
-  --pink-light: #ff83bd;
-  --pink-soft: #ffc4e0;
+  --pink-light: #ff86c0;
+  --pink-soft: #ffc5e1;
+
+  --skin: #ffe1d3;
+  --skin-shadow: #efbba9;
+
+  --hair: #2a1720;
+
   --dark: #080508;
   --text: #fff7fb;
-  --muted: #cbb9c2;
+  --muted: #cdbac4;
 }
 
 * {
@@ -19,6 +25,7 @@ html {
 
 body {
   min-height: 100vh;
+
   overflow-x: hidden;
 
   font-family: "Poppins", sans-serif;
@@ -31,6 +38,11 @@ body {
       rgba(255, 62, 157, .18),
       transparent 35%
     ),
+    radial-gradient(
+      circle at 10% 80%,
+      rgba(255, 40, 140, .07),
+      transparent 30%
+    ),
     #080508;
 }
 
@@ -39,9 +51,9 @@ button {
 }
 
 
-/* ===================================
+/* ==============================
    BACKGROUND
-=================================== */
+============================== */
 
 .background {
   position: fixed;
@@ -51,7 +63,7 @@ button {
 
   pointer-events: none;
 
-  z-index: -5;
+  z-index: -10;
 }
 
 .orb {
@@ -59,7 +71,7 @@ button {
 
   border-radius: 50%;
 
-  filter: blur(100px);
+  filter: blur(110px);
 
   opacity: .22;
 
@@ -71,8 +83,8 @@ button {
   width: 350px;
   height: 350px;
 
-  left: -160px;
-  top: -100px;
+  top: -150px;
+  left: -130px;
 
   background: #ff248d;
 }
@@ -82,43 +94,47 @@ button {
   height: 450px;
 
   right: -250px;
-  bottom: -150px;
+  bottom: -160px;
 
-  background: #d72b87;
+  background: #c92179;
 
-  animation-delay: -4s;
+  animation-delay: -5s;
 }
 
 @keyframes orbFloat {
+
   to {
     transform:
       translate(60px, 40px)
       scale(1.2);
   }
+
 }
 
 
-/* ===================================
+/* ==============================
    LOADER
-=================================== */
+============================== */
 
 #loader {
   position: fixed;
   inset: 0;
 
+  z-index: 9999;
+
   display: flex;
-  justify-content: center;
+
   align-items: center;
+  justify-content: center;
 
   background: #070407;
-
-  z-index: 9999;
 
   transition: 1s ease;
 }
 
 #loader.hide {
   opacity: 0;
+
   visibility: hidden;
 }
 
@@ -129,40 +145,148 @@ button {
 .loader-heart {
   color: var(--pink);
 
-  font-size: 36px;
+  font-size: 38px;
 
   text-shadow:
     0 0 15px var(--pink),
-    0 0 40px rgba(255, 79, 163, .6);
+    0 0 40px rgba(255,79,163,.6);
 
   animation:
-    heartbeat 1.2s infinite;
+    basicBeat 1.1s infinite;
 }
 
 .loader-content p {
-  margin-top: 15px;
+  margin-top: 14px;
 
-  color: #c9a9b8;
+  color: #caaaba;
 
   font-size: 10px;
 
   letter-spacing: 4px;
 }
 
+@keyframes basicBeat {
 
-/* ===================================
+  50% {
+    transform: scale(1.25);
+  }
+
+}
+
+
+/* ==============================
+   MUSIC
+============================== */
+
+.music-player {
+  position: fixed;
+
+  top: 16px;
+  right: 16px;
+
+  z-index: 800;
+}
+
+.music-button {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding:
+    8px 13px 8px 9px;
+
+  border:
+    1px solid rgba(255, 119, 185, .22);
+
+  border-radius: 999px;
+
+  color: white;
+
+  background:
+    rgba(15, 7, 12, .72);
+
+  backdrop-filter:
+    blur(18px);
+
+  cursor: pointer;
+
+  transition: .3s ease;
+}
+
+#musicIcon {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4fa3,
+      #c42d78
+    );
+
+  box-shadow:
+    0 0 15px rgba(255,79,163,.25);
+}
+
+.music-info {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+}
+
+.music-title {
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+.music-status {
+  color: #b9a2ad;
+
+  font-size: 8px;
+}
+
+.music-player.playing #musicIcon {
+  animation:
+    musicBeat 1.1s infinite;
+}
+
+@keyframes musicBeat {
+
+  50% {
+    transform: scale(1.12);
+
+    box-shadow:
+      0 0 25px rgba(255,79,163,.6);
+  }
+
+}
+
+
+/* ==============================
    PARTICLES
-=================================== */
+============================== */
 
 #particles {
   position: fixed;
   inset: 0;
 
+  z-index: 700;
+
   overflow: hidden;
 
   pointer-events: none;
-
-  z-index: 100;
 }
 
 .particle {
@@ -170,10 +294,11 @@ button {
 
   bottom: -40px;
 
-  color: rgba(255, 115, 183, .6);
+  color:
+    rgba(255,120,185,.65);
 
   text-shadow:
-    0 0 12px rgba(255, 79, 163, .8);
+    0 0 12px rgba(255,79,163,.8);
 
   animation:
     floatParticle linear forwards;
@@ -186,7 +311,7 @@ button {
 
     transform:
       translateY(0)
-      rotate(0deg)
+      rotate(0)
       scale(.7);
   }
 
@@ -207,24 +332,24 @@ button {
 }
 
 
-/* ===================================
+/* ==============================
    GENERAL
-=================================== */
+============================== */
 
 section {
-  min-height: 100vh;
+  position: relative;
 
   width: 100%;
+
+  min-height: 100vh;
 
   padding:
     65px 20px;
 
   display: flex;
 
-  justify-content: center;
   align-items: center;
-
-  position: relative;
+  justify-content: center;
 }
 
 .tiny {
@@ -244,13 +369,54 @@ section {
   color: var(--pink-light);
 
   text-shadow:
-    0 0 10px rgba(255, 79, 163, .7);
+    0 0 10px rgba(255,79,163,.65);
 }
 
 
-/* ===================================
+/* ==============================
+   BUTTON
+============================== */
+
+.main-button {
+  margin-top: 30px;
+
+  padding:
+    14px 25px;
+
+  border:
+    1px solid rgba(255,106,180,.45);
+
+  border-radius: 999px;
+
+  color: white;
+
+  background:
+    rgba(255,79,163,.08);
+
+  backdrop-filter:
+    blur(15px);
+
+  cursor: pointer;
+
+  transition:
+    .35s ease;
+}
+
+.main-button:hover {
+  transform:
+    translateY(-3px);
+
+  background:
+    rgba(255,79,163,.16);
+
+  box-shadow:
+    0 0 30px rgba(255,79,163,.25);
+}
+
+
+/* ==============================
    OPENING
-=================================== */
+============================== */
 
 #opening {
   flex-direction: column;
@@ -268,7 +434,7 @@ section {
   margin-top: 12px;
 
   font-size:
-    clamp(45px, 11vw, 85px);
+    clamp(45px,11vw,85px);
 
   line-height: 1;
 
@@ -289,59 +455,15 @@ section {
 }
 
 
-/* ===================================
-   BUTTON
-=================================== */
-
-.main-button {
-  margin-top: 30px;
-
-  padding:
-    14px 25px;
-
-  border:
-    1px solid rgba(255, 106, 180, .45);
-
-  border-radius: 999px;
-
-  color: white;
-
-  background:
-    rgba(255, 79, 163, .08);
-
-  backdrop-filter:
-    blur(15px);
-
-  cursor: pointer;
-
-  transition:
-    .35s ease;
-
-  box-shadow:
-    0 0 20px rgba(255, 79, 163, .08);
-}
-
-.main-button:hover {
-  transform:
-    translateY(-3px);
-
-  background:
-    rgba(255, 79, 163, .16);
-
-  box-shadow:
-    0 0 30px rgba(255, 79, 163, .25);
-}
-
-
-/* ===================================
-   CHARACTER SCENE
-=================================== */
+/* ==============================
+   SCENE
+============================== */
 
 .scene {
   position: relative;
 
   width:
-    min(700px, 100%);
+    min(700px,100%);
 
   height: 250px;
 
@@ -364,18 +486,18 @@ section {
     linear-gradient(
       90deg,
       transparent,
-      rgba(255, 91, 170, .5),
+      rgba(255,91,170,.5),
       transparent
     );
 
   box-shadow:
-    0 0 15px rgba(255, 79, 163, .6);
+    0 0 15px rgba(255,79,163,.6);
 }
 
 
-/* ===================================
-   CHARACTERS
-=================================== */
+/* ==============================
+   CHARACTER
+============================== */
 
 .person {
   position: absolute;
@@ -386,11 +508,11 @@ section {
   height: 165px;
 
   transition:
-    left 2.2s cubic-bezier(.65, 0, .35, 1),
-    right 2.2s cubic-bezier(.65, 0, .35, 1);
+    left 2.2s cubic-bezier(.65,0,.35,1),
+    right 2.2s cubic-bezier(.65,0,.35,1);
 
   animation:
-    characterIdle 3s ease-in-out infinite;
+    idle 3s ease-in-out infinite;
 }
 
 .husen {
@@ -403,7 +525,7 @@ section {
   animation-delay: -.7s;
 }
 
-@keyframes characterIdle {
+@keyframes idle {
 
   50% {
     transform:
@@ -412,25 +534,19 @@ section {
 
 }
 
-
-/* NAME */
-
 .name {
   position: absolute;
 
-  width: 100%;
-
   top: -18px;
 
-  color: #d3bec9;
+  width: 100%;
+
+  color: #d4c0ca;
 
   font-size: 10px;
 
   letter-spacing: 1px;
 }
-
-
-/* CHARACTER */
 
 .character {
   position: relative;
@@ -440,67 +556,140 @@ section {
 }
 
 
-/* SKIN */
+/* ==============================
+   SKIN
+============================== */
 
 .head {
   position: absolute;
 
-  width: 53px;
-  height: 56px;
-
   top: 8px;
   left: 16px;
+
+  width: 53px;
+  height: 56px;
 
   border-radius: 48%;
 
   background:
     linear-gradient(
       135deg,
-      #ffe8dc,
-      #f4c8b6
+      var(--skin),
+      var(--skin-shadow)
     );
 
   box-shadow:
-    inset -5px -5px 8px
-    rgba(157, 85, 75, .07);
+    inset -4px -5px 7px
+    rgba(140,75,65,.06);
 
-  z-index: 3;
+  z-index: 5;
 }
 
 
-/* HAIR */
+/*
+   PENTING:
+   wajah Ike menggunakan skin
+   yang sama dengan Husen.
+*/
 
-.hair {
+.ike .head {
+  background:
+    linear-gradient(
+      135deg,
+      #ffe4d7,
+      #f2c3b1
+    );
+
+  z-index: 5;
+}
+
+
+/* ==============================
+   HUSEN HAIR
+============================== */
+
+.husen .hair {
   position: absolute;
-
-  width: 59px;
-  height: 34px;
 
   top: 2px;
   left: 13px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #3a2530,
-      #190f15
-    );
+  width: 59px;
+  height: 34px;
 
   border-radius:
     45px 45px 15px 15px;
 
-  z-index: 4;
+  background:
+    linear-gradient(
+      135deg,
+      #39252e,
+      #190f14
+    );
+
+  z-index: 7;
 }
 
-.ike .hair {
-  height: 69px;
+
+/* ==============================
+   IKE HAIR
+
+   Rambut belakang sengaja berada
+   DI BELAKANG kepala supaya wajah
+   tidak terlihat hitam.
+============================== */
+
+.ike-back-hair {
+  position: absolute;
+
+  top: 1px;
+  left: 10px;
+
+  width: 65px;
+  height: 82px;
 
   border-radius:
-    45px 45px 27px 27px;
+    42px 42px 28px 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #3b2630,
+      #190f15
+    );
+
+  z-index: 1;
 }
 
 
-/* EYES */
+/* PONI */
+
+.ike-bangs {
+  position: absolute;
+
+  top: -3px;
+  left: 2px;
+
+  width: 49px;
+  height: 15px;
+
+  border-radius:
+    30px 30px 13px 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #3b2630,
+      #190f15
+    );
+
+  z-index: 2;
+}
+
+
+/* ==============================
+   FACE
+============================== */
 
 .eye {
   position: absolute;
@@ -510,9 +699,11 @@ section {
   width: 4px;
   height: 5px;
 
-  background: #432a33;
-
   border-radius: 50%;
+
+  background: #432b34;
+
+  z-index: 6;
 }
 
 .eye-left {
@@ -523,21 +714,20 @@ section {
   right: 15px;
 }
 
-
-/* BLUSH */
-
 .blush {
   position: absolute;
+
+  top: 38px;
 
   width: 8px;
   height: 3px;
 
-  top: 38px;
+  border-radius: 50%;
 
   background:
-    rgba(255, 117, 154, .35);
+    rgba(255,112,150,.35);
 
-  border-radius: 50%;
+  z-index: 6;
 }
 
 .blush-left {
@@ -548,19 +738,39 @@ section {
   right: 7px;
 }
 
+.mouth {
+  position: absolute;
 
-/* ===================================
-   COUPLE OUTFIT
-=================================== */
+  left: 50%;
+  top: 42px;
+
+  width: 7px;
+  height: 3px;
+
+  transform:
+    translateX(-50%);
+
+  border-bottom:
+    1px solid rgba(90,45,55,.6);
+
+  border-radius: 50%;
+
+  z-index: 6;
+}
+
+
+/* ==============================
+   COUPLE CLOTHES
+============================== */
 
 .body {
   position: absolute;
 
-  width: 57px;
-  height: 77px;
-
   top: 59px;
   left: 14px;
+
+  width: 57px;
+  height: 77px;
 
   border-radius:
     22px 22px 13px 13px;
@@ -568,25 +778,25 @@ section {
   background:
     linear-gradient(
       180deg,
-      #ff76b7,
-      #ca347d
+      #ff78b8,
+      #c9327c
     );
 
   border:
-    1px solid rgba(255, 211, 232, .22);
+    1px solid rgba(255,211,232,.25);
 
   box-shadow:
-    0 0 18px rgba(255, 79, 163, .14);
+    0 0 18px rgba(255,79,163,.14);
 
-  z-index: 2;
+  z-index: 3;
 }
 
 .ike .body {
   background:
     linear-gradient(
       180deg,
-      #ff91c6,
-      #d8478c
+      #ff78b8,
+      #c9327c
     );
 }
 
@@ -608,25 +818,27 @@ section {
 }
 
 
-/* ARMS */
+/* ==============================
+   ARMS
+============================== */
 
 .arm {
   position: absolute;
 
+  top: 67px;
+
   width: 13px;
   height: 55px;
-
-  top: 67px;
 
   border-radius: 10px;
 
   background:
     linear-gradient(
-      #ff81bd 55%,
-      #f5cbbb 55%
+      #ff7dbb 55%,
+      #f6c9b8 55%
     );
 
-  z-index: 1;
+  z-index: 2;
 }
 
 .arm-left {
@@ -644,15 +856,17 @@ section {
 }
 
 
-/* LEGS */
+/* ==============================
+   LEGS
+============================== */
 
 .leg {
   position: absolute;
 
+  top: 128px;
+
   width: 15px;
   height: 38px;
-
-  top: 128px;
 
   border-radius:
     8px 8px 4px 4px;
@@ -669,13 +883,14 @@ section {
 }
 
 
-/* ===================================
+/* ==============================
    WALK
-=================================== */
+============================== */
 
 .scene.walking .husen {
   animation:
-    walking .32s ease-in-out infinite alternate;
+    walking .32s ease-in-out
+    infinite alternate;
 }
 
 @keyframes walking {
@@ -705,7 +920,9 @@ section {
 }
 
 
-/* FLOWER */
+/* ==============================
+   FLOWER
+============================== */
 
 .flower {
   position: absolute;
@@ -725,7 +942,7 @@ section {
   transition:
     1s ease 1.4s;
 
-  z-index: 10;
+  z-index: 20;
 }
 
 .scene.together .flower {
@@ -738,7 +955,9 @@ section {
 }
 
 
-/* HEART BETWEEN */
+/* ==============================
+   HEART
+============================== */
 
 .heart-between {
   position: absolute;
@@ -747,7 +966,7 @@ section {
   top: 70px;
 
   transform:
-    translate(-50%, 10px)
+    translate(-50%,10px)
     scale(.3);
 
   color: var(--pink);
@@ -767,35 +986,35 @@ section {
   opacity: 1;
 
   transform:
-    translate(-50%, 0)
+    translate(-50%,0)
     scale(1);
 
   animation:
-    heartbeat 1.3s infinite 2.5s;
+    heartBetween 1.3s infinite 2.5s;
 }
 
-@keyframes heartbeat {
+@keyframes heartBetween {
 
   50% {
     transform:
-      translate(-50%, 0)
+      translate(-50%,0)
       scale(1.25);
   }
 
 }
 
 
-/* ===================================
-   STORY TEXT
-=================================== */
+/* ==============================
+   STORY
+============================== */
 
 .story-text {
   position: absolute;
 
-  width: 100%;
-
   top: -10px;
   left: 50%;
+
+  width: 100%;
 
   transform:
     translateX(-50%)
@@ -807,8 +1026,7 @@ section {
 
   opacity: 0;
 
-  transition:
-    .6s ease;
+  transition: .6s ease;
 }
 
 .story-text.active {
@@ -820,9 +1038,9 @@ section {
 }
 
 
-/* ===================================
-   FLOWER QUESTION
-=================================== */
+/* ==============================
+   QUESTION
+============================== */
 
 #flowerSection {
   display: none;
@@ -832,34 +1050,34 @@ section {
 
 .question-card {
   width:
-    min(420px, 100%);
+    min(430px,100%);
 
   padding:
     40px 25px;
 
   border:
-    1px solid rgba(255, 111, 181, .2);
+    1px solid rgba(255,111,181,.2);
 
   border-radius: 28px;
 
   background:
-    rgba(255, 255, 255, .035);
+    rgba(255,255,255,.035);
 
   backdrop-filter:
     blur(20px);
 
   box-shadow:
-    0 25px 90px rgba(0, 0, 0, .4);
+    0 25px 90px rgba(0,0,0,.4);
 }
 
 .big-flower {
   margin:
-    20px 0 10px;
+    18px 0 8px;
 
-  font-size: 55px;
+  font-size: 58px;
 
   animation:
-    flowerFloat 2.5s ease-in-out infinite;
+    flowerFloat 2.4s ease-in-out infinite;
 }
 
 @keyframes flowerFloat {
@@ -867,6 +1085,425 @@ section {
   50% {
     transform:
       translateY(-7px)
+      rotate(5deg);
+  }
+
+}
+
+.question-card h2 {
+  font-size: 35px;
+
+  font-weight: 500;
+}
+
+.question-description {
+  margin-top: 5px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.small-apology {
+  margin:
+    22px auto;
+
+  max-width: 330px;
+
+  color: #e0d0d8;
+
+  font-size: 12px;
+
+  line-height: 1.9;
+}
+
+.question-card h3 {
+  font-size: 21px;
+
+  font-weight: 500;
+}
+
+.choice-buttons {
+  min-height: 130px;
+
+  margin-top: 15px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 13px;
+}
+
+.yes-button,
+.no-button {
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transform-origin: center;
+
+  transition:
+    transform .35s cubic-bezier(.16,1,.3,1),
+    opacity .35s,
+    box-shadow .35s;
+}
+
+.yes-button {
+  padding:
+    13px 22px;
+
+  border: 0;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4fa3,
+      #ff7dbc
+    );
+
+  box-shadow:
+    0 0 25px rgba(255,79,163,.25);
+}
+
+.no-button {
+  padding:
+    12px 20px;
+
+  color: #d0bdc6;
+
+  border:
+    1px solid rgba(255,255,255,.1);
+
+  background:
+    rgba(255,255,255,.05);
+}
+
+.no-message {
+  min-height: 22px;
+
+  color: #bda8b2;
+
+  font-size: 11px;
+}
+
+
+/* ==============================
+   LETTER
+============================== */
+
+#letter {
+  display: none;
+}
+
+.letter-container {
+  width:
+    min(650px,100%);
+
+  text-align: center;
+}
+
+.letter-title {
+  margin-bottom: 30px;
+}
+
+.letter-title h2 {
+  margin-top: 10px;
+
+  font-size:
+    clamp(28px,7vw,45px);
+
+  font-weight: 500;
+}
+
+.letter-card {
+  padding: 35px;
+
+  text-align: left;
+
+  border:
+    1px solid rgba(255,111,181,.2);
+
+  border-radius: 27px;
+
+  background:
+    rgba(255,255,255,.035);
+
+  backdrop-filter:
+    blur(20px);
+
+  box-shadow:
+    0 25px 90px rgba(0,0,0,.35);
+}
+
+.letter-card p {
+  margin-bottom: 22px;
+
+  color: #dfd1d8;
+
+  font-size: 13px;
+
+  line-height: 2;
+
+  opacity: 0;
+
+  transform:
+    translateY(15px);
+
+  transition: .8s ease;
+}
+
+.letter-card p.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* ==============================
+   BEFORE END
+============================== */
+
+#beforeEnd {
+  display: none;
+
+  text-align: center;
+}
+
+.before-container {
+  width:
+    min(620px,100%);
+}
+
+.before-container h2 {
+  margin-top: 12px;
+
+  font-size:
+    clamp(28px,7vw,48px);
+
+  font-weight: 500;
+}
+
+.small-messages {
+  margin-top: 45px;
+}
+
+.message-line {
+  max-width: 530px;
+
+  margin:
+    25px auto;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  line-height: 1.9;
+
+  opacity: 0;
+
+  transform:
+    translateY(20px);
+
+  transition: .8s ease;
+}
+
+.message-line.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* ==============================
+   FINAL
+============================== */
+
+#final {
+  display: none;
+
+  text-align: center;
+}
+
+.final-container {
+  width:
+    min(650px,100%);
+}
+
+.final-container h2 {
+  margin-top: 10px;
+
+  font-size:
+    clamp(35px,9vw,60px);
+
+  font-weight: 500;
+}
+
+.final-description {
+  margin-top: 15px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+}
+
+.final-message {
+  opacity: 0;
+
+  transform:
+    translateY(20px);
+
+  transition: 1s ease;
+}
+
+.final-message.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+.final-message h3 {
+  color: var(--pink-light);
+
+  font-size: 21px;
+
+  font-weight: 500;
+
+  text-shadow:
+    0 0 20px rgba(255,79,163,.4);
+}
+
+.final-message p {
+  margin-top: 8px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.signature {
+  margin-top: 50px;
+
+  color: #917e88;
+
+  font-size: 11px;
+
+  line-height: 2;
+
+  letter-spacing: 1px;
+}
+
+.signature span {
+  color: var(--pink-light);
+}
+
+
+/* ==============================
+   FLASH
+============================== */
+
+#pinkFlash {
+  position: fixed;
+  inset: 0;
+
+  z-index: 900;
+
+  background:
+    rgba(255,79,163,.15);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: .4s;
+}
+
+#pinkFlash.active {
+  opacity: 1;
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media(max-width:520px) {
+
+  section {
+    padding:
+      55px 17px;
+  }
+
+  .music-player {
+    top: 10px;
+    right: 10px;
+  }
+
+  .music-button {
+    padding:
+      6px 9px;
+  }
+
+  #musicIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .music-title {
+    font-size: 8px;
+  }
+
+  .scene {
+    height: 225px;
+
+    margin-top: 40px;
+  }
+
+  .person {
+    scale: .85;
+  }
+
+  .husen {
+    left: 0;
+  }
+
+  .ike {
+    right: 0;
+  }
+
+  .scene.together .husen {
+    left:
+      calc(50% - 82px);
+  }
+
+  .scene.together .ike {
+    right:
+      calc(50% - 82px);
+  }
+
+  .letter-card {
+    padding:
+      27px 21px;
+  }
+
+  .letter-card p {
+    font-size: 12.5px;
+
+    line-height: 1.9;
+  }
+
+  .question-card {
+    padding:
+      35px 18px;
+  }
+
+  }    translateY(-7px)
       rotate(5deg);
   }
 
