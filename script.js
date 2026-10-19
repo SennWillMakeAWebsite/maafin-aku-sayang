@@ -1,847 +1,356 @@
-const particles =
-  document.getElementById("particles");
-
-let storyStarted = false;
 let noCount = 0;
-let musicPlaying = false;
 
+const particles = document.getElementById("particles");
 
-/* =================================
+/* ===============================
    LOADER
-================================= */
+================================ */
 
-window.addEventListener(
-  "load",
-  () => {
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+
+  setTimeout(() => {
+    if (!loader) return;
+
+    loader.style.opacity = "0";
+    loader.style.pointerEvents = "none";
 
     setTimeout(() => {
-
-      document
-        .getElementById("loader")
-        .classList
-        .add("hide");
-
-    }, 1600);
-
-  }
-);
+      loader.style.display = "none";
+    }, 600);
+  }, 1200);
+});
 
 
-/* =================================
+/* ===============================
    MUSIC
-================================= */
+================================ */
 
 function toggleMusic() {
+  const music = document.getElementById("backgroundMusic");
+  const status = document.getElementById("musicStatus");
 
-  const music =
-    document.getElementById(
-      "backgroundMusic"
-    );
+  if (!music) return;
 
-  const player =
-    document.getElementById(
-      "musicPlayer"
-    );
-
-  const status =
-    document.getElementById(
-      "musicStatus"
-    );
-
-
-  if (!musicPlaying) {
-
+  if (music.paused) {
     music.play()
       .then(() => {
-
-        musicPlaying = true;
-
-        player.classList.add(
-          "playing"
-        );
-
-        status.textContent =
-          "now playing";
-
+        if (status) status.textContent = "playing";
       })
-
       .catch(() => {
-
-        status.textContent =
-          "audio belum ada";
-
+        if (status) status.textContent = "tap to play";
       });
-
-  }
-
-  else {
-
+  } else {
     music.pause();
 
-    musicPlaying = false;
-
-    player.classList.remove(
-      "playing"
-    );
-
-    status.textContent =
-      "paused";
-
+    if (status) {
+      status.textContent = "paused";
+    }
   }
-
 }
 
 
-/* =================================
-   PARTICLES
-================================= */
-
-function createParticle() {
-
-  const particle =
-    document.createElement(
-      "span"
-    );
-
-  particle.className =
-    "particle";
-
-
-  const symbols = [
-    "♡",
-    "♥",
-    "✦",
-    "·"
-  ];
-
-
-  particle.textContent =
-    symbols[
-      Math.floor(
-        Math.random() *
-        symbols.length
-      )
-    ];
-
-
-  particle.style.left =
-    Math.random() * 100 + "vw";
-
-
-  particle.style.fontSize =
-    Math.random() * 11 +
-    7 + "px";
-
-
-  particle.style.animationDuration =
-    Math.random() * 7 +
-    8 + "s";
-
-
-  particles.appendChild(
-    particle
-  );
-
-
-  setTimeout(() => {
-
-    particle.remove();
-
-  }, 16000);
-
-}
-
-
-setInterval(
-  createParticle,
-  650
-);
-
-
-/* =================================
+/* ===============================
    START STORY
-================================= */
+================================ */
 
 function startStory() {
+  const scene = document.getElementById("openingScene");
+  const button = document.getElementById("startButton");
 
-  if (storyStarted) return;
-
-  storyStarted = true;
-
-
-  const button =
-    document.getElementById(
-      "startButton"
-    );
-
-
-  button.textContent =
-    "bentar ya... ♡";
-
-
-  button.style.opacity =
-    ".45";
-
-
-  button.style.pointerEvents =
-    "none";
-
-
-  const texts = [
-
-    "sebenernya aku bingung mulai dari mana.",
-
-    "karena kadang satu kata maaf aja rasanya nggak cukup.",
-
-    "jadi aku nyoba nyampeinnya dengan cara aku sendiri.",
-
-    "aku cuma mau mendekat dan bilang sesuatu ke kamu."
-
-  ];
-
-
-  let index = 0;
-
-
-  function nextText() {
-
-    const text =
-      document.getElementById(
-        "storyText"
-      );
-
-
-    text.classList.remove(
-      "active"
-    );
-
-
-    setTimeout(() => {
-
-      text.textContent =
-        texts[index];
-
-
-      text.classList.add(
-        "active"
-      );
-
-
-      index++;
-
-
-      if (
-        index <
-        texts.length
-      ) {
-
-        setTimeout(
-          nextText,
-          2100
-        );
-
-      }
-
-      else {
-
-        setTimeout(() => {
-
-          text.classList.remove(
-            "active"
-          );
-
-          startWalking();
-
-        }, 1900);
-
-      }
-
-    }, 400);
-
+  if (button) {
+    button.disabled = true;
+    button.style.opacity = ".6";
   }
 
+  if (!scene) {
+    openFlowerQuestion();
+    return;
+  }
 
-  nextText();
-
-}
-
-
-/* =================================
-   WALK + FLOWER
-================================= */
-
-function startWalking() {
-
-  const scene =
-    document.getElementById(
-      "openingScene"
-    );
-
-
-  scene.classList.add(
-    "walking"
-  );
-
+  scene.classList.add("walking");
 
   setTimeout(() => {
-
-    scene.classList.add(
-      "together"
-    );
-
+    scene.classList.add("together");
   }, 300);
 
-
   setTimeout(() => {
-
-    scene.classList.remove(
-      "walking"
-    );
-
+    scene.classList.remove("walking");
   }, 2600);
 
-
   setTimeout(() => {
-
     openFlowerQuestion();
-
   }, 4200);
-
 }
 
 
-/* =================================
-   QUESTION
-================================= */
+/* ===============================
+   FLOWER QUESTION
+================================ */
 
 function openFlowerQuestion() {
+  const section = document.getElementById("flowerSection");
 
-  const section =
-    document.getElementById(
-      "flowerSection"
-    );
+  if (!section) return;
 
-
-  section.style.display =
-    "flex";
-
+  section.style.display = "flex";
 
   section.scrollIntoView({
-    behavior: "smooth"
+    behavior: "smooth",
+    block: "start"
   });
-
 }
 
 
-/* =================================
-   CLICK "GAK"
-================================= */
+/* ===============================
+   TOMBOL GAK
+================================ */
 
 function rejectApology() {
-
   noCount++;
 
+  const noButton = document.getElementById("noButton");
+  const yesButton = document.getElementById("yesButton");
+  const message = document.getElementById("noMessage");
 
-  const noButton =
-    document.getElementById(
-      "noButton"
-    );
+  if (!noButton || !yesButton || !message) return;
 
+  const noScale = Math.max(
+    0.3,
+    1 - noCount * 0.13
+  );
 
-  const yesButton =
-    document.getElementById(
-      "yesButton"
-    );
-
-
-  const message =
-    document.getElementById(
-      "noMessage"
-    );
-
-
-  /*
-    GAK MAKIN KECIL
-  */
-
-  const noScale =
-    Math.max(
-      .25,
-      1 - noCount * .14
-    );
-
-
-  /*
-    MAAFIN MAKIN GEDE
-  */
-
-  const yesScale =
-    Math.min(
-      2.25,
-      1 + noCount * .16
-    );
-
+  const yesScale = Math.min(
+    2,
+    1 + noCount * 0.15
+  );
 
   noButton.style.transform =
     `scale(${noScale})`;
 
-
   yesButton.style.transform =
     `scale(${yesScale})`;
 
-
   const messages = [
-
     "yahh... 🥲",
-
     "masih gak? 😭",
-
     "aku minta maaf beneran...",
-
     "bunganya ikut sedih 🌷",
-
     "kok tombol maafnya makin gede ya...",
-
     "aku masih nungguin nih 🥲",
-
-    "oke... tapi aku tetep minta maaf.",
-
+    "oke... aku tetep minta maaf.",
     "🌷♡"
-
   ];
 
-
-  const messageIndex =
-    Math.min(
-      noCount - 1,
-      messages.length - 1
-    );
-
-
-  message.textContent =
-    messages[
-      messageIndex
-    ];
-
-
-  /*
-    SHAKE
-  */
-
-  noButton.animate(
-
-    [
-
-      {
-        translate: "0 0"
-      },
-
-      {
-        translate: "-4px 0"
-      },
-
-      {
-        translate: "4px 0"
-      },
-
-      {
-        translate: "0 0"
-      }
-
-    ],
-
-    {
-      duration: 180
-    }
-
+  const index = Math.min(
+    noCount - 1,
+    messages.length - 1
   );
 
+  message.textContent = messages[index];
 }
 
 
-/* =================================
+/* ===============================
    MAAFIN
-================================= */
+================================ */
 
 function acceptApology() {
+  const yes = document.getElementById("yesButton");
+  const no = document.getElementById("noButton");
+  const message = document.getElementById("noMessage");
 
-  const yes =
-    document.getElementById(
-      "yesButton"
-    );
+  if (yes) {
+    yes.textContent = "♡";
+    yes.style.pointerEvents = "none";
+  }
 
+  if (no) {
+    no.style.opacity = "0";
+    no.style.pointerEvents = "none";
+  }
 
-  const no =
-    document.getElementById(
-      "noButton"
-    );
-
-
-  const message =
-    document.getElementById(
-      "noMessage"
-    );
-
-
-  yes.textContent =
-    "♡";
-
-
-  yes.style.pointerEvents =
-    "none";
-
-
-  no.style.opacity =
-    "0";
-
-
-  no.style.pointerEvents =
-    "none";
-
-
-  message.textContent =
-    "makasih udah mau dengerin aku ♡";
-
+  if (message) {
+    message.textContent =
+      "makasih udah mau dengerin aku ♡";
+  }
 
   pinkFlash();
-
   heartBurst();
 
-
   setTimeout(() => {
-
     openLetter();
-
-  }, 1800);
-
+  }, 1500);
 }
 
 
-/* =================================
+/* ===============================
    LETTER
-================================= */
+================================ */
 
 function openLetter() {
+  const letter = document.getElementById("letter");
 
-  const letter =
-    document.getElementById(
-      "letter"
-    );
+  if (!letter) return;
 
-
-  letter.style.display =
-    "flex";
-
+  letter.style.display = "flex";
 
   letter.scrollIntoView({
-    behavior: "smooth"
+    behavior: "smooth",
+    block: "start"
   });
 
-
-  setTimeout(
-    revealLetter,
-    700
-  );
-
+  setTimeout(() => {
+    revealLetter();
+  }, 600);
 }
 
 
 function revealLetter() {
-
   const paragraphs =
-    document.querySelectorAll(
-      ".letter-card p"
-    );
+    document.querySelectorAll(".letter-card p");
 
-
-  paragraphs.forEach(
-    (paragraph, index) => {
-
-      setTimeout(() => {
-
-        paragraph.classList.add(
-          "visible"
-        );
-
-      }, index * 280);
-
-    }
-  );
-
+  paragraphs.forEach((paragraph, index) => {
+    setTimeout(() => {
+      paragraph.classList.add("visible");
+    }, index * 280);
+  });
 }
 
 
-/* =================================
+/* ===============================
    BEFORE END
-================================= */
+================================ */
 
 function openBeforeEnd() {
-
   const section =
-    document.getElementById(
-      "beforeEnd"
-    );
+    document.getElementById("beforeEnd");
 
+  if (!section) return;
 
-  section.style.display =
-    "flex";
-
+  section.style.display = "flex";
 
   section.scrollIntoView({
-    behavior: "smooth"
+    behavior: "smooth",
+    block: "start"
   });
 
-
   setTimeout(() => {
-
     const messages =
-      document.querySelectorAll(
-        ".message-line"
-      );
+      document.querySelectorAll(".message-line");
 
-
-    messages.forEach(
-      (message, index) => {
-
-        setTimeout(() => {
-
-          message.classList.add(
-            "visible"
-          );
-
-        }, index * 600);
-
-      }
-    );
-
-  }, 700);
-
+    messages.forEach((message, index) => {
+      setTimeout(() => {
+        message.classList.add("visible");
+      }, index * 500);
+    });
+  }, 600);
 }
 
 
-/* =================================
+/* ===============================
    FINAL
-================================= */
+================================ */
 
 function openFinal() {
-
   const final =
-    document.getElementById(
-      "final"
-    );
-
+    document.getElementById("final");
 
   const scene =
-    document.getElementById(
-      "finalScene"
-    );
+    document.getElementById("finalScene");
 
+  if (!final) return;
 
-  final.style.display =
-    "flex";
-
+  final.style.display = "flex";
 
   final.scrollIntoView({
-    behavior: "smooth"
+    behavior: "smooth",
+    block: "start"
   });
 
-
-  setTimeout(() => {
-
-    scene.classList.add(
-      "walking"
-    );
-
-  }, 900);
-
-
-  setTimeout(() => {
-
-    scene.classList.add(
-      "together"
-    );
-
-  }, 1200);
-
-
-  setTimeout(() => {
-
-    scene.classList.remove(
-      "walking"
-    );
-
-  }, 3500);
-
-
-  setTimeout(() => {
-
-    document
-      .querySelector(
-        ".final-message"
-      )
-      .classList
-      .add("visible");
-
-
-    heartBurst();
-
-  }, 4100);
-
-}
-
-
-/* =================================
-   PINK FLASH
-================================= */
-
-function pinkFlash() {
-
-  const flash =
-    document.getElementById(
-      "pinkFlash"
-    );
-
-
-  flash.classList.add(
-    "active"
-  );
-
-
-  setTimeout(() => {
-
-    flash.classList.remove(
-      "active"
-    );
-
-  }, 450);
-
-}
-
-
-/* =================================
-   HEART BURST
-================================= */
-
-function heartBurst() {
-
-  for (
-    let i = 0;
-    i < 50;
-    i++
-  ) {
+  if (scene) {
+    setTimeout(() => {
+      scene.classList.add("walking");
+    }, 700);
 
     setTimeout(() => {
+      scene.classList.add("together");
+    }, 1000);
 
+    setTimeout(() => {
+      scene.classList.remove("walking");
+    }, 3200);
+  }
+
+  setTimeout(() => {
+    const message =
+      document.querySelector(".final-message");
+
+    if (message) {
+      message.classList.add("visible");
+    }
+
+    heartBurst();
+  }, 3900);
+}
+
+
+/* ===============================
+   PINK FLASH
+================================ */
+
+function pinkFlash() {
+  const flash =
+    document.getElementById("pinkFlash");
+
+  if (!flash) return;
+
+  flash.classList.add("active");
+
+  setTimeout(() => {
+    flash.classList.remove("active");
+  }, 450);
+}
+
+
+/* ===============================
+   HEART PARTICLES
+================================ */
+
+function heartBurst() {
+  if (!particles) return;
+
+  for (let i = 0; i < 45; i++) {
+    setTimeout(() => {
       const heart =
-        document.createElement(
-          "span"
-        );
+        document.createElement("span");
 
-
-      heart.className =
-        "particle";
-
+      heart.className = "particle";
 
       heart.textContent =
-        Math.random() > .3
-          ? "♥"
-          : "♡";
-
+        Math.random() > 0.3 ? "♥" : "♡";
 
       heart.style.left =
-        (
-          25 +
-          Math.random() * 50
-        ) + "vw";
-
+        (25 + Math.random() * 50) + "vw";
 
       heart.style.bottom =
-        (
-          5 +
-          Math.random() * 20
-        ) + "vh";
-
+        (5 + Math.random() * 20) + "vh";
 
       heart.style.fontSize =
-        (
-          Math.random() * 18 +
-          8
-        ) + "px";
-
+        (8 + Math.random() * 18) + "px";
 
       heart.style.animationDuration =
-        (
-          Math.random() * 3 +
-          3
-        ) + "s";
+        (3 + Math.random() * 3) + "s";
 
-
-      particles.appendChild(
-        heart
-      );
-
+      particles.appendChild(heart);
 
       setTimeout(() => {
-
         heart.remove();
-
       }, 7000);
 
-
     }, i * 35);
-
   }
-
-}   );
-
-  }
-
-
-  /* =======================================================
-     CONTINUE
-  ======================================================= */
-
-  if (continueBtn) {
-
-    continueBtn.addEventListener(
-      "click",
-      async function () {
-
-        if (moreOpened) {
-          return;
-        }
-
-
-        moreOpened =
-          true;
-
-
-        continueBtn.disabled =
-          true;
-
-
-        showSection(
-          more
-        );
-
-
-        scrollToSection(
-          more
-        );
-
-
-        await wait(450);
-
-
-        const messages =
-          document.querySelectorAll(
-            ".message"
-          );
-
-
-        messages.forEach(
-          function (
-            message,
+}   message,
             index
           ) {
 
