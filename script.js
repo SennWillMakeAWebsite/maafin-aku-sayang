@@ -1,838 +1,1014 @@
-/* =========================================
-   FOR IKE ♡
-   SCRIPT.JS
-========================================= */
+document.addEventListener("DOMContentLoaded", () => {
 
+  /* ==================================================
+     ELEMENTS
+  ================================================== */
 
-/* =========================================
-   ELEMENTS
-========================================= */
+  const welcomeScreen =
+    document.getElementById("welcomeScreen");
 
-const particles =
-  document.getElementById("particles");
+  const enterButton =
+    document.getElementById("enterButton");
 
-const pinkFlashElement =
-  document.getElementById("pinkFlash");
+  const opening =
+    document.getElementById("opening");
 
-const welcomeScreen =
-  document.getElementById("welcomeScreen");
+  const startButton =
+    document.getElementById("startButton");
 
-const enterButton =
-  document.getElementById("enterButton");
+  const openingScene =
+    document.getElementById("openingScene");
 
-const audioError =
-  document.getElementById("audioError");
+  const storyText =
+    document.getElementById("storyText");
 
 
-/* MUSIC */
+  const flowerSection =
+    document.getElementById("flowerSection");
 
-const music =
-  document.getElementById("backgroundMusic");
+  const yesButton =
+    document.getElementById("yesButton");
 
-const musicPlayer =
-  document.getElementById("musicPlayer");
+  const noButton =
+    document.getElementById("noButton");
 
-const musicButton =
-  document.getElementById("musicButton");
+  const noMessage =
+    document.getElementById("noMessage");
 
-const musicStatus =
-  document.getElementById("musicStatus");
 
+  const hugSection =
+    document.getElementById("hugSection");
 
-/* STORY */
+  const hugScene =
+    document.getElementById("hugScene");
 
-const startButton =
-  document.getElementById("startButton");
+  const openLetterButton =
+    document.getElementById("openLetterButton");
 
-const yesButton =
-  document.getElementById("yesButton");
 
-const noButton =
-  document.getElementById("noButton");
+  const letter =
+    document.getElementById("letter");
 
-const beforeEndButton =
-  document.getElementById("beforeEndButton");
+  const beforeEndButton =
+    document.getElementById("beforeEndButton");
 
-const finalButton =
-  document.getElementById("finalButton");
 
+  const beforeEnd =
+    document.getElementById("beforeEnd");
 
-/* =========================================
-   VARIABLES
-========================================= */
+  const finalButton =
+    document.getElementById("finalButton");
 
-let websiteEntered = false;
 
-let storyStarted = false;
+  const final =
+    document.getElementById("final");
 
-let noCount = 0;
+  const finalScene =
+    document.getElementById("finalScene");
 
 
-/* =========================================
-   MUSIC SETUP
-========================================= */
+  const particles =
+    document.getElementById("particles");
 
-if (music) {
+  const pinkFlash =
+    document.getElementById("pinkFlash");
 
-  music.volume = 0.45;
 
-  music.loop = true;
+  /* ==================================================
+     STATE
+  ================================================== */
 
-}
+  let storyStarted = false;
 
+  let apologyAccepted = false;
 
-/* =========================================
-   MUSIC EVENTS
-========================================= */
+  let noCount = 0;
 
-if (music) {
+  let noButtonRemoved = false;
 
-  music.addEventListener(
-    "playing",
-    function () {
 
-      if (musicPlayer) {
+  /* ==================================================
+     HELPERS
+  ================================================== */
 
-        musicPlayer.classList.add(
-          "playing"
-        );
+  function wait(ms) {
 
-      }
-
-
-      if (musicStatus) {
-
-        musicStatus.textContent =
-          "now playing";
-
-      }
-
-
-      if (audioError) {
-
-        audioError.textContent =
-          "";
-
-      }
-
-    }
-  );
-
-
-  music.addEventListener(
-    "pause",
-    function () {
-
-      if (musicPlayer) {
-
-        musicPlayer.classList.remove(
-          "playing"
-        );
-
-      }
-
-
-      if (musicStatus) {
-
-        musicStatus.textContent =
-          "paused";
-
-      }
-
-    }
-  );
-
-
-  music.addEventListener(
-    "waiting",
-    function () {
-
-      if (musicStatus) {
-
-        musicStatus.textContent =
-          "loading...";
-
-      }
-
-    }
-  );
-
-
-  music.addEventListener(
-    "canplay",
-    function () {
-
-      if (
-        music.paused &&
-        musicStatus
-      ) {
-
-        musicStatus.textContent =
-          "ready";
-
-      }
-
-    }
-  );
-
-
-  music.addEventListener(
-    "error",
-    function () {
-
-      console.error(
-        "Audio gagal dimuat."
-      );
-
-
-      if (musicPlayer) {
-
-        musicPlayer.classList.remove(
-          "playing"
-        );
-
-      }
-
-
-      if (musicStatus) {
-
-        musicStatus.textContent =
-          "audio error";
-
-      }
-
-
-      if (audioError) {
-
-        audioError.textContent =
-          "musiknya belum kebaca :(";
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================
-   ENTER WEBSITE
-========================================= */
-
-function enterWebsite() {
-
-  /*
-    Cegah double click.
-  */
-
-  if (websiteEntered) {
-
-    return;
-
-  }
-
-
-  websiteEntered = true;
-
-
-  /*
-    PENTING:
-
-    Website dibuka LANGSUNG.
-
-    Kita tidak menunggu:
-    - audio load
-    - audio play
-    - promise
-    - event canplay
-
-    Jadi kalau MP3 bermasalah,
-    website tetap masuk.
-  */
-
-  if (welcomeScreen) {
-
-    welcomeScreen.classList.add(
-      "hide"
+    return new Promise(
+      resolve =>
+        setTimeout(resolve, ms)
     );
 
   }
 
 
-  if (musicPlayer) {
+  function scrollToElement(element) {
 
-    musicPlayer.classList.add(
-      "show"
-    );
-
-  }
-
-
-  /*
-    Efek masuk.
-  */
-
-  pinkFlash();
-
-  heartBurst();
-
-
-  /*
-    Coba nyalakan musik.
-
-    Karena fungsi ini dipanggil
-    langsung dari klik user,
-    browser mengizinkan audio
-    jauh lebih konsisten.
-  */
-
-  if (music) {
-
-    music.volume = 0.45;
-
-    music.loop = true;
-
-
-    try {
-
-      const playPromise =
-        music.play();
-
-
-      if (
-        playPromise &&
-        typeof playPromise.catch ===
-        "function"
-      ) {
-
-        playPromise.catch(
-          function (error) {
-
-            console.error(
-              "Musik gagal dimainkan:",
-              error
-            );
-
-
-            if (musicStatus) {
-
-              musicStatus.textContent =
-                "tap to play";
-
-            }
-
-          }
-        );
-
-      }
-
+    if (!element) {
+      return;
     }
 
-    catch (error) {
-
-      console.error(
-        "Music error:",
-        error
-      );
-
-
-      if (musicStatus) {
-
-        musicStatus.textContent =
-          "tap to play";
-
-      }
-
-    }
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
 
   }
 
 
-  /*
-    Hapus welcome dari DOM
-    setelah animasi selesai.
-
-    Jadi overlay mustahil
-    masih menutupi website.
-  */
-
-  setTimeout(
-    function () {
-
-      if (welcomeScreen) {
-
-        welcomeScreen.style.display =
-          "none";
-
-      }
-
-    },
-    800
-  );
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-}
-
-
-/* =========================================
-   ENTER BUTTON
-========================================= */
-
-if (enterButton) {
-
-  enterButton.addEventListener(
-    "click",
-    enterWebsite
-  );
-
-}
-
-
-/* =========================================
-   MUSIC TOGGLE
-========================================= */
-
-function toggleMusic() {
-
-  if (!music) {
-
-    return;
-
-  }
-
-
-  /*
-    Kalau sedang pause:
-    PLAY.
-  */
-
-  if (music.paused) {
-
-    music.volume = 0.45;
-
-
-    try {
-
-      const playPromise =
-        music.play();
-
-
-      if (
-        playPromise &&
-        typeof playPromise.catch ===
-        "function"
-      ) {
-
-        playPromise.catch(
-          function (error) {
-
-            console.error(
-              "Gagal play audio:",
-              error
-            );
-
-
-            if (musicStatus) {
-
-              musicStatus.textContent =
-                "audio error";
-
-            }
-
-          }
-        );
-
-      }
-
-    }
-
-    catch (error) {
-
-      console.error(
-        error
-      );
-
-    }
-
-  }
-
-
-  /*
-    Kalau sedang play:
-    PAUSE.
-  */
-
-  else {
-
-    music.pause();
-
-  }
-
-}
-
-
-/* =========================================
-   MUSIC BUTTON
-========================================= */
-
-if (musicButton) {
-
-  musicButton.addEventListener(
-    "click",
-    toggleMusic
-  );
-
-}
-
-
-/* =========================================
-   PARTICLES
-========================================= */
-
-function createParticle() {
-
-  if (!particles) {
-
-    return;
-
-  }
-
-
-  const particle =
-    document.createElement(
-      "span"
-    );
-
-
-  particle.className =
-    "particle";
-
-
-  const symbols = [
-
-    "♡",
-
-    "♥",
-
-    "✦",
-
-    "·"
-
-  ];
-
-
-  particle.textContent =
-    symbols[
-      Math.floor(
-        Math.random() *
-        symbols.length
-      )
-    ];
-
-
-  particle.style.left =
-    (
-      Math.random() *
-      100
-    ) +
-    "vw";
-
-
-  particle.style.fontSize =
-    (
-      Math.random() *
-      11 +
-      7
-    ) +
-    "px";
-
-
-  particle.style.animationDuration =
-    (
-      Math.random() *
-      7 +
-      8
-    ) +
-    "s";
-
-
-  particles.appendChild(
-    particle
-  );
-
-
-  setTimeout(
-    function () {
-
-      particle.remove();
-
-    },
-    16000
-  );
-
-}
-
-
-/*
-  Background particles.
-*/
-
-setInterval(
-  createParticle,
-  650
-);
-
-
-/* =========================================
-   START STORY
-========================================= */
-
-function startStory() {
-
-  if (storyStarted) {
-
-    return;
-
-  }
-
-
-  storyStarted = true;
-
-
-  if (startButton) {
-
-    startButton.textContent =
-      "bentar ya... ♡";
-
-
-    startButton.style.opacity =
-      ".45";
-
-
-    startButton.style.pointerEvents =
-      "none";
-
-  }
-
-
-  const texts = [
-
-    "sebenernya aku bingung mulai dari mana.",
-
-    "karena kadang satu kata maaf aja rasanya nggak cukup.",
-
-    "jadi aku nyoba nyampeinnya dengan cara aku sendiri.",
-
-    "aku cuma mau mendekat dan bilang sesuatu ke kamu."
-
-  ];
-
-
-  let index = 0;
-
-
-  function nextText() {
-
-    const storyText =
-      document.getElementById(
-        "storyText"
-      );
-
+  function showStoryText(text) {
 
     if (!storyText) {
-
-      startWalking();
-
       return;
-
     }
-
 
     storyText.classList.remove(
       "active"
     );
 
+    setTimeout(() => {
 
-    setTimeout(
-      function () {
+      storyText.textContent =
+        text;
 
-        storyText.textContent =
-          texts[index];
-
-
-        storyText.classList.add(
-          "active"
-        );
-
-
-        index++;
-
-
-        if (
-          index <
-          texts.length
-        ) {
-
-          setTimeout(
-            nextText,
-            2100
-          );
-
-        }
-
-        else {
-
-          setTimeout(
-            function () {
-
-              storyText.classList.remove(
-                "active"
-              );
-
-
-              startWalking();
-
-            },
-            1900
-          );
-
-        }
-
-      },
-      400
-    );
-
-  }
-
-
-  nextText();
-
-}
-
-
-/* =========================================
-   START BUTTON
-========================================= */
-
-if (startButton) {
-
-  startButton.addEventListener(
-    "click",
-    startStory
-  );
-
-}
-
-
-/* =========================================
-   WALKING
-========================================= */
-
-function startWalking() {
-
-  const scene =
-    document.getElementById(
-      "openingScene"
-    );
-
-
-  if (!scene) {
-
-    openFlowerQuestion();
-
-    return;
-
-  }
-
-
-  /*
-    Husen mulai jalan.
-  */
-
-  scene.classList.add(
-    "walking"
-  );
-
-
-  /*
-    Mendekat.
-  */
-
-  setTimeout(
-    function () {
-
-      scene.classList.add(
-        "together"
+      storyText.classList.add(
+        "active"
       );
 
-    },
-    300
+    }, 220);
+
+  }
+
+
+  function hideStoryText() {
+
+    if (!storyText) {
+      return;
+    }
+
+    storyText.classList.remove(
+      "active"
+    );
+
+  }
+
+
+  function flashPink() {
+
+    if (!pinkFlash) {
+      return;
+    }
+
+    pinkFlash.classList.remove(
+      "flash"
+    );
+
+    void pinkFlash.offsetWidth;
+
+    pinkFlash.classList.add(
+      "flash"
+    );
+
+  }
+
+
+  /* ==================================================
+     WELCOME
+  ================================================== */
+
+  document.body.classList.add(
+    "locked"
   );
 
 
-  /*
-    Berhenti jalan.
-  */
+  enterButton?.addEventListener(
+    "click",
+    async () => {
 
-  setTimeout(
-    function () {
+      welcomeScreen?.classList.add(
+        "hide"
+      );
 
-      scene.classList.remove(
+      document.body.classList.remove(
+        "locked"
+      );
+
+      createHeartBurst(
+        window.innerWidth / 2,
+        window.innerHeight / 2,
+        10
+      );
+
+      await wait(500);
+
+      scrollToElement(
+        opening
+      );
+
+    }
+  );
+
+
+  /* ==================================================
+     BACKGROUND PARTICLES
+  ================================================== */
+
+  function createParticle() {
+
+    if (!particles) {
+      return;
+    }
+
+
+    const particle =
+      document.createElement("span");
+
+
+    const symbols = [
+      "♡",
+      "♥",
+      "♡",
+      "♡"
+    ];
+
+
+    particle.className =
+      "particle";
+
+
+    particle.textContent =
+      symbols[
+        Math.floor(
+          Math.random() *
+          symbols.length
+        )
+      ];
+
+
+    particle.style.left =
+      `${Math.random() * 100}%`;
+
+
+    particle.style.fontSize =
+      `${
+        9 +
+        Math.random() * 12
+      }px`;
+
+
+    particle.style.animationDuration =
+      `${
+        7 +
+        Math.random() * 5
+      }s`;
+
+
+    particle.style.opacity =
+      `${
+        0.25 +
+        Math.random() * 0.45
+      }`;
+
+
+    particles.appendChild(
+      particle
+    );
+
+
+    setTimeout(() => {
+
+      particle.remove();
+
+    }, 12500);
+
+  }
+
+
+  setInterval(
+    createParticle,
+    850
+  );
+
+
+  for (
+    let i = 0;
+    i < 7;
+    i++
+  ) {
+
+    setTimeout(
+      createParticle,
+      i * 250
+    );
+
+  }
+
+
+  /* ==================================================
+     HEART BURST
+  ================================================== */
+
+  function createHeartBurst(
+    x,
+    y,
+    amount = 14
+  ) {
+
+    const symbols = [
+      "♡",
+      "♥",
+      "♡"
+    ];
+
+
+    for (
+      let i = 0;
+      i < amount;
+      i++
+    ) {
+
+      const heart =
+        document.createElement("span");
+
+
+      heart.className =
+        "burst-heart";
+
+
+      heart.textContent =
+        symbols[
+          Math.floor(
+            Math.random() *
+            symbols.length
+          )
+        ];
+
+
+      document.body.appendChild(
+        heart
+      );
+
+
+      const angle =
+        (
+          Math.PI * 2 /
+          amount
+        ) * i;
+
+
+      const distance =
+        65 +
+        Math.random() * 95;
+
+
+      const moveX =
+        Math.cos(angle) *
+        distance;
+
+
+      const moveY =
+        Math.sin(angle) *
+        distance;
+
+
+      heart.style.left =
+        `${x}px`;
+
+      heart.style.top =
+        `${y}px`;
+
+
+      heart.animate(
+
+        [
+          {
+            transform:
+              "translate(-50%, -50%) scale(0.3)",
+
+            opacity: 0
+          },
+
+          {
+            opacity: 1,
+
+            offset: 0.18
+          },
+
+          {
+            transform:
+              `translate(
+                calc(-50% + ${moveX}px),
+                calc(-50% + ${moveY}px)
+              )
+              scale(${
+                0.8 +
+                Math.random() * 0.7
+              })
+              rotate(${
+                -30 +
+                Math.random() * 60
+              }deg)`,
+
+            opacity: 0
+          }
+        ],
+
+        {
+          duration:
+            900 +
+            Math.random() * 550,
+
+          easing:
+            "cubic-bezier(.17,.67,.35,1)",
+
+          fill:
+            "forwards"
+        }
+
+      );
+
+
+      setTimeout(() => {
+
+        heart.remove();
+
+      }, 1600);
+
+    }
+
+  }
+
+
+  /* ==================================================
+     START STORY
+  ================================================== */
+
+  startButton?.addEventListener(
+    "click",
+    async () => {
+
+      if (storyStarted) {
+        return;
+      }
+
+
+      storyStarted = true;
+
+
+      startButton.disabled =
+        true;
+
+
+      startButton.style.opacity =
+        "0.55";
+
+
+      startButton.style.pointerEvents =
+        "none";
+
+
+      scrollToElement(
+        openingScene
+      );
+
+
+      await wait(500);
+
+
+      showStoryText(
+        "jadi... aku datang bawa sesuatu kecil buat kamu."
+      );
+
+
+      await wait(1500);
+
+
+      openingScene?.classList.add(
         "walking"
       );
 
-    },
-    2600
+
+      showStoryText(
+        "bentar, aku kesana dulu..."
+      );
+
+
+      await wait(450);
+
+
+      openingScene?.classList.add(
+        "together"
+      );
+
+
+      await wait(1200);
+
+
+      openingScene?.classList.remove(
+        "walking"
+      );
+
+
+      showStoryText(
+        "ini buat kamu 🌷"
+      );
+
+
+      openingScene?.classList.add(
+        "giving-flower"
+      );
+
+
+      await wait(1200);
+
+
+      const sceneRect =
+        openingScene?.getBoundingClientRect();
+
+
+      if (sceneRect) {
+
+        createHeartBurst(
+          sceneRect.left +
+          sceneRect.width / 2,
+
+          sceneRect.top +
+          sceneRect.height / 2,
+
+          8
+        );
+
+      }
+
+
+      await wait(1400);
+
+
+      showStoryText(
+        "terus... ada satu hal lagi."
+      );
+
+
+      await wait(1400);
+
+
+      hideStoryText();
+
+
+      flowerSection?.classList.add(
+        "show"
+      );
+
+
+      await wait(250);
+
+
+      scrollToElement(
+        flowerSection
+      );
+
+    }
   );
 
 
-  /*
-    Buka pertanyaan.
-  */
+  /* ==================================================
+     NO BUTTON
+  ================================================== */
 
-  setTimeout(
-    openFlowerQuestion,
-    4200
+  const noMessages = [
+
+    "yahh 🥲",
+
+    "masih gak?",
+
+    "aku minta maaf beneran...",
+
+    "bunganya masih aku pegang 🌷",
+
+    "maafinnya makin gede tuh 😭",
+
+    "oke... tombol gak-nya mulai menyerah.",
+
+    "udah kalah dia."
+
+  ];
+
+
+  noButton?.addEventListener(
+    "click",
+    () => {
+
+      if (
+        apologyAccepted ||
+        noButtonRemoved
+      ) {
+        return;
+      }
+
+
+      noCount++;
+
+
+      const yesScale =
+        Math.min(
+          2.55,
+          1 + noCount * 0.28
+        );
+
+
+      const noScale =
+        Math.max(
+          0.45,
+          1 - noCount * 0.11
+        );
+
+
+      yesButton.style.transform =
+        `scale(${yesScale})`;
+
+
+      noButton.style.transform =
+        `scale(${noScale})`;
+
+
+      const messageIndex =
+        Math.min(
+          noCount - 1,
+          noMessages.length - 1
+        );
+
+
+      noMessage.textContent =
+        noMessages[
+          messageIndex
+        ];
+
+
+      if (noCount === 2) {
+
+        noButton.style.opacity =
+          "0.82";
+
+      }
+
+
+      if (noCount === 3) {
+
+        noButton.style.opacity =
+          "0.65";
+
+      }
+
+
+      if (noCount === 4) {
+
+        noButton.style.opacity =
+          "0.45";
+
+      }
+
+
+      /*
+        Setelah YES sudah sangat besar,
+        tombol NO menyerah.
+      */
+
+      if (noCount >= 5) {
+
+        noButtonRemoved =
+          true;
+
+
+        noMessage.textContent =
+          "oke... pilihan satunya menyerah 😭";
+
+
+        noButton.classList.add(
+          "disappear"
+        );
+
+
+        yesButton.style.transform =
+          "scale(2.55)";
+
+
+        setTimeout(() => {
+
+          noButton.style.display =
+            "none";
+
+        }, 450);
+
+      }
+
+    }
   );
 
-}
+
+  /* ==================================================
+     YES / ACCEPT APOLOGY
+  ================================================== */
+
+  yesButton?.addEventListener(
+    "click",
+    async () => {
+
+      if (apologyAccepted) {
+        return;
+      }
 
 
-/* =========================================
-   FLOWER QUESTION
-========================================= */
-
-function openFlowerQuestion() {
-
-  const section =
-    document.getElementById(
-      "flowerSection"
-    );
+      apologyAccepted =
+        true;
 
 
-  if (!section) {
-
-    return;
-
-  }
+      yesButton.disabled =
+        true;
 
 
-  section.style.display =
-    "flex";
+      if (
+        noButton &&
+        !noButtonRemoved
+      ) {
+
+        noButton.classList.add(
+          "disappear"
+        );
+
+      }
 
 
-  section.scrollIntoView({
+      yesButton.style.transform =
+        "scale(1.08)";
 
-    behavior:
-      "smooth",
 
-    block:
-      "start"
+      yesButton.textContent =
+        "makasih ♡";
+
+
+      noMessage.textContent =
+        "makasih udah mau dengerin aku :)";
+
+
+      flashPink();
+
+
+      const buttonRect =
+        yesButton.getBoundingClientRect();
+
+
+      createHeartBurst(
+        buttonRect.left +
+        buttonRect.width / 2,
+
+        buttonRect.top +
+        buttonRect.height / 2,
+
+        18
+      );
+
+
+      await wait(900);
+
+
+      hugSection?.classList.add(
+        "show"
+      );
+
+
+      await wait(200);
+
+
+      scrollToElement(
+        hugSection
+      );
+
+
+      await wait(800);
+
+
+      hugScene?.classList.add(
+        "hugging"
+      );
+
+
+      await wait(800);
+
+
+      const hugRect =
+        hugScene?.getBoundingClientRect();
+
+
+      if (hugRect) {
+
+        createHeartBurst(
+          hugRect.left +
+          hugRect.width / 2,
+
+          hugRect.top +
+          hugRect.height * 0.48,
+
+          12
+        );
+
+      }
+
+    }
+  );
+
+
+  /* ==================================================
+     OPEN LETTER
+  ================================================== */
+
+  openLetterButton?.addEventListener(
+    "click",
+    async () => {
+
+      openLetterButton.disabled =
+        true;
+
+
+      flashPink();
+
+
+      letter?.classList.add(
+        "show"
+      );
+
+
+      await wait(250);
+
+
+      scrollToElement(
+        letter
+      );
+
+
+      await wait(500);
+
+
+      const paragraphs =
+        document.querySelectorAll(
+          ".letter-card p"
+        );
+
+
+      paragraphs.forEach(
+        (paragraph, index) => {
+
+          setTimeout(() => {
+
+            paragraph.classList.add(
+              "reveal"
+            );
+
+          }, index * 260);
+
+        }
+      );
+
+    }
+  );
+
+
+  /* ==================================================
+     BEFORE END
+  ================================================== */
+
+  beforeEndButton?.addEventListener(
+    "click",
+    async () => {
+
+      beforeEndButton.disabled =
+        true;
+
+
+      beforeEnd?.classList.add(
+        "show"
+      );
+
+
+      await wait(250);
+
+
+      scrollToElement(
+        beforeEnd
+      );
+
+
+      await wait(450);
+
+
+      const lines =
+        document.querySelectorAll(
+          ".message-line"
+        );
+
+
+      lines.forEach(
+        (line, index) => {
+
+          setTimeout(() => {
+
+            line.classList.add(
+              "reveal"
+            );
+
+          }, index * 500);
+
+        }
+      );
+
+    }
+  );
+
+
+  /* ==================================================
+     FINAL
+  ================================================== */
+
+  finalButton?.addEventListener(
+    "click",
+    async () => {
+
+      finalButton.disabled =
+        true;
+
+
+      flashPink();
+
+
+      final?.classList.add(
+        "show"
+      );
+
+
+      await wait(250);
+
+
+      scrollToElement(
+        final
+      );
+
+
+      await wait(700);
+
+
+      finalScene?.classList.add(
+        "final-together"
+      );
+
+
+      await wait(1000);
+
+
+      const finalRect =
+        finalScene?.getBoundingClientRect();
+
+
+      if (finalRect) {
+
+        createHeartBurst(
+          finalRect.left +
+          finalRect.width / 2,
+
+          finalRect.top +
+          finalRect.height * 0.45,
+
+          14
+        );
+
+      }
+
+
+      await wait(500);
+
+
+      document
+        .querySelector(
+          ".final-message"
+        )
+        ?.classList.add(
+          "reveal"
+        );
+
+
+      await wait(900);
+
+
+      document
+        .querySelector(
+          ".signature"
+        )
+        ?.classList.add(
+          "reveal"
+        );
+
+    }
+  );
+
+
+});t"
 
   });
 
