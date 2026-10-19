@@ -1,620 +1,1413 @@
+"use strict";
+
+
+/* =====================================================
+   MA-AFIN AKU SAYANG V2
+   SCRIPT BARU TOTAL
+===================================================== */
+
 document.addEventListener("DOMContentLoaded", function () {
 
-  /* =====================================================
-     ELEMENT
-  ===================================================== */
-
-  const welcomeScreen = document.getElementById("welcomeScreen");
-  const enterButton = document.getElementById("enterButton");
-
-  const startButton = document.getElementById("startButton");
-  const openingScene = document.getElementById("openingScene");
-  const storyText = document.getElementById("storyText");
-
-  const flowerSection = document.getElementById("flowerSection");
-  const yesButton = document.getElementById("yesButton");
-  const noButton = document.getElementById("noButton");
-  const noMessage = document.getElementById("noMessage");
-
-  const hugSection = document.getElementById("hugSection");
-  const hugScene = document.getElementById("hugScene");
-  const openLetterButton = document.getElementById("openLetterButton");
-
-  const letter = document.getElementById("letter");
-  const beforeEndButton = document.getElementById("beforeEndButton");
-
-  const beforeEnd = document.getElementById("beforeEnd");
-  const finalButton = document.getElementById("finalButton");
-
-  const final = document.getElementById("final");
-  const finalScene = document.getElementById("finalScene");
-
-  const particles = document.getElementById("particles");
-  const pinkFlash = document.getElementById("pinkFlash");
+  console.log("SENN V2: script loaded");
 
 
-  /* =====================================================
+  /* ===================================================
+     ELEMENTS
+  =================================================== */
+
+  const welcome =
+    document.getElementById("welcome");
+
+  const enterBtn =
+    document.getElementById("enterBtn");
+
+
+  const startBtn =
+    document.getElementById("startBtn");
+
+  const openingScene =
+    document.getElementById("openingScene");
+
+  const storyText =
+    document.getElementById("storyText");
+
+
+  const apology =
+    document.getElementById("apology");
+
+  const yesBtn =
+    document.getElementById("yesBtn");
+
+  const noBtn =
+    document.getElementById("noBtn");
+
+  const rejectText =
+    document.getElementById("rejectText");
+
+
+  const hug =
+    document.getElementById("hug");
+
+  const hugScene =
+    document.getElementById("hugScene");
+
+  const letterBtn =
+    document.getElementById("letterBtn");
+
+
+  const letter =
+    document.getElementById("letter");
+
+  const continueBtn =
+    document.getElementById("continueBtn");
+
+
+  const more =
+    document.getElementById("more");
+
+  const finalBtn =
+    document.getElementById("finalBtn");
+
+
+  const final =
+    document.getElementById("final");
+
+  const finalScene =
+    document.getElementById("finalScene");
+
+  const finalMessage =
+    document.getElementById("finalMessage");
+
+  const signature =
+    document.getElementById("signature");
+
+
+  const particles =
+    document.getElementById("particles");
+
+  const flash =
+    document.getElementById("flash");
+
+
+  /* ===================================================
      STATE
-  ===================================================== */
+  =================================================== */
 
   let storyRunning = false;
+
   let apologyAccepted = false;
-  let noCount = 0;
+
+  let rejectCount = 0;
+
+  let noRemoved = false;
 
 
-  /* =====================================================
-     HELPER
-  ===================================================== */
+  /* ===================================================
+     BASIC HELPERS
+  =================================================== */
 
   function wait(ms) {
+
     return new Promise(function (resolve) {
+
       setTimeout(resolve, ms);
+
     });
+
   }
 
 
-  function scrollToSection(element) {
+  function scrollToElement(element) {
 
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
-    element.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
+
+    try {
+
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    } catch (error) {
+
+      element.scrollIntoView();
+
+    }
 
   }
 
 
   function showSection(element) {
 
-    if (!element) return;
+    if (!element) {
+      return;
+    }
+
 
     element.classList.add("show");
 
   }
 
 
-  function setStory(text) {
+  /* ===================================================
+     STORY TEXT
+  =================================================== */
 
-    if (!storyText) return;
+  function showStory(text) {
 
-    storyText.classList.remove("active");
-
-    setTimeout(function () {
-
-      storyText.textContent = text;
-      storyText.classList.add("active");
-
-    }, 150);
-
-  }
-
-
-  function flash() {
-
-    if (!pinkFlash) return;
-
-    pinkFlash.classList.remove("flash");
-
-    void pinkFlash.offsetWidth;
-
-    pinkFlash.classList.add("flash");
-
-  }
-
-
-  /* =====================================================
-     WELCOME
-  ===================================================== */
-
-  document.body.classList.add("locked");
-
-
-  if (enterButton) {
-
-    enterButton.onclick = function () {
-
-      document.body.classList.remove("locked");
-
-      if (welcomeScreen) {
-
-        welcomeScreen.classList.add("hide");
-
-        setTimeout(function () {
-          welcomeScreen.style.display = "none";
-        }, 700);
-
-      }
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    };
-
-  }
-
-
-  /* =====================================================
-     PARTICLES
-  ===================================================== */
-
-  function makeParticle() {
-
-    if (!particles) return;
-
-    if (particles.children.length > 20) {
+    if (!storyText) {
       return;
     }
 
 
-    const particle = document.createElement("span");
-
-    particle.className = "particle";
-
-    particle.textContent =
-      Math.random() > 0.75 ? "♥" : "♡";
-
-    particle.style.left =
-      Math.random() * 100 + "%";
-
-    particle.style.fontSize =
-      9 + Math.random() * 10 + "px";
-
-    particle.style.animationDuration =
-      7 + Math.random() * 4 + "s";
-
-
-    particles.appendChild(particle);
+    storyText.classList.remove("show");
 
 
     setTimeout(function () {
-      particle.remove();
-    }, 12000);
+
+      storyText.textContent = text;
+
+      storyText.classList.add("show");
+
+    }, 120);
 
   }
 
 
-  setInterval(makeParticle, 1000);
+  function hideStory() {
+
+    if (!storyText) {
+      return;
+    }
 
 
-  /* =====================================================
-     HEART BURST
-  ===================================================== */
+    storyText.classList.remove("show");
 
-  function heartBurst(element, amount = 12) {
-
-    if (!element) return;
+  }
 
 
-    const rect =
-      element.getBoundingClientRect();
+  /* ===================================================
+     SCREEN FLASH
+  =================================================== */
+
+  function pinkFlash() {
+
+    if (!flash) {
+      return;
+    }
 
 
-    const centerX =
-      rect.left + rect.width / 2;
-
-    const centerY =
-      rect.top + rect.height / 2;
+    flash.classList.remove("active");
 
 
-    for (let i = 0; i < amount; i++) {
+    /*
+      Memaksa browser restart animasi.
+    */
 
-      const heart =
-        document.createElement("span");
-
-
-      heart.className =
-        "burst-heart";
+    void flash.offsetWidth;
 
 
-      heart.textContent =
-        i % 3 === 0 ? "♥" : "♡";
+    flash.classList.add("active");
 
 
-      heart.style.left =
-        centerX + "px";
+    setTimeout(function () {
 
-      heart.style.top =
-        centerY + "px";
+      flash.classList.remove("active");
 
+    }, 700);
 
-      document.body.appendChild(heart);
-
-
-      const angle =
-        Math.PI * 2 * i / amount;
+  }
 
 
-      const distance =
-        60 + Math.random() * 80;
+  /* ===================================================
+     WELCOME
+  =================================================== */
+
+  /*
+    Body dikunci saat welcome tampil.
+  */
+
+  document.body.classList.add("locked");
 
 
-      const x =
-        Math.cos(angle) * distance;
+  if (enterBtn) {
 
-      const y =
-        Math.sin(angle) * distance;
+    enterBtn.addEventListener(
+      "click",
+      function () {
 
-
-      if (heart.animate) {
-
-        heart.animate(
-          [
-            {
-              transform:
-                "translate(-50%, -50%) scale(.3)",
-              opacity: 0
-            },
-
-            {
-              transform:
-                "translate(-50%, -50%) scale(1)",
-              opacity: 1,
-              offset: 0.2
-            },
-
-            {
-              transform:
-                `translate(
-                  calc(-50% + ${x}px),
-                  calc(-50% + ${y}px)
-                )
-                scale(1.2)`,
-              opacity: 0
-            }
-          ],
-          {
-            duration: 1100,
-            easing: "ease-out",
-            fill: "forwards"
-          }
+        console.log(
+          "SENN V2: enter clicked"
         );
 
+
+        /*
+          Yang PALING penting dilakukan dulu.
+          Buka halaman.
+        */
+
+        document.body.classList.remove(
+          "locked"
+        );
+
+
+        if (welcome) {
+
+          welcome.classList.add(
+            "hide"
+          );
+
+
+          /*
+            Setelah fade selesai,
+            overlay dibuang total.
+          */
+
+          setTimeout(function () {
+
+            welcome.style.display =
+              "none";
+
+          }, 800);
+
+        }
+
+
+        /*
+          Scroll kembali ke opening.
+        */
+
+        setTimeout(function () {
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+
+        }, 150);
+
+      }
+    );
+
+  } else {
+
+    console.error(
+      "SENN V2 ERROR: #enterBtn tidak ditemukan"
+    );
+
+  }
+
+
+  /* ===================================================
+     BACKGROUND PARTICLES
+  =================================================== */
+
+  function createParticle() {
+
+    /*
+      Kalau partikel error,
+      tombol lain tidak boleh ikut mati.
+    */
+
+    try {
+
+      if (!particles) {
+        return;
       }
 
 
+      /*
+        Jangan biarkan DOM dipenuhi
+        ratusan hati.
+      */
+
+      if (
+        particles.children.length >= 24
+      ) {
+        return;
+      }
+
+
+      const particle =
+        document.createElement("span");
+
+
+      particle.className =
+        "particle";
+
+
+      const random =
+        Math.random();
+
+
+      particle.textContent =
+        random > 0.78
+          ? "♥"
+          : "♡";
+
+
+      particle.style.left =
+        (
+          Math.random() * 100
+        ) + "%";
+
+
+      particle.style.fontSize =
+        (
+          9 +
+          Math.random() * 11
+        ) + "px";
+
+
+      particle.style.animationDuration =
+        (
+          7 +
+          Math.random() * 5
+        ) + "s";
+
+
+      particle.style.opacity =
+        (
+          0.3 +
+          Math.random() * 0.5
+        );
+
+
+      particles.appendChild(
+        particle
+      );
+
+
       setTimeout(function () {
-        heart.remove();
-      }, 1300);
+
+        if (
+          particle &&
+          particle.parentNode
+        ) {
+
+          particle.remove();
+
+        }
+
+      }, 13000);
+
+
+    } catch (error) {
+
+      console.error(
+        "Particle error:",
+        error
+      );
 
     }
 
   }
 
 
-  /* =====================================================
-     START STORY
-  ===================================================== */
+  /*
+    Beberapa partikel saat load.
+  */
 
-  if (startButton) {
+  for (
+    let i = 0;
+    i < 7;
+    i++
+  ) {
 
-    startButton.onclick = async function () {
-
-      if (storyRunning) return;
-
-      storyRunning = true;
-
-
-      startButton.disabled = true;
-
-      startButton.style.opacity = ".55";
-
-
-      /*
-        1. MULAI CERITA
-      */
-
-      setStory(
-        "jadi... aku datang bawa sesuatu kecil buat kamu."
-      );
-
-
-      scrollToSection(openingScene);
-
-
-      await wait(1200);
-
-
-      /*
-        2. HUSEN JALAN
-      */
-
-      if (openingScene) {
-
-        openingScene.classList.add(
-          "walking"
-        );
-
-      }
-
-
-      setStory(
-        "bentar, aku kesana dulu..."
-      );
-
-
-      await wait(400);
-
-
-      /*
-        3. MENDEKAT KE IKE
-      */
-
-      if (openingScene) {
-
-        openingScene.classList.add(
-          "together"
-        );
-
-      }
-
-
-      await wait(1300);
-
-
-      /*
-        4. BERHENTI JALAN
-      */
-
-      if (openingScene) {
-
-        openingScene.classList.remove(
-          "walking"
-        );
-
-      }
-
-
-      /*
-        5. KASIH BUNGA
-      */
-
-      setStory(
-        "ini buat kamu 🌷"
-      );
-
-
-      if (openingScene) {
-
-        openingScene.classList.add(
-          "giving-flower"
-        );
-
-      }
-
-
-      await wait(1000);
-
-
-      heartBurst(
-        openingScene,
-        8
-      );
-
-
-      await wait(1100);
-
-
-      /*
-        6. LANJUT KE PERTANYAAN
-      */
-
-      setStory(
-        "terus... aku mau nanya sesuatu."
-      );
-
-
-      await wait(1200);
-
-
-      /*
-        7. TAMPILKAN SECTION MAAF
-      */
-
-      showSection(
-        flowerSection
-      );
-
-
-      await wait(200);
-
-
-      scrollToSection(
-        flowerSection
-      );
-
-
-      storyText?.classList.remove(
-        "active"
-      );
-
-    };
+    setTimeout(
+      createParticle,
+      i * 250
+    );
 
   }
 
 
-  /* =====================================================
-     TOMBOL GAK
-  ===================================================== */
-
-  const rejectMessages = [
-    "yahh 🥲",
-    "masih gak?",
-    "aku minta maaf beneran...",
-    "bunganya masih aku pegang 🌷",
-    "maafinnya udah gede banget 😭"
-  ];
+  setInterval(
+    createParticle,
+    950
+  );
 
 
-  if (noButton && yesButton) {
+  /* ===================================================
+     HEART BURST
+  =================================================== */
 
-    noButton.onclick = function () {
+  function heartBurst(
+    target,
+    amount
+  ) {
 
-      if (apologyAccepted) return;
+    try {
 
-
-      noCount++;
-
-
-      /*
-        MA-AFIN MEMBESAR
-      */
-
-      const yesScale =
-        Math.min(
-          2.6,
-          1 + noCount * 0.32
-        );
-
-
-      yesButton.style.transform =
-        `scale(${yesScale})`;
-
-
-      /*
-        GAK MENGECIL
-      */
-
-      const noScale =
-        Math.max(
-          0.45,
-          1 - noCount * 0.12
-        );
-
-
-      noButton.style.transform =
-        `scale(${noScale})`;
-
-
-      /*
-        PESAN
-      */
-
-      if (noMessage) {
-
-        const index =
-          Math.min(
-            noCount - 1,
-            rejectMessages.length - 1
-          );
-
-
-        noMessage.textContent =
-          rejectMessages[index];
-
+      if (!target) {
+        return;
       }
 
 
-      /*
-        OPACITY TOMBOL GAK
-      */
+      amount =
+        amount || 12;
 
-      noButton.style.opacity =
-        Math.max(
-          0.35,
-          1 - noCount * 0.13
+
+      const rect =
+        target.getBoundingClientRect();
+
+
+      const centerX =
+        rect.left +
+        rect.width / 2;
+
+
+      const centerY =
+        rect.top +
+        rect.height / 2;
+
+
+      for (
+        let i = 0;
+        i < amount;
+        i++
+      ) {
+
+        const heart =
+          document.createElement(
+            "span"
+          );
+
+
+        heart.className =
+          "burst-heart";
+
+
+        heart.textContent =
+          i % 3 === 0
+            ? "♥"
+            : "♡";
+
+
+        heart.style.left =
+          centerX + "px";
+
+
+        heart.style.top =
+          centerY + "px";
+
+
+        document.body.appendChild(
+          heart
         );
 
 
-      /*
-        SUDAH MENTOK
-      */
-
-      if (noCount >= 5) {
-
-        yesButton.style.transform =
-          "scale(2.6)";
+        const angle =
+          (
+            Math.PI *
+            2 *
+            i
+          ) / amount;
 
 
-        noButton.classList.add(
-          "disappear"
-        );
+        const distance =
+          55 +
+          Math.random() *
+          85;
 
 
-        noButton.disabled = true;
+        const moveX =
+          Math.cos(angle) *
+          distance;
 
 
-        if (noMessage) {
+        const moveY =
+          Math.sin(angle) *
+          distance;
 
-          noMessage.textContent =
-            "oke... tombol gak-nya nyerah 😭";
+
+        /*
+          Browser modern:
+          animasikan burst.
+        */
+
+        if (
+          typeof heart.animate ===
+          "function"
+        ) {
+
+          heart.animate(
+
+            [
+              {
+                transform:
+                  "translate(-50%, -50%) scale(.3)",
+
+                opacity: 0
+              },
+
+              {
+                transform:
+                  "translate(-50%, -50%) scale(1)",
+
+                opacity: 1,
+
+                offset: 0.2
+              },
+
+              {
+                transform:
+                  "translate(" +
+                  "calc(-50% + " +
+                  moveX +
+                  "px)," +
+                  "calc(-50% + " +
+                  moveY +
+                  "px)" +
+                  ") scale(1.15)",
+
+                opacity: 0
+              }
+            ],
+
+            {
+              duration:
+                900 +
+                Math.random() *
+                400,
+
+              easing:
+                "ease-out",
+
+              fill:
+                "forwards"
+            }
+
+          );
 
         }
 
 
         setTimeout(function () {
 
-          noButton.style.display =
-            "none";
+          if (
+            heart &&
+            heart.parentNode
+          ) {
 
-        }, 450);
+            heart.remove();
+
+          }
+
+        }, 1500);
 
       }
 
-    };
+
+    } catch (error) {
+
+      /*
+        Burst cuma kosmetik.
+        Kalau gagal, flow tetap lanjut.
+      */
+
+      console.error(
+        "Heart burst error:",
+        error
+      );
+
+    }
 
   }
 
 
-  /* =====================================================
-     MAAFIN
-  ===================================================== */
+  /* ===================================================
+     START STORY
+  =================================================== */
 
-  if (yesButton) {
+  if (startBtn) {
 
-    yesButton.onclick = async function () {
+    startBtn.addEventListener(
+      "click",
+      async function () {
 
-      if (apologyAccepted) return;
+        /*
+          Cegah double click.
+        */
+
+        if (storyRunning) {
+          return;
+        }
 
 
-      apologyAccepted = true;
+        storyRunning = true;
 
 
-      yesButton.disabled = true;
-
-
-      /*
-        Hilangkan tombol gak.
-      */
-
-      if (noButton) {
-
-        noButton.classList.add(
-          "disappear"
+        console.log(
+          "SENN V2: story started"
         );
 
 
-        noButton.disabled = true;
+        startBtn.disabled = true;
+
+        startBtn.style.opacity =
+          "0.55";
 
 
-        setTimeout(function () {
+        /*
+          SCROLL KE KARAKTER
+        */
 
-          noButton.style.display =
-            "none";
+        scrollToElement(
+          openingScene
+        );
 
-        }, 400);
+
+        /*
+          CERITA 1
+        */
+
+        showStory(
+          "jadi... aku datang bawa sesuatu kecil buat kamu."
+        );
+
+
+        await wait(1500);
+
+
+        /*
+          HUSEN MULAI JALAN
+        */
+
+        if (openingScene) {
+
+          openingScene.classList.add(
+            "walking"
+          );
+
+        }
+
+
+        showStory(
+          "bentar, aku kesana dulu..."
+        );
+
+
+        await wait(500);
+
+
+        /*
+          POSISI HUSEN BERGERAK
+          MENDEKATI IKE
+        */
+
+        if (openingScene) {
+
+          openingScene.classList.add(
+            "together"
+          );
+
+        }
+
+
+        await wait(1700);
+
+
+        /*
+          BERHENTI JALAN
+        */
+
+        if (openingScene) {
+
+          openingScene.classList.remove(
+            "walking"
+          );
+
+        }
+
+
+        await wait(250);
+
+
+        /*
+          KASIH BUNGA
+        */
+
+        showStory(
+          "ini buat kamu 🌷"
+        );
+
+
+        if (openingScene) {
+
+          openingScene.classList.add(
+            "give-flower"
+          );
+
+        }
+
+
+        await wait(1000);
+
+
+        /*
+          HEART EFFECT
+        */
+
+        heartBurst(
+          openingScene,
+          9
+        );
+
+
+        await wait(1300);
+
+
+        /*
+          TEKS TERAKHIR
+        */
+
+        showStory(
+          "terus... aku mau nanya sesuatu."
+        );
+
+
+        await wait(1400);
+
+
+        hideStory();
+
+
+        /*
+          TAMPILKAN PERTANYAAN MAAF
+        */
+
+        showSection(
+          apology
+        );
+
+
+        await wait(200);
+
+
+        scrollToElement(
+          apology
+        );
+
+
+        console.log(
+          "SENN V2: apology opened"
+        );
 
       }
+    );
+
+  } else {
+
+    console.error(
+      "SENN V2 ERROR: #startBtn tidak ditemukan"
+    );
+
+  }
 
 
-      /*
-        YES kembali normal.
-      */
+  /* ===================================================
+     REJECT / "GAK"
+  =================================================== */
 
-      yesButton.style.transform =
-        "scale(1.08)";
+  const rejectMessages = [
+
+    "yahh 🥲",
+
+    "masih gak?",
+
+    "aku minta maaf beneran...",
+
+    "bunganya masih aku pegang 🌷",
+
+    "maafinnya udah gede banget 😭"
+
+  ];
 
 
-      yesButton.textContent =
-        "makasih ♡";
+  if (
+    noBtn &&
+    yesBtn
+  ) {
+
+    noBtn.addEventListener(
+      "click",
+      function () {
+
+        if (
+          apologyAccepted ||
+          noRemoved
+        ) {
+          return;
+        }
 
 
-      if (noMessage) {
+        rejectCount++;
 
-        noMessage.textContent =
-          "makasih udah mau dengerin aku :)";
+
+        /*
+          YES MAKIN GEDE.
+        */
+
+        const yesScale =
+          Math.min(
+            2.6,
+            1 +
+            rejectCount *
+            0.31
+          );
+
+
+        yesBtn.style.transform =
+          "scale(" +
+          yesScale +
+          ")";
+
+
+        /*
+          NO MAKIN KECIL.
+        */
+
+        const noScale =
+          Math.max(
+            0.43,
+            1 -
+            rejectCount *
+            0.12
+          );
+
+
+        noBtn.style.transform =
+          "scale(" +
+          noScale +
+          ")";
+
+
+        /*
+          NO MAKIN PUDAR.
+        */
+
+        const noOpacity =
+          Math.max(
+            0.32,
+            1 -
+            rejectCount *
+            0.13
+          );
+
+
+        noBtn.style.opacity =
+          noOpacity;
+
+
+        /*
+          TEKS REAKSI.
+        */
+
+        if (rejectText) {
+
+          const index =
+            Math.min(
+              rejectCount - 1,
+              rejectMessages.length - 1
+            );
+
+
+          rejectText.textContent =
+            rejectMessages[index];
+
+        }
+
+
+        /*
+          HEART KECIL DI YES.
+        */
+
+        heartBurst(
+          yesBtn,
+          4
+        );
+
+
+        /*
+          SETELAH 5 KALI:
+          NO MENYERAH.
+        */
+
+        if (
+          rejectCount >= 5
+        ) {
+
+          noRemoved = true;
+
+
+          yesBtn.style.transform =
+            "scale(2.6)";
+
+
+          noBtn.disabled = true;
+
+
+          noBtn.classList.add(
+            "disappear"
+          );
+
+
+          if (rejectText) {
+
+            rejectText.textContent =
+              "oke... tombol gak-nya nyerah 😭";
+
+          }
+
+
+          setTimeout(function () {
+
+            noBtn.style.display =
+              "none";
+
+          }, 450);
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     ACCEPT APOLOGY
+  =================================================== */
+
+  if (yesBtn) {
+
+    yesBtn.addEventListener(
+      "click",
+      async function () {
+
+        if (apologyAccepted) {
+          return;
+        }
+
+
+        apologyAccepted = true;
+
+
+        console.log(
+          "SENN V2: apology accepted"
+        );
+
+
+        /*
+          YES NORMAL LAGI.
+        */
+
+        yesBtn.style.transform =
+          "scale(1.08)";
+
+
+        yesBtn.textContent =
+          "makasih ♡";
+
+
+        yesBtn.disabled =
+          true;
+
+
+        /*
+          NO HILANG.
+        */
+
+        if (noBtn) {
+
+          noRemoved = true;
+
+
+          noBtn.disabled = true;
+
+
+          noBtn.classList.add(
+            "disappear"
+          );
+
+
+          setTimeout(function () {
+
+            noBtn.style.display =
+              "none";
+
+          }, 400);
+
+        }
+
+
+        if (rejectText) {
+
+          rejectText.textContent =
+            "makasih udah mau dengerin aku :)";
+
+        }
+
+
+        /*
+          EFFECT.
+        */
+
+        pinkFlash();
+
+
+        heartBurst(
+          yesBtn,
+          18
+        );
+
+
+        await wait(900);
+
+
+        /*
+          TAMPILKAN HUG SECTION.
+        */
+
+        showSection(
+          hug
+        );
+
+
+        await wait(200);
+
+
+        scrollToElement(
+          hug
+        );
+
+
+        /*
+          BIAR SECTION SUDAH
+          BENAR-BENAR KELIHATAN.
+        */
+
+        await wait(700);
+
+
+        /*
+          MULAI PELUKAN.
+        */
+
+        if (hugScene) {
+
+          hugScene.classList.add(
+            "hugging"
+          );
+
+        }
+
+
+        await wait(1000);
+
+
+        heartBurst(
+          hugScene,
+          13
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     OPEN LETTER
+  =================================================== */
+
+  if (letterBtn) {
+
+    letterBtn.addEventListener(
+      "click",
+      async function () {
+
+        console.log(
+          "SENN V2: letter opened"
+        );
+
+
+        letterBtn.disabled =
+          true;
+
+
+        pinkFlash();
+
+
+        /*
+          TAMPILKAN SURAT.
+        */
+
+        showSection(
+          letter
+        );
+
+
+        await wait(200);
+
+
+        scrollToElement(
+          letter
+        );
+
+
+        await wait(500);
+
+
+        /*
+          REVEAL PARAGRAF SATU-SATU.
+        */
+
+        const paragraphs =
+          document.querySelectorAll(
+            ".letter-card p"
+          );
+
+
+        paragraphs.forEach(
+          function (
+            paragraph,
+            index
+          ) {
+
+            setTimeout(
+              function () {
+
+                paragraph.classList.add(
+                  "reveal"
+                );
+
+              },
+
+              index * 240
+            );
+
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     CONTINUE
+  =================================================== */
+
+  if (continueBtn) {
+
+    continueBtn.addEventListener(
+      "click",
+      async function () {
+
+        console.log(
+          "SENN V2: more section opened"
+        );
+
+
+        continueBtn.disabled =
+          true;
+
+
+        showSection(
+          more
+        );
+
+
+        await wait(200);
+
+
+        scrollToElement(
+          more
+        );
+
+
+        await wait(500);
+
+
+        /*
+          REVEAL MESSAGE.
+        */
+
+        const messages =
+          document.querySelectorAll(
+            ".message"
+          );
+
+
+        messages.forEach(
+          function (
+            message,
+            index
+          ) {
+
+            setTimeout(
+              function () {
+
+                message.classList.add(
+                  "reveal"
+                );
+
+              },
+
+              index * 450
+            );
+
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     FINAL
+  =================================================== */
+
+  if (finalBtn) {
+
+    finalBtn.addEventListener(
+      "click",
+      async function () {
+
+        console.log(
+          "SENN V2: final opened"
+        );
+
+
+        finalBtn.disabled =
+          true;
+
+
+        pinkFlash();
+
+
+        /*
+          TAMPILKAN FINAL.
+        */
+
+        showSection(
+          final
+        );
+
+
+        await wait(200);
+
+
+        scrollToElement(
+          final
+        );
+
+
+        await wait(700);
+
+
+        /*
+          KARAKTER MENDEKAT.
+        */
+
+        if (finalScene) {
+
+          finalScene.classList.add(
+            "together"
+          );
+
+        }
+
+
+        await wait(1200);
+
+
+        /*
+          HEART BURST.
+        */
+
+        heartBurst(
+          finalScene,
+          16
+        );
+
+
+        await wait(450);
+
+
+        /*
+          PESAN AKHIR.
+        */
+
+        if (finalMessage) {
+
+          finalMessage.classList.add(
+            "reveal"
+          );
+
+        }
+
+
+        await wait(900);
+
+
+        /*
+          SIGNATURE.
+        */
+
+        if (signature) {
+
+          signature.classList.add(
+            "reveal"
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* ===================================================
+     FINAL CHECK
+  =================================================== */
+
+  console.log(
+    "SENN V2 READY",
+    {
+      enterBtn:
+        Boolean(enterBtn),
+
+      startBtn:
+        Boolean(startBtn),
+
+      yesBtn:
+        Boolean(yesBtn),
+
+      noBtn:
+        Boolean(noBtn),
+
+      letterBtn:
+        Boolean(letterBtn),
+
+      continueBtn:
+        Boolean(continueBtn),
+
+      finalBtn:
+        Boolean(finalBtn)
+    }
+  );
+
+});         "makasih udah mau dengerin aku :)";
 
       }
 
