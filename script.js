@@ -1064,5 +1064,411 @@ document.addEventListener("DOMContentLoaded", () => {
     holdButton.classList.remove(
       "is-holding"
     );
+    holdButton.classList.add(
+      "is-complete"
+    );
 
-    holdBut
+    holdProgress.style.transform =
+      "scaleX(1)";
+
+    holdPercent.textContent =
+      "100%";
+
+    holdText.textContent =
+      "selesai ♡";
+
+    createHeartBurst(
+      window.innerWidth / 2,
+      window.innerHeight / 2,
+      18
+    );
+
+    setTimeout(() => {
+      showScene("finalScene");
+    }, 700);
+  }
+
+
+  /* =======================================================
+     HOLD EVENTS
+  ======================================================= */
+
+  holdButton.addEventListener(
+    "pointerdown",
+    (event) => {
+      event.preventDefault();
+
+      startHold();
+    }
+  );
+
+
+  holdButton.addEventListener(
+    "pointerup",
+    () => {
+      if (!state.holdComplete) {
+        cancelHold();
+      }
+    }
+  );
+
+
+  holdButton.addEventListener(
+    "pointercancel",
+    () => {
+      if (!state.holdComplete) {
+        cancelHold();
+      }
+    }
+  );
+
+
+  holdButton.addEventListener(
+    "pointerleave",
+    (event) => {
+      if (
+        event.pointerType === "mouse" &&
+        !state.holdComplete
+      ) {
+        cancelHold();
+      }
+    }
+  );
+
+
+  /* =======================================================
+     REPLAY
+  ======================================================= */
+
+  replayButton.addEventListener(
+    "click",
+    () => {
+      state.noClicks = 0;
+      state.accepted = false;
+
+      state.collectedPetals.clear();
+
+      state.openedCards = 0;
+
+      state.holdStart = null;
+      state.holdComplete = false;
+
+
+      /* -----------------------------
+         RESET QUESTION
+      ----------------------------- */
+
+      noButton.hidden = false;
+
+      noButton.style.opacity = "";
+      noButton.style.pointerEvents = "";
+      noButton.style.transform = "";
+
+      noButton.textContent =
+        "gak";
+
+
+      yesButton.style.transform =
+        "scale(1)";
+
+
+      noMessage.textContent =
+        "";
+
+
+      /* -----------------------------
+         RESET FLOWER INTRO
+      ----------------------------- */
+
+      husenCharacter.classList.remove(
+        "is-near"
+      );
+
+      ikeCharacter.classList.remove(
+        "has-flower",
+        "is-happy"
+      );
+
+      giftFlower.classList.remove(
+        "is-moving",
+        "is-given"
+      );
+
+      stageHeart.classList.remove(
+        "is-visible"
+      );
+
+      sceneCaption.textContent =
+        "bentar...";
+
+
+      /* -----------------------------
+         RESET ENVELOPE
+      ----------------------------- */
+
+      envelope.classList.remove(
+        "is-open"
+      );
+
+      envelopeHint.textContent =
+        "tekan untuk buka";
+
+      readLetterButton.classList.add(
+        "primary-button--hidden"
+      );
+
+
+      /* -----------------------------
+         RESET FLOWERS
+      ----------------------------- */
+
+      collectibles.forEach(
+        (flower) => {
+          flower.classList.remove(
+            "is-collected"
+          );
+
+          flower.disabled = false;
+        }
+      );
+
+      petalCount.textContent =
+        "0/5";
+
+      petalCounter.classList.remove(
+        "is-visible"
+      );
+
+      secretMessage.classList.remove(
+        "is-visible"
+      );
+
+
+      /* -----------------------------
+         RESET CARDS
+      ----------------------------- */
+
+      memoryCards.forEach(
+        (card) => {
+          card.classList.remove(
+            "is-flipped"
+          );
+
+          card.setAttribute(
+            "aria-pressed",
+            "false"
+          );
+        }
+      );
+
+      memoryHint.textContent =
+        "buka ketiga kartu untuk lanjut";
+
+      holdSceneButton.classList.add(
+        "primary-button--hidden"
+      );
+
+
+      /* -----------------------------
+         RESET HOLD
+      ----------------------------- */
+
+      holdButton.classList.remove(
+        "is-holding",
+        "is-complete"
+      );
+
+      holdProgress.style.transform =
+        "scaleX(0)";
+
+      holdPercent.textContent =
+        "0%";
+
+      holdText.textContent =
+        "tahan di sini";
+
+
+      /* -----------------------------
+         RESET REVEAL
+      ----------------------------- */
+
+      revealElements.forEach(
+        (element) => {
+          element.classList.remove(
+            "is-visible"
+          );
+        }
+      );
+
+
+      /* -----------------------------
+         BACK TO START
+      ----------------------------- */
+
+      showScene(
+        "flowerScene",
+        false
+      );
+
+      setTimeout(() => {
+        playFlowerIntro();
+      }, 350);
+    }
+  );
+
+
+  /* =======================================================
+     POINTER PARTICLES
+  ======================================================= */
+
+  document.addEventListener(
+    "pointerdown",
+    (event) => {
+      createParticle(
+        event.clientX,
+        event.clientY
+      );
+    }
+  );
+
+
+  /* =======================================================
+     INTERACTIVE CARD TILT
+  ======================================================= */
+
+  const interactiveCards =
+    document.querySelectorAll(
+      ".interactive-card"
+    );
+
+
+  interactiveCards.forEach(
+    (card) => {
+
+      card.addEventListener(
+        "pointermove",
+        (event) => {
+
+          if (
+            event.pointerType !== "mouse"
+          ) {
+            return;
+          }
+
+
+          const rect =
+            card.getBoundingClientRect();
+
+
+          const x =
+            event.clientX -
+            rect.left;
+
+
+          const y =
+            event.clientY -
+            rect.top;
+
+
+          const rotateY =
+            (
+              (x / rect.width) -
+              0.5
+            ) * 5;
+
+
+          const rotateX =
+            (
+              0.5 -
+              (y / rect.height)
+            ) * 5;
+
+
+          card.style.transform =
+            `perspective(900px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)`;
+        }
+      );
+
+
+      card.addEventListener(
+        "pointerleave",
+        () => {
+          card.style.transform = "";
+        }
+      );
+
+    }
+  );
+
+
+  /* =======================================================
+     BACKGROUND POINTER REACTION
+  ======================================================= */
+
+  document.addEventListener(
+    "pointermove",
+    (event) => {
+
+      if (
+        window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches
+      ) {
+        return;
+      }
+
+
+      const x =
+        event.clientX /
+        window.innerWidth;
+
+
+      const y =
+        event.clientY /
+        window.innerHeight;
+
+
+      document.documentElement.style.setProperty(
+        "--pointer-x",
+        `${x * 100}%`
+      );
+
+
+      document.documentElement.style.setProperty(
+        "--pointer-y",
+        `${y * 100}%`
+      );
+    }
+  );
+
+
+  /* =======================================================
+     PREVENT DRAGGING
+  ======================================================= */
+
+  document.addEventListener(
+    "dragstart",
+    (event) => {
+      event.preventDefault();
+    }
+  );
+
+
+  /* =======================================================
+     INITIAL STATE
+  ======================================================= */
+
+  updateProgress();
+
+  updatePetalCounter();
+
+  observeReveals();
+
+
+  setTimeout(() => {
+    playFlowerIntro();
+  }, 500);
+
+});
