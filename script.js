@@ -2,26 +2,17 @@
 
 /* =========================================================
    FOR IKE ♡
-   SCRIPT.JS V30
+   SCRIPT.JS V31
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
-
-  console.log("FOR IKE V30 LOADED");
-
 
   /* =======================================================
      ELEMENTS
   ======================================================= */
 
-  const welcome = document.getElementById("welcome");
-  const enterBtn = document.getElementById("enterBtn");
-
-  const startBtn = document.getElementById("startBtn");
-  const openingScene = document.getElementById("openingScene");
-  const storyText = document.getElementById("storyText");
-
   const apology = document.getElementById("apology");
+
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
   const rejectText = document.getElementById("rejectText");
@@ -38,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const finalSection = document.getElementById("final");
   const finalScene = document.getElementById("finalScene");
+
   const finalMessage = document.getElementById("finalMessage");
   const signature = document.getElementById("signature");
 
@@ -49,12 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
      STATE
   ======================================================= */
 
-  let entered = false;
-  let storyRunning = false;
-  let accepted = false;
   let rejectCount = 0;
-  let noRemoved = false;
 
+  let accepted = false;
   let letterOpened = false;
   let moreOpened = false;
   let finalOpened = false;
@@ -65,149 +54,42 @@ document.addEventListener("DOMContentLoaded", function () {
   ======================================================= */
 
   function wait(ms) {
+
     return new Promise(function (resolve) {
+
       setTimeout(resolve, ms);
+
     });
+
   }
 
 
-  function showSection(element) {
+  function showSection(section) {
 
-    if (!element) {
+    if (!section) {
       return;
     }
 
-    element.classList.add("show");
+    section.classList.add("show");
+
   }
 
 
-  function scrollToElement(element) {
+  function scrollToSection(section) {
 
-    if (!element) {
+    if (!section) {
       return;
     }
 
-    try {
+    setTimeout(function () {
 
-      element.scrollIntoView({
+      section.scrollIntoView({
         behavior: "smooth",
-        block: "center"
+        block: "start"
       });
 
-    } catch (error) {
-
-      element.scrollIntoView();
-    }
-  }
-
-
-  function setStory(text) {
-
-    if (!storyText) {
-      return;
-    }
-
-    storyText.classList.remove("show");
-
-    setTimeout(function () {
-
-      storyText.textContent = text;
-      storyText.classList.add("show");
-
-    }, 120);
-  }
-
-
-  function hideStory() {
-
-    if (!storyText) {
-      return;
-    }
-
-    storyText.classList.remove("show");
-  }
-
-
-  /* =======================================================
-     ENTER
-  ======================================================= */
-
-  function enterWebsite() {
-
-    if (entered) {
-      return;
-    }
-
-    entered = true;
-
-    console.log("ENTER CLICKED");
-
-    /*
-      Lepaskan scroll.
-    */
-
-    document.body.classList.remove("locked");
-
-
-    /*
-      Hilangkan welcome.
-    */
-
-    if (welcome) {
-
-      welcome.classList.add("hide");
-
-      welcome.style.pointerEvents = "none";
-
-      setTimeout(function () {
-
-        welcome.style.display = "none";
-
-      }, 750);
-    }
-
-
-    /*
-      Pastikan kembali ke bagian atas.
-    */
-
-    setTimeout(function () {
-
-      try {
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-
-      } catch (error) {
-
-        window.scrollTo(0, 0);
-      }
-
     }, 100);
-  }
 
-
-  if (enterBtn) {
-
-    enterBtn.addEventListener("click", enterWebsite);
-
-    enterBtn.addEventListener("touchend", function (event) {
-
-      /*
-        Backup untuk browser mobile tertentu.
-        entered mencegah fungsi jalan dua kali.
-      */
-
-      event.preventDefault();
-
-      enterWebsite();
-    });
-
-  } else {
-
-    console.error("enterBtn TIDAK DITEMUKAN");
   }
 
 
@@ -221,29 +103,24 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    try {
+    flash.classList.remove("active");
+
+    void flash.offsetWidth;
+
+    flash.classList.add("active");
+
+
+    setTimeout(function () {
 
       flash.classList.remove("active");
 
-      void flash.offsetWidth;
+    }, 700);
 
-      flash.classList.add("active");
-
-      setTimeout(function () {
-
-        flash.classList.remove("active");
-
-      }, 700);
-
-    } catch (error) {
-
-      console.log("Flash dilewati.");
-    }
   }
 
 
   /* =======================================================
-     PARTICLES
+     BACKGROUND PARTICLES
   ======================================================= */
 
   function createParticle() {
@@ -252,66 +129,63 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    try {
 
-      if (particles.children.length >= 20) {
-        return;
-      }
-
-      const particle = document.createElement("span");
-
-      particle.className = "particle";
-
-      if (Math.random() > 0.75) {
-        particle.textContent = "♥";
-      } else {
-        particle.textContent = "♡";
-      }
-
-      particle.style.left =
-        Math.floor(Math.random() * 100) + "%";
-
-      particle.style.fontSize =
-        (9 + Math.random() * 10) + "px";
-
-      particle.style.animationDuration =
-        (7 + Math.random() * 5) + "s";
-
-      particles.appendChild(particle);
-
-
-      setTimeout(function () {
-
-        if (particle.parentNode) {
-          particle.parentNode.removeChild(particle);
-        }
-
-      }, 13000);
-
-    } catch (error) {
-
-      console.log("Particle dilewati.");
+    if (particles.children.length > 18) {
+      return;
     }
+
+
+    const particle =
+      document.createElement("span");
+
+
+    particle.className =
+      "particle";
+
+
+    particle.textContent =
+      Math.random() > 0.7
+        ? "♥"
+        : "♡";
+
+
+    particle.style.left =
+      Math.random() * 100 + "%";
+
+
+    particle.style.fontSize =
+      (8 + Math.random() * 10) + "px";
+
+
+    particle.style.animationDuration =
+      (7 + Math.random() * 5) + "s";
+
+
+    particles.appendChild(particle);
+
+
+    setTimeout(function () {
+
+      particle.remove();
+
+    }, 13000);
+
   }
 
-
-  /*
-    Jalankan partikel SETELAH event tombol utama
-    sudah terpasang.
-  */
 
   for (let i = 0; i < 5; i++) {
 
     setTimeout(
       createParticle,
-      i * 400
+      i * 300
     );
+
   }
 
 
   setInterval(
     createParticle,
-    1100
+    1000
   );
 
 
@@ -319,250 +193,678 @@ document.addEventListener("DOMContentLoaded", function () {
      HEART BURST
   ======================================================= */
 
-  function heartBurst(target, amount) {
+  function heartBurst(target, amount = 10) {
 
     if (!target) {
       return;
     }
 
-    amount = amount || 10;
 
-    try {
-
-      const rect =
-        target.getBoundingClientRect();
-
-      const centerX =
-        rect.left + (rect.width / 2);
-
-      const centerY =
-        rect.top + (rect.height / 2);
+    const rect =
+      target.getBoundingClientRect();
 
 
-      for (let i = 0; i < amount; i++) {
-
-        const heart =
-          document.createElement("span");
-
-        heart.className =
-          "burst-heart";
-
-        heart.textContent =
-          i % 3 === 0 ? "♥" : "♡";
-
-        heart.style.left =
-          centerX + "px";
-
-        heart.style.top =
-          centerY + "px";
-
-        document.body.appendChild(heart);
+    const centerX =
+      rect.left +
+      rect.width / 2;
 
 
-        const angle =
-          (Math.PI * 2 * i) / amount;
-
-        const distance =
-          50 + Math.random() * 80;
-
-        const x =
-          Math.cos(angle) * distance;
-
-        const y =
-          Math.sin(angle) * distance;
+    const centerY =
+      rect.top +
+      rect.height / 2;
 
 
-        /*
-          Pakai Web Animations kalau tersedia.
-        */
+    for (let i = 0; i < amount; i++) {
 
-        if (typeof heart.animate === "function") {
+      const heart =
+        document.createElement("span");
 
-          heart.animate(
 
-            [
-              {
-                transform:
-                  "translate(-50%, -50%) scale(0.3)",
+      heart.className =
+        "burst-heart";
 
-                opacity: 0
-              },
 
-              {
-                transform:
-                  "translate(-50%, -50%) scale(1)",
+      heart.textContent =
+        i % 3 === 0
+          ? "♥"
+          : "♡";
 
-                opacity: 1,
 
-                offset: 0.2
-              },
+      heart.style.left =
+        centerX + "px";
 
-              {
-                transform:
-                  "translate(" +
-                  "calc(-50% + " +
-                  x +
-                  "px), " +
-                  "calc(-50% + " +
-                  y +
-                  "px)) scale(1.15)",
 
-                opacity: 0
-              }
-            ],
+      heart.style.top =
+        centerY + "px";
+
+
+      document.body.appendChild(heart);
+
+
+      const angle =
+        (Math.PI * 2 * i) / amount;
+
+
+      const distance =
+        45 +
+        Math.random() * 75;
+
+
+      const moveX =
+        Math.cos(angle) *
+        distance;
+
+
+      const moveY =
+        Math.sin(angle) *
+        distance;
+
+
+      if (
+        typeof heart.animate ===
+        "function"
+      ) {
+
+        heart.animate(
+
+          [
+            {
+              transform:
+                "translate(-50%, -50%) scale(0.3)",
+
+              opacity: 0
+            },
 
             {
-              duration:
-                850 + Math.random() * 350,
+              transform:
+                "translate(-50%, -50%) scale(1)",
 
-              easing: "ease-out",
+              opacity: 1,
 
-              fill: "forwards"
+              offset: 0.2
+            },
+
+            {
+              transform:
+                `translate(
+                  calc(-50% + ${moveX}px),
+                  calc(-50% + ${moveY}px)
+                )
+                scale(1.2)`,
+
+              opacity: 0
             }
-          );
+          ],
 
-        } else {
+          {
+            duration:
+              800 +
+              Math.random() * 400,
 
-          /*
-            Fallback browser lama.
-          */
+            easing:
+              "ease-out",
 
-          heart.style.transition =
-            "all 900ms ease-out";
-
-          setTimeout(function () {
-
-            heart.style.transform =
-              "translate(" +
-              x +
-              "px," +
-              y +
-              "px)";
-
-            heart.style.opacity = "0";
-
-          }, 20);
-        }
-
-
-        setTimeout(function () {
-
-          if (heart.parentNode) {
-            heart.parentNode.removeChild(heart);
+            fill:
+              "forwards"
           }
 
-        }, 1400);
+        );
+
       }
 
-    } catch (error) {
 
-      console.log("Heart burst dilewati.");
+      setTimeout(function () {
+
+        heart.remove();
+
+      }, 1400);
+
     }
+
   }
 
 
   /* =======================================================
-     START STORY
+     BUTTON "GAK"
   ======================================================= */
 
-  if (startBtn) {
+  const rejectMessages = [
 
-    startBtn.addEventListener(
+    "yahh 🥲",
+
+    "masa gak...",
+
+    "aku minta maaf beneran.",
+
+    "masih belum? 😭",
+
+    "oke tombol gak-nya nyerah."
+
+  ];
+
+
+  if (noBtn && yesBtn) {
+
+    noBtn.addEventListener(
       "click",
-      async function () {
+      function () {
 
-        if (storyRunning) {
+        if (accepted) {
           return;
         }
 
-        storyRunning = true;
 
-        startBtn.disabled = true;
-
-        startBtn.style.opacity = "0.55";
+        rejectCount++;
 
 
-        /*
-          Arahkan ke karakter.
-        */
+        /* YES MAKIN GEDE */
 
-        scrollToElement(openingScene);
-
-        await wait(400);
-
-
-        /*
-          CERITA PERTAMA
-        */
-
-        setStory(
-          "jadi... aku datang bawa sesuatu kecil buat kamu."
-        );
-
-
-        await wait(1500);
-
-
-        /*
-          HUSEN MULAI JALAN
-        */
-
-        if (openingScene) {
-
-          openingScene.classList.add(
-            "walking"
+        const yesScale =
+          Math.min(
+            2.4,
+            1 +
+            rejectCount * 0.28
           );
+
+
+        yesBtn.style.transform =
+          `scale(${yesScale})`;
+
+
+        /* NO MAKIN KECIL */
+
+        const noScale =
+          Math.max(
+            0.35,
+            1 -
+            rejectCount * 0.14
+          );
+
+
+        noBtn.style.transform =
+          `scale(${noScale})`;
+
+
+        /* NO MAKIN TRANSPARAN */
+
+        const noOpacity =
+          Math.max(
+            0.25,
+            1 -
+            rejectCount * 0.14
+          );
+
+
+        noBtn.style.opacity =
+          noOpacity;
+
+
+        /* PESAN */
+
+        if (rejectText) {
+
+          const messageIndex =
+            Math.min(
+              rejectCount - 1,
+              rejectMessages.length - 1
+            );
+
+
+          rejectText.textContent =
+            rejectMessages[
+              messageIndex
+            ];
+
         }
 
 
-        setStory(
-          "bentar, aku kesana dulu..."
+        /* HEART KECIL */
+
+        heartBurst(
+          yesBtn,
+          3
+        );
+
+
+        /* 5 KALI = GAK HILANG */
+
+        if (rejectCount >= 5) {
+
+          noBtn.disabled =
+            true;
+
+
+          noBtn.classList.add(
+            "disappear"
+          );
+
+
+          yesBtn.style.transform =
+            "scale(2.4)";
+
+
+          if (rejectText) {
+
+            rejectText.textContent =
+              "sekarang tinggal satu pilihan 😭";
+
+          }
+
+
+          setTimeout(function () {
+
+            noBtn.style.display =
+              "none";
+
+          }, 450);
+
+        }
+
+      }
+
+    );
+
+  }
+
+
+  /* =======================================================
+     BUTTON "MAAFIN ♡"
+  ======================================================= */
+
+  if (yesBtn) {
+
+    yesBtn.addEventListener(
+      "click",
+      async function () {
+
+        if (accepted) {
+          return;
+        }
+
+
+        accepted = true;
+
+
+        /* RESET UKURAN */
+
+        yesBtn.style.transform =
+          "scale(1)";
+
+
+        yesBtn.textContent =
+          "makasih ♡";
+
+
+        yesBtn.disabled =
+          true;
+
+
+        /* HILANGKAN GAK */
+
+        if (noBtn) {
+
+          noBtn.disabled =
+            true;
+
+
+          noBtn.classList.add(
+            "disappear"
+          );
+
+
+          setTimeout(function () {
+
+            noBtn.style.display =
+              "none";
+
+          }, 400);
+
+        }
+
+
+        if (rejectText) {
+
+          rejectText.textContent =
+            "makasih udah mau dengerin aku :)";
+
+        }
+
+
+        pinkFlash();
+
+
+        heartBurst(
+          yesBtn,
+          15
+        );
+
+
+        await wait(700);
+
+
+        /* MUNCULKAN SECTION HUG */
+
+        showSection(hug);
+
+
+        scrollToSection(hug);
+
+
+        await wait(900);
+
+
+        /* KARAKTER MENDEKAT */
+
+        if (hugScene) {
+
+          hugScene.classList.add(
+            "hugging"
+          );
+
+        }
+
+
+        await wait(800);
+
+
+        heartBurst(
+          hugScene,
+          12
+        );
+
+      }
+
+    );
+
+  }
+
+
+  /* =======================================================
+     OPEN LETTER
+  ======================================================= */
+
+  if (letterBtn) {
+
+    letterBtn.addEventListener(
+      "click",
+      async function () {
+
+        if (letterOpened) {
+          return;
+        }
+
+
+        letterOpened =
+          true;
+
+
+        letterBtn.disabled =
+          true;
+
+
+        pinkFlash();
+
+
+        showSection(
+          letter
+        );
+
+
+        scrollToSection(
+          letter
+        );
+
+
+        await wait(500);
+
+
+        const paragraphs =
+          document.querySelectorAll(
+            ".letter-card p"
+          );
+
+
+        paragraphs.forEach(
+          function (
+            paragraph,
+            index
+          ) {
+
+            setTimeout(
+              function () {
+
+                paragraph
+                  .classList
+                  .add(
+                    "reveal"
+                  );
+
+              },
+
+              index * 180
+            );
+
+          }
+        );
+
+      }
+
+    );
+
+  }
+
+
+  /* =======================================================
+     CONTINUE
+  ======================================================= */
+
+  if (continueBtn) {
+
+    continueBtn.addEventListener(
+      "click",
+      async function () {
+
+        if (moreOpened) {
+          return;
+        }
+
+
+        moreOpened =
+          true;
+
+
+        continueBtn.disabled =
+          true;
+
+
+        showSection(
+          more
+        );
+
+
+        scrollToSection(
+          more
         );
 
 
         await wait(450);
 
 
-        /*
-          BERGERAK KE IKE
-        */
-
-        if (openingScene) {
-
-          openingScene.classList.add(
-            "together"
+        const messages =
+          document.querySelectorAll(
+            ".message"
           );
+
+
+        messages.forEach(
+          function (
+            message,
+            index
+          ) {
+
+            setTimeout(
+              function () {
+
+                message
+                  .classList
+                  .add(
+                    "reveal"
+                  );
+
+              },
+
+              index * 320
+            );
+
+          }
+        );
+
+      }
+
+    );
+
+  }
+
+
+  /* =======================================================
+     FINAL
+  ======================================================= */
+
+  if (finalBtn) {
+
+    finalBtn.addEventListener(
+      "click",
+      async function () {
+
+        if (finalOpened) {
+          return;
         }
 
 
-        await wait(1700);
+        finalOpened =
+          true;
 
 
-        /*
-          BERHENTI
-        */
-
-        if (openingScene) {
-
-          openingScene.classList.remove(
-            "walking"
-          );
-        }
+        finalBtn.disabled =
+          true;
 
 
-        await wait(300);
+        pinkFlash();
 
 
-        /*
-          KASIH BUNGA
-        */
+        /* MUNCULKAN FINAL */
 
-        setStory(
-          "ini buat kamu 🌷"
+        showSection(
+          finalSection
         );
 
 
-        if (openingScene) {
+        scrollToSection(
+          finalSection
+        );
+
+
+        await wait(700);
+
+
+        /* KARAKTER MENDEKAT */
+
+        if (finalScene) {
+
+          finalScene
+            .classList
+            .add(
+              "together"
+            );
+
+        }
+
+
+        await wait(1100);
+
+
+        heartBurst(
+          finalScene,
+          15
+        );
+
+
+        /* PESAN */
+
+        await wait(400);
+
+
+        if (finalMessage) {
+
+          finalMessage
+            .classList
+            .add(
+              "reveal"
+            );
+
+        }
+
+
+        /* SIGNATURE */
+
+        await wait(800);
+
+
+        if (signature) {
+
+          signature
+            .classList
+            .add(
+              "reveal"
+            );
+
+        }
+
+      }
+
+    );
+
+  }
+
+
+  /* =======================================================
+     SAFETY CHECK
+  ======================================================= */
+
+  console.log(
+    "FOR IKE V31 READY ♡"
+  );
+
+
+  console.log({
+
+    apology:
+      !!apology,
+
+    yesBtn:
+      !!yesBtn,
+
+    noBtn:
+      !!noBtn,
+
+    hug:
+      !!hug,
+
+    hugScene:
+      !!hugScene,
+
+    letter:
+      !!letter,
+
+    more:
+      !!more,
+
+    final:
+      !!finalSection
+
+  });
+
+});        if (openingScene) {
 
           openingScene.classList.add(
             "give-flower"
