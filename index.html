@@ -26,15 +26,18 @@
     rel="stylesheet"
   >
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="./style.css?v=101">
+  <!-- EXTERNAL CSS -->
+  <link rel="stylesheet" href="./style.css?v=102">
+
+  <!-- EXTERNAL JAVASCRIPT -->
+  <script src="./script.js?v=102" defer></script>
 </head>
 
 <body>
 
-  <!-- =========================================
+  <!-- =====================================================
        BACKGROUND
-  ========================================== -->
+  ====================================================== -->
 
   <div class="ambient" aria-hidden="true">
     <div class="ambient__orb ambient__orb--one"></div>
@@ -50,9 +53,9 @@
   ></div>
 
 
-  <!-- =========================================
-       PROGRESS
-  ========================================== -->
+  <!-- =====================================================
+       TOP PROGRESS
+  ====================================================== -->
 
   <div class="progress" aria-hidden="true">
     <div
@@ -62,9 +65,9 @@
   </div>
 
 
-  <!-- =========================================
+  <!-- =====================================================
        FLOWER COUNTER
-  ========================================== -->
+  ====================================================== -->
 
   <div
     id="petalCounter"
@@ -76,17 +79,17 @@
   </div>
 
 
-  <!-- =========================================
+  <!-- =====================================================
        APP
-  ========================================== -->
+  ====================================================== -->
 
   <main id="app">
 
 
-    <!-- =======================================
-         SCENE 1
-         HUSEN MEMBERIKAN BUNGA
-    ======================================== -->
+    <!-- ===================================================
+         SCENE 01
+         HUSEN MEMBERIKAN BUNGA KE IKE
+    ==================================================== -->
 
     <section
       id="flowerScene"
@@ -125,7 +128,9 @@
           <div class="stage-floor"></div>
 
 
-          <!-- HUSEN -->
+          <!-- ===============================
+               HUSEN
+          ================================ -->
 
           <div
             id="husenCharacter"
@@ -170,26 +175,35 @@
               </div>
 
 
-              <!-- TANGAN -->
+              <!-- HUSEN ARMS -->
 
-              <div class="arm arm--left"></div>
+              <div
+                class="arm arm--left"
+              ></div>
 
               <div
                 class="arm arm--right arm--gift"
               ></div>
 
 
-              <!-- KAKI -->
+              <!-- HUSEN LEGS -->
 
-              <div class="leg leg--left"></div>
-              <div class="leg leg--right"></div>
+              <div
+                class="leg leg--left"
+              ></div>
+
+              <div
+                class="leg leg--right"
+              ></div>
 
             </div>
 
           </div>
 
 
-          <!-- BUNGA -->
+          <!-- ===============================
+               FLOWER
+          ================================ -->
 
           <div
             id="giftFlower"
@@ -203,7 +217,9 @@
           </div>
 
 
-          <!-- IKE -->
+          <!-- ===============================
+               IKE
+          ================================ -->
 
           <div
             id="ikeCharacter"
@@ -248,19 +264,26 @@
               </div>
 
 
-              <!-- TANGAN -->
+              <!-- IKE ARMS -->
 
               <div
                 class="arm arm--left arm--receive"
               ></div>
 
-              <div class="arm arm--right"></div>
+              <div
+                class="arm arm--right"
+              ></div>
 
 
-              <!-- KAKI -->
+              <!-- IKE LEGS -->
 
-              <div class="leg leg--left"></div>
-              <div class="leg leg--right"></div>
+              <div
+                class="leg leg--left"
+              ></div>
+
+              <div
+                class="leg leg--right"
+              ></div>
 
             </div>
 
@@ -300,10 +323,10 @@
     </section>
 
 
-    <!-- =======================================
-         SCENE 2
-         PERTANYAAN
-    ======================================== -->
+    <!-- ===================================================
+         SCENE 02
+         MAAFIN AKU?
+    ==================================================== -->
 
     <section
       id="questionScene"
@@ -321,7 +344,10 @@
           </p>
 
 
-          <div class="question__flower">
+          <div
+            class="question__flower"
+            aria-hidden="true"
+          >
             🌷
           </div>
 
@@ -347,7 +373,7 @@
           >
 
 
-            <!-- YES -->
+            <!-- MAAFIN -->
 
             <div
               class="choice-slot choice-slot--yes"
@@ -363,7 +389,7 @@
                   maafin
                 </span>
 
-                <span>
+                <span aria-hidden="true">
                   ♡
                 </span>
 
@@ -372,7 +398,7 @@
             </div>
 
 
-            <!-- NO -->
+            <!-- GAK -->
 
             <div
               class="choice-slot choice-slot--no"
@@ -404,10 +430,10 @@
     </section>
 
 
-    <!-- =======================================
-         SCENE 3
-         MAAFIN DITERIMA
-    ======================================== -->
+    <!-- ===================================================
+         SCENE 03
+         ACCEPTED
+    ==================================================== -->
 
     <section
       id="acceptedScene"
@@ -419,6 +445,7 @@
         <div
           id="acceptedBurst"
           class="accepted__heart"
+          aria-hidden="true"
         >
           ♡
         </div>
@@ -445,8 +472,13 @@
           class="primary-button"
           type="button"
         >
+
           buka suratnya
-          <span>💌</span>
+
+          <span aria-hidden="true">
+            💌
+          </span>
+
         </button>
 
       </div>
@@ -454,10 +486,10 @@
     </section>
 
 
-    <!-- =======================================
-         SCENE 4
-         AMPLOP
-    ======================================== -->
+    <!-- ===================================================
+         SCENE 04
+         ENVELOPE
+    ==================================================== -->
 
     <section
       id="envelopeScene"
@@ -480,13 +512,19 @@
           id="envelope"
           class="envelope"
           type="button"
-          aria-label="Buka surat"
+          aria-label="Buka surat untuk Ike"
         >
 
-          <span class="envelope__back"></span>
+          <span
+            class="envelope__back"
+            aria-hidden="true"
+          ></span>
 
 
-          <span class="envelope__paper">
+          <span
+            class="envelope__paper"
+            aria-hidden="true"
+          >
 
             <span>
               for ike ♡
@@ -495,11 +533,22 @@
           </span>
 
 
-          <span class="envelope__front"></span>
+          <span
+            class="envelope__front"
+            aria-hidden="true"
+          ></span>
 
-          <span class="envelope__flap"></span>
 
-          <span class="envelope__seal">
+          <span
+            class="envelope__flap"
+            aria-hidden="true"
+          ></span>
+
+
+          <span
+            class="envelope__seal"
+            aria-hidden="true"
+          >
             ♡
           </span>
 
@@ -519,8 +568,13 @@
           class="primary-button primary-button--hidden"
           type="button"
         >
+
           baca suratnya
-          <span>♡</span>
+
+          <span aria-hidden="true">
+            ♡
+          </span>
+
         </button>
 
       </div>
@@ -528,10 +582,10 @@
     </section>
 
 
-    <!-- =======================================
-         SCENE 5
-         SURAT
-    ======================================== -->
+    <!-- ===================================================
+         SCENE 05
+         LETTER
+    ==================================================== -->
 
     <section
       id="letterScene"
@@ -541,9 +595,11 @@
       <div class="scene__inner letter">
 
 
-        <!-- HEADER -->
+        <!-- LETTER HEADER -->
 
-        <header class="letter__header reveal">
+        <header
+          class="letter__header reveal"
+        >
 
           <p class="eyebrow">
             for ike
@@ -564,12 +620,12 @@
         </header>
 
 
-        <!-- LETTER -->
+        <!-- LETTER PAPER -->
 
         <article class="letter-paper">
 
 
-          <!-- FLOWER 1 -->
+          <!-- COLLECTIBLE 1 -->
 
           <button
             class="collectible collectible--1"
@@ -598,7 +654,7 @@
           </p>
 
 
-          <!-- FLOWER 2 -->
+          <!-- COLLECTIBLE 2 -->
 
           <button
             class="collectible collectible--2"
@@ -623,7 +679,9 @@
           </p>
 
 
-          <p class="reveal letter-highlight">
+          <p
+            class="reveal letter-highlight"
+          >
             aku cuma mau jujur kalau aku
             <strong>
               beneran minta maaf.
@@ -631,7 +689,7 @@
           </p>
 
 
-          <!-- FLOWER 3 -->
+          <!-- COLLECTIBLE 3 -->
 
           <button
             class="collectible collectible--3"
@@ -663,7 +721,7 @@
           </p>
 
 
-          <!-- FLOWER 4 -->
+          <!-- COLLECTIBLE 4 -->
 
           <button
             class="collectible collectible--4"
@@ -675,7 +733,9 @@
           </button>
 
 
-          <p class="reveal letter-highlight">
+          <p
+            class="reveal letter-highlight"
+          >
             <strong>
               maafin aku ya, Ike.
             </strong>
@@ -695,7 +755,7 @@
           </p>
 
 
-          <!-- FLOWER 5 -->
+          <!-- COLLECTIBLE 5 -->
 
           <button
             class="collectible collectible--5"
@@ -707,7 +767,9 @@
           </button>
 
 
-          <p class="reveal letter-signature">
+          <p
+            class="reveal letter-signature"
+          >
             husen ♡
           </p>
 
@@ -721,7 +783,10 @@
           class="secret-message reveal"
         >
 
-          <span class="secret-message__icon">
+          <span
+            class="secret-message__icon"
+            aria-hidden="true"
+          >
             🌷
           </span>
 
@@ -749,8 +814,13 @@
           class="primary-button reveal"
           type="button"
         >
+
           lanjut
-          <span>♡</span>
+
+          <span aria-hidden="true">
+            ♡
+          </span>
+
         </button>
 
       </div>
@@ -758,10 +828,10 @@
     </section>
 
 
-    <!-- =======================================
-         SCENE 6
-         THREE CARDS
-    ======================================== -->
+    <!-- ===================================================
+         SCENE 06
+         THREE THINGS / FLIP CARDS
+    ==================================================== -->
 
     <section
       id="memoryScene"
@@ -794,7 +864,9 @@
         <div class="memory-grid">
 
 
-          <!-- CARD 1 -->
+          <!-- ===============================
+               CARD 01
+          ================================ -->
 
           <button
             class="memory-card"
@@ -809,7 +881,9 @@
                 class="memory-card__face memory-card__front"
               >
 
-                <span class="memory-card__number">
+                <span
+                  class="memory-card__number"
+                >
                   01
                 </span>
 
@@ -830,7 +904,7 @@
                 class="memory-card__face memory-card__back"
               >
 
-                <span>
+                <span aria-hidden="true">
                   ♡
                 </span>
 
@@ -847,7 +921,9 @@
           </button>
 
 
-          <!-- CARD 2 -->
+          <!-- ===============================
+               CARD 02
+          ================================ -->
 
           <button
             class="memory-card"
@@ -862,7 +938,9 @@
                 class="memory-card__face memory-card__front"
               >
 
-                <span class="memory-card__number">
+                <span
+                  class="memory-card__number"
+                >
                   02
                 </span>
 
@@ -883,7 +961,7 @@
                 class="memory-card__face memory-card__back"
               >
 
-                <span>
+                <span aria-hidden="true">
                   ♡
                 </span>
 
@@ -900,7 +978,9 @@
           </button>
 
 
-          <!-- CARD 3 -->
+          <!-- ===============================
+               CARD 03
+          ================================ -->
 
           <button
             class="memory-card"
@@ -915,7 +995,9 @@
                 class="memory-card__face memory-card__front"
               >
 
-                <span class="memory-card__number">
+                <span
+                  class="memory-card__number"
+                >
                   03
                 </span>
 
@@ -936,7 +1018,7 @@
                 class="memory-card__face memory-card__back"
               >
 
-                <span>
+                <span aria-hidden="true">
                   ♡
                 </span>
 
@@ -958,6 +1040,7 @@
         <p
           id="memoryHint"
           class="memory-hint"
+          aria-live="polite"
         >
           buka ketiga kartu untuk lanjut
         </p>
@@ -968,8 +1051,13 @@
           class="primary-button primary-button--hidden"
           type="button"
         >
-          satu hal terakhir
-          <span>♡</span>
+
+                    satu hal terakhir
+
+          <span aria-hidden="true">
+            ♡
+          </span>
+
         </button>
 
       </div>
@@ -977,10 +1065,10 @@
     </section>
 
 
-    <!-- =======================================
-         SCENE 7
+    <!-- ===================================================
+         SCENE 07
          HOLD INTERACTION
-    ======================================== -->
+    ==================================================== -->
 
     <section
       id="holdScene"
@@ -993,11 +1081,9 @@
           almost there
         </p>
 
-
         <h2>
           tahan sebentar.
         </h2>
-
 
         <p>
           jangan cuma dipencet.
@@ -1014,15 +1100,18 @@
           <span
             id="holdProgress"
             class="hold-button__progress"
+            aria-hidden="true"
           ></span>
 
 
           <span class="hold-button__content">
 
-            <span class="hold-button__heart">
+            <span
+              class="hold-button__heart"
+              aria-hidden="true"
+            >
               ♡
             </span>
-
 
             <span id="holdText">
               tahan di sini
@@ -1036,6 +1125,7 @@
         <p
           id="holdPercent"
           class="hold-percent"
+          aria-live="polite"
         >
           0%
         </p>
@@ -1045,10 +1135,10 @@
     </section>
 
 
-    <!-- =======================================
-         SCENE 8
+    <!-- ===================================================
+         SCENE 08
          FINAL
-    ======================================== -->
+    ==================================================== -->
 
     <section
       id="finalScene"
@@ -1056,7 +1146,6 @@
     >
 
       <div class="scene__inner final">
-
 
         <p class="eyebrow">
           one last thing
@@ -1074,7 +1163,9 @@
         </p>
 
 
-        <!-- FINAL CHARACTER STAGE -->
+        <!-- ===============================================
+             FINAL CHARACTER STAGE
+        ================================================ -->
 
         <div
           class="final-stage"
@@ -1085,10 +1176,261 @@
           <div class="final-stage__floor"></div>
 
 
-          <!-- HUSEN -->
+          <!-- ===========================================
+               FINAL HUSEN
+          ============================================ -->
 
           <div
             class="final-person final-person--husen"
           >
 
-            <span class
+            <span class="final-person__name">
+              husen
+            </span>
+
+
+            <div class="mini-character">
+
+              <!-- HAIR -->
+
+              <div
+                class="mini-character__hair mini-character__hair--boy"
+              ></div>
+
+
+              <!-- HEAD -->
+
+              <div class="mini-character__head">
+
+                <span
+                  class="mini-eye mini-eye--left"
+                ></span>
+
+                <span
+                  class="mini-eye mini-eye--right"
+                ></span>
+
+                <span
+                  class="mini-blush mini-blush--left"
+                ></span>
+
+                <span
+                  class="mini-blush mini-blush--right"
+                ></span>
+
+              </div>
+
+
+              <!-- BODY -->
+
+              <div class="mini-character__body">
+                ♡
+              </div>
+
+
+              <!-- ARMS -->
+
+              <div
+                class="mini-arm mini-arm--left"
+              ></div>
+
+              <div
+                class="mini-arm mini-arm--right"
+              ></div>
+
+
+              <!-- LEGS -->
+
+              <div
+                class="mini-leg mini-leg--left"
+              ></div>
+
+              <div
+                class="mini-leg mini-leg--right"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ===========================================
+               FINAL HEART
+          ============================================ -->
+
+          <div class="final-heart">
+            ♥
+          </div>
+
+
+          <!-- ===========================================
+               FINAL IKE
+          ============================================ -->
+
+          <div
+            class="final-person final-person--ike"
+          >
+
+            <span class="final-person__name">
+              ike
+            </span>
+
+
+            <div class="mini-character">
+
+              <!-- HAIR -->
+
+              <div
+                class="mini-character__hair mini-character__hair--girl"
+              ></div>
+
+
+              <!-- HEAD -->
+
+              <div class="mini-character__head">
+
+                <span
+                  class="mini-eye mini-eye--left"
+                ></span>
+
+                <span
+                  class="mini-eye mini-eye--right"
+                ></span>
+
+                <span
+                  class="mini-blush mini-blush--left"
+                ></span>
+
+                <span
+                  class="mini-blush mini-blush--right"
+                ></span>
+
+              </div>
+
+
+              <!-- BODY -->
+
+              <div class="mini-character__body">
+                ♡
+              </div>
+
+
+              <!-- ARMS -->
+
+              <div
+                class="mini-arm mini-arm--left"
+              ></div>
+
+              <div
+                class="mini-arm mini-arm--right"
+              ></div>
+
+
+              <!-- LEGS -->
+
+              <div
+                class="mini-leg mini-leg--left"
+              ></div>
+
+              <div
+                class="mini-leg mini-leg--right"
+              ></div>
+
+
+              <!-- FLOWER FROM HUSEN -->
+
+              <span class="final-flower">
+                🌷
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ===============================================
+             FINAL MESSAGE
+        ================================================ -->
+
+        <div
+          class="final__message interactive-card"
+        >
+
+          <span
+            class="final__big-heart"
+            aria-hidden="true"
+          >
+            ♡
+          </span>
+
+
+          <h3>
+            i'm really sorry, ike.
+          </h3>
+
+
+          <p>
+            aku nggak bisa mengubah apa yang sudah terjadi,
+            tapi aku bisa belajar supaya setelah ini
+            aku jadi lebih baik.
+          </p>
+
+        </div>
+
+
+        <!-- ===============================================
+             SIGNATURE
+        ================================================ -->
+
+        <div class="final__signature">
+
+          <span>
+            from husen,
+          </span>
+
+          <strong>
+            for ike. ♡
+          </strong>
+
+        </div>
+
+
+        <!-- ===============================================
+             REPLAY
+        ================================================ -->
+
+        <button
+          id="replayButton"
+          class="secondary-button"
+          type="button"
+        >
+
+          <span aria-hidden="true">
+            ↻
+          </span>
+
+          lihat lagi
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       JAVASCRIPT EXTERNAL
+       JS TETAP DI script.js, BUKAN DICAMPUR KE HTML
+  ====================================================== -->
+
+  <script
+    src="./script.js?v=102"
+    defer
+  ></script>
+
+</body>
+</html>
