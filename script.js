@@ -3,37 +3,109 @@ const particles =
 
 let storyStarted = false;
 let noCount = 0;
+let musicPlaying = false;
 
 
-/* =====================================
-   LOADING
-===================================== */
+/* =================================
+   LOADER
+================================= */
 
-window.addEventListener("load", () => {
+window.addEventListener(
+  "load",
+  () => {
 
-  setTimeout(() => {
+    setTimeout(() => {
 
-    document
-      .getElementById("loader")
-      .classList
-      .add("hide");
+      document
+        .getElementById("loader")
+        .classList
+        .add("hide");
 
-  }, 1600);
+    }, 1600);
 
-});
+  }
+);
 
 
-/* =====================================
-   BACKGROUND PARTICLES
-===================================== */
+/* =================================
+   MUSIC
+================================= */
+
+function toggleMusic() {
+
+  const music =
+    document.getElementById(
+      "backgroundMusic"
+    );
+
+  const player =
+    document.getElementById(
+      "musicPlayer"
+    );
+
+  const status =
+    document.getElementById(
+      "musicStatus"
+    );
+
+
+  if (!musicPlaying) {
+
+    music.play()
+      .then(() => {
+
+        musicPlaying = true;
+
+        player.classList.add(
+          "playing"
+        );
+
+        status.textContent =
+          "now playing";
+
+      })
+
+      .catch(() => {
+
+        status.textContent =
+          "audio belum ada";
+
+      });
+
+  }
+
+  else {
+
+    music.pause();
+
+    musicPlaying = false;
+
+    player.classList.remove(
+      "playing"
+    );
+
+    status.textContent =
+      "paused";
+
+  }
+
+}
+
+
+/* =================================
+   PARTICLES
+================================= */
 
 function createParticle() {
 
   const particle =
-    document.createElement("span");
+    document.createElement(
+      "span"
+    );
 
   particle.className =
     "particle";
+
 
   const symbols = [
     "♡",
@@ -41,6 +113,7 @@ function createParticle() {
     "✦",
     "·"
   ];
+
 
   particle.textContent =
     symbols[
@@ -50,18 +123,25 @@ function createParticle() {
       )
     ];
 
+
   particle.style.left =
     Math.random() * 100 + "vw";
 
+
   particle.style.fontSize =
-    Math.random() * 11 + 7 + "px";
+    Math.random() * 11 +
+    7 + "px";
+
 
   particle.style.animationDuration =
-    Math.random() * 7 + 8 + "s";
+    Math.random() * 7 +
+    8 + "s";
+
 
   particles.appendChild(
     particle
   );
+
 
   setTimeout(() => {
 
@@ -78,9 +158,9 @@ setInterval(
 );
 
 
-/* =====================================
+/* =================================
    START STORY
-===================================== */
+================================= */
 
 function startStory() {
 
@@ -98,8 +178,10 @@ function startStory() {
   button.textContent =
     "bentar ya... ♡";
 
+
   button.style.opacity =
     ".45";
+
 
   button.style.pointerEvents =
     "none";
@@ -139,9 +221,11 @@ function startStory() {
       text.textContent =
         texts[index];
 
+
       text.classList.add(
         "active"
       );
+
 
       index++;
 
@@ -182,9 +266,9 @@ function startStory() {
 }
 
 
-/* =====================================
-   HUSEN WALKS TO IKE
-===================================== */
+/* =================================
+   WALK + FLOWER
+================================= */
 
 function startWalking() {
 
@@ -217,23 +301,18 @@ function startWalking() {
   }, 2600);
 
 
-  /*
-    Setelah bunga muncul,
-    pindah ke pertanyaan.
-  */
-
   setTimeout(() => {
 
     openFlowerQuestion();
 
-  }, 4100);
+  }, 4200);
 
 }
 
 
-/* =====================================
-   FLOWER QUESTION
-===================================== */
+/* =================================
+   QUESTION
+================================= */
 
 function openFlowerQuestion() {
 
@@ -247,20 +326,16 @@ function openFlowerQuestion() {
     "flex";
 
 
-  setTimeout(() => {
-
-    section.scrollIntoView({
-      behavior: "smooth"
-    });
-
-  }, 100);
+  section.scrollIntoView({
+    behavior: "smooth"
+  });
 
 }
 
 
-/* =====================================
+/* =================================
    CLICK "GAK"
-===================================== */
+================================= */
 
 function rejectApology() {
 
@@ -286,25 +361,24 @@ function rejectApology() {
 
 
   /*
-    "gak" makin kecil.
-    Minimum masih kelihatan.
+    GAK MAKIN KECIL
   */
 
   const noScale =
     Math.max(
-      .35,
-      1 - noCount * .13
+      .25,
+      1 - noCount * .14
     );
 
 
   /*
-    "maafin" makin besar.
+    MAAFIN MAKIN GEDE
   */
 
   const yesScale =
     Math.min(
-      2.15,
-      1 + noCount * .15
+      2.25,
+      1 + noCount * .16
     );
 
 
@@ -316,26 +390,21 @@ function rejectApology() {
     `scale(${yesScale})`;
 
 
-  /*
-    Pesan tiap kali "gak"
-    ditekan.
-  */
-
   const messages = [
 
-    "yah... 😭",
+    "yahh... 🥲",
 
-    "masih gak? 🥲",
+    "masih gak? 😭",
 
     "aku minta maaf beneran...",
 
     "bunganya ikut sedih 🌷",
 
-    "tombol maafnya kok makin gede ya...",
+    "kok tombol maafnya makin gede ya...",
 
     "aku masih nungguin nih 🥲",
 
-    "oke... aku tetep minta maaf.",
+    "oke... tapi aku tetep minta maaf.",
 
     "🌷♡"
 
@@ -350,16 +419,19 @@ function rejectApology() {
 
 
   message.textContent =
-    messages[messageIndex];
+    messages[
+      messageIndex
+    ];
 
 
   /*
-    Sedikit getar.
+    SHAKE
   */
 
   noButton.animate(
 
     [
+
       {
         translate: "0 0"
       },
@@ -375,6 +447,7 @@ function rejectApology() {
       {
         translate: "0 0"
       }
+
     ],
 
     {
@@ -386,19 +459,19 @@ function rejectApology() {
 }
 
 
-/* =====================================
-   CLICK "MAAFIN"
-===================================== */
+/* =================================
+   MAAFIN
+================================= */
 
 function acceptApology() {
 
-  const yesButton =
+  const yes =
     document.getElementById(
       "yesButton"
     );
 
 
-  const noButton =
+  const no =
     document.getElementById(
       "noButton"
     );
@@ -410,19 +483,19 @@ function acceptApology() {
     );
 
 
-  yesButton.textContent =
+  yes.textContent =
     "♡";
 
 
-  yesButton.style.pointerEvents =
+  yes.style.pointerEvents =
     "none";
 
 
-  noButton.style.opacity =
+  no.style.opacity =
     "0";
 
 
-  noButton.style.pointerEvents =
+  no.style.pointerEvents =
     "none";
 
 
@@ -439,14 +512,14 @@ function acceptApology() {
 
     openLetter();
 
-  }, 1700);
+  }, 1800);
 
 }
 
 
-/* =====================================
+/* =================================
    LETTER
-===================================== */
+================================= */
 
 function openLetter() {
 
@@ -465,18 +538,13 @@ function openLetter() {
   });
 
 
-  setTimeout(() => {
-
-    revealLetter();
-
-  }, 700);
+  setTimeout(
+    revealLetter,
+    700
+  );
 
 }
 
-
-/* =====================================
-   LETTER ANIMATION
-===================================== */
 
 function revealLetter() {
 
@@ -503,9 +571,9 @@ function revealLetter() {
 }
 
 
-/* =====================================
+/* =================================
    BEFORE END
-===================================== */
+================================= */
 
 function openBeforeEnd() {
 
@@ -551,9 +619,9 @@ function openBeforeEnd() {
 }
 
 
-/* =====================================
+/* =================================
    FINAL
-===================================== */
+================================= */
 
 function openFinal() {
 
@@ -622,9 +690,9 @@ function openFinal() {
 }
 
 
-/* =====================================
+/* =================================
    PINK FLASH
-===================================== */
+================================= */
 
 function pinkFlash() {
 
@@ -650,15 +718,15 @@ function pinkFlash() {
 }
 
 
-/* =====================================
+/* =================================
    HEART BURST
-===================================== */
+================================= */
 
 function heartBurst() {
 
   for (
     let i = 0;
-    i < 45;
+    i < 50;
     i++
   ) {
 
@@ -724,64 +792,4 @@ function heartBurst() {
 
   }
 
-}
-
-
-/* =====================================
-   MOUSE PINK GLOW
-===================================== */
-
-const mouseGlow =
-  document.createElement(
-    "div"
-  );
-
-
-mouseGlow.className =
-  "mouse-glow";
-
-
-mouseGlow.style.cssText = `
-
-  position: fixed;
-
-  width: 250px;
-  height: 250px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,79,163,.07),
-      transparent 65%
-    );
-
-  pointer-events: none;
-
-  z-index: -2;
-
-  transform:
-    translate(-50%,-50%);
-
-`;
-
-
-document.body.appendChild(
-  mouseGlow
-);
-
-
-document.addEventListener(
-  "mousemove",
-
-  event => {
-
-    mouseGlow.style.left =
-      event.clientX + "px";
-
-    mouseGlow.style.top =
-      event.clientY + "px";
-
-  }
-);
+      }
