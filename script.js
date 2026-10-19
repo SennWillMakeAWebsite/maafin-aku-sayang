@@ -1,266 +1,258 @@
 const particles =
-  document.getElementById("particles");
+  document.getElementById(
+    "particles"
+  );
+
+
+const music =
+  document.getElementById(
+    "backgroundMusic"
+  );
+
+
+const musicPlayer =
+  document.getElementById(
+    "musicPlayer"
+  );
+
+
+const musicStatus =
+  document.getElementById(
+    "musicStatus"
+  );
+
+
+const audioError =
+  document.getElementById(
+    "audioError"
+  );
+
 
 let storyStarted = false;
+
 let noCount = 0;
+
 let musicPlaying = false;
 
 
+
 /* =================================
-   LOADER + AUTO MUSIC
+   AUDIO SETTINGS
 ================================= */
 
-window.addEventListener(
-  "load",
-  () => {
+if (music) {
 
-    setTimeout(() => {
+  music.volume = 0.6;
 
-      document
-        .getElementById("loader")
+
+  music.addEventListener(
+    "play",
+    () => {
+
+      musicPlaying = true;
+
+      musicPlayer
         .classList
-        .add("hide");
-
-    }, 1600);
-
-
-    /*
-      COBA AUTOPLAY MUSIK
-    */
-
-    startMusic();
-
-  }
-);
-
-
-/* =================================
-   MUSIC
-================================= */
-
-function startMusic() {
-
-  const music =
-    document.getElementById(
-      "backgroundMusic"
-    );
-
-  const player =
-    document.getElementById(
-      "musicPlayer"
-    );
-
-  const status =
-    document.getElementById(
-      "musicStatus"
-    );
-
-
-  if (!music) return;
-
-
-  music.volume = 0.55;
-
-
-  const playPromise =
-    music.play();
-
-
-  if (
-    playPromise !== undefined
-  ) {
-
-    playPromise
-      .then(() => {
-
-        musicPlaying = true;
-
-        player.classList.add(
+        .add(
           "playing"
         );
 
-        status.textContent =
-          "now playing";
 
-      })
+      musicStatus.textContent =
+        "now playing";
 
-      .catch(() => {
+    }
+  );
 
-        /*
-          Browser memblokir autoplay.
 
-          Klik pertama user di halaman
-          bakal langsung nyalain musik.
-        */
+  music.addEventListener(
+    "pause",
+    () => {
 
-        musicPlaying = false;
+      musicPlaying = false;
 
-        status.textContent =
-          "Shape of My Heart ♡";
+      musicPlayer
+        .classList
+        .remove(
+          "playing"
+        );
 
-      });
 
-  }
+      musicStatus.textContent =
+        "paused";
+
+    }
+  );
+
+
+  music.addEventListener(
+    "error",
+    () => {
+
+      audioError.textContent =
+        "musiknya belum kebaca :( cek file shape-of-my-heart.mp3";
+
+      musicStatus.textContent =
+        "audio error";
+
+    }
+  );
 
 }
 
 
-/* =================================
-   FALLBACK AUTOPLAY
 
-   Kalau browser blok autoplay,
-   interaksi pertama di halaman
-   langsung memainkan musik.
+/* =================================
+   ENTER WEBSITE + PLAY MUSIC
 ================================= */
 
-function unlockMusic() {
+function enterWebsite() {
 
-  const music =
+  const welcome =
     document.getElementById(
-      "backgroundMusic"
+      "welcomeScreen"
     );
 
 
-  if (!music) return;
+  const button =
+    document.getElementById(
+      "enterButton"
+    );
 
 
-  if (
-    musicPlaying
-  ) {
-
-    removeMusicUnlock();
-
-    return;
-
-  }
+  button.textContent =
+    "sebentar... ♡";
 
 
-  music.volume = 0.55;
+  /*
+    Karena fungsi ini dipanggil
+    langsung dari klik user,
+    browser seharusnya mengizinkan
+    musik bersuara.
+  */
 
+  music
+    .play()
 
-  music.play()
     .then(() => {
 
       musicPlaying = true;
 
 
-      document
-        .getElementById(
-          "musicPlayer"
-        )
+      musicPlayer
         .classList
-        .add("playing");
+        .add(
+          "playing"
+        );
 
 
-      document
-        .getElementById(
-          "musicStatus"
-        )
-        .textContent =
+      musicStatus.textContent =
         "now playing";
 
 
-      removeMusicUnlock();
+      audioError.textContent =
+        "";
+
+
+      /*
+        Baru masuk setelah musik
+        berhasil dimainkan.
+      */
+
+      setTimeout(() => {
+
+        welcome
+          .classList
+          .add(
+            "hide"
+          );
+
+
+        musicPlayer
+          .classList
+          .add(
+            "show"
+          );
+
+
+        heartBurst();
+
+      }, 350);
 
     })
 
-    .catch(() => {
+
+    .catch(error => {
+
+      console.error(
+        "Audio gagal:",
+        error
+      );
+
 
       /*
-        Kalau masih diblokir,
-        biarkan event berikutnya mencoba.
+        Kalau file musik tidak
+        ditemukan atau browser gagal
+        membacanya, jangan pura-pura
+        seolah musik sedang jalan.
       */
+
+      button.textContent =
+        "coba nyalain lagi ♫";
+
+
+      audioError.textContent =
+        "musiknya belum kebaca. pastiin file shape-of-my-heart.mp3 ada di folder yang sama.";
 
     });
 
 }
 
 
-/* EVENT UNTUK HP + PC */
-
-document.addEventListener(
-  "pointerdown",
-  unlockMusic
-);
-
-document.addEventListener(
-  "touchstart",
-  unlockMusic,
-  {
-    passive: true
-  }
-);
-
-document.addEventListener(
-  "keydown",
-  unlockMusic
-);
-
-
-/* HAPUS EVENT SETELAH MUSIK BERHASIL */
-
-function removeMusicUnlock() {
-
-  document.removeEventListener(
-    "pointerdown",
-    unlockMusic
-  );
-
-  document.removeEventListener(
-    "touchstart",
-    unlockMusic
-  );
-
-  document.removeEventListener(
-    "keydown",
-    unlockMusic
-  );
-
-}
-
 
 /* =================================
-   MUSIC BUTTON
-
-   Tombol tetap bisa pause/play.
+   MUSIC TOGGLE
 ================================= */
 
 function toggleMusic() {
 
-  const music =
-    document.getElementById(
-      "backgroundMusic"
-    );
-
-  const player =
-    document.getElementById(
-      "musicPlayer"
-    );
-
-  const status =
-    document.getElementById(
-      "musicStatus"
-    );
+  if (!music) {
+    return;
+  }
 
 
-  if (!music) return;
+  if (music.paused) {
 
+    music
+      .play()
 
-  if (
-    music.paused
-  ) {
-
-    music.play()
       .then(() => {
 
         musicPlaying = true;
 
-        player.classList.add(
-          "playing"
+
+        musicPlayer
+          .classList
+          .add(
+            "playing"
+          );
+
+
+        musicStatus.textContent =
+          "now playing";
+
+      })
+
+
+      .catch(error => {
+
+        console.error(
+          error
         );
 
-        status.textContent =
-          "now playing";
+
+        musicStatus.textContent =
+          "audio error";
 
       });
 
@@ -270,18 +262,24 @@ function toggleMusic() {
 
     music.pause();
 
+
     musicPlaying = false;
 
-    player.classList.remove(
-      "playing"
-    );
 
-    status.textContent =
+    musicPlayer
+      .classList
+      .remove(
+        "playing"
+      );
+
+
+    musicStatus.textContent =
       "paused";
 
   }
 
 }
+
 
 
 /* =================================
@@ -290,7 +288,9 @@ function toggleMusic() {
 
 function createParticle() {
 
-  if (!particles) return;
+  if (!particles) {
+    return;
+  }
 
 
   const particle =
@@ -304,10 +304,15 @@ function createParticle() {
 
 
   const symbols = [
+
     "♡",
+
     "♥",
+
     "✦",
+
     "·"
+
   ];
 
 
@@ -321,18 +326,21 @@ function createParticle() {
 
 
   particle.style.left =
-    Math.random() * 100 +
+    Math.random() *
+    100 +
     "vw";
 
 
   particle.style.fontSize =
-    Math.random() * 11 +
+    Math.random() *
+    11 +
     7 +
     "px";
 
 
   particle.style.animationDuration =
-    Math.random() * 7 +
+    Math.random() *
+    7 +
     8 +
     "s";
 
@@ -351,10 +359,12 @@ function createParticle() {
 }
 
 
+
 setInterval(
   createParticle,
   650
 );
+
 
 
 /* =================================
@@ -363,17 +373,9 @@ setInterval(
 
 function startStory() {
 
-  /*
-    Tombol pertama ditekan,
-    pastikan musik sudah hidup.
-  */
-
-  unlockMusic();
-
-
-  if (
-    storyStarted
-  ) return;
+  if (storyStarted) {
+    return;
+  }
 
 
   storyStarted = true;
@@ -413,6 +415,7 @@ function startStory() {
   let index = 0;
 
 
+
   function nextText() {
 
     const text =
@@ -421,9 +424,11 @@ function startStory() {
       );
 
 
-    text.classList.remove(
-      "active"
-    );
+    text
+      .classList
+      .remove(
+        "active"
+      );
 
 
     setTimeout(() => {
@@ -432,9 +437,11 @@ function startStory() {
         texts[index];
 
 
-      text.classList.add(
-        "active"
-      );
+      text
+        .classList
+        .add(
+          "active"
+        );
 
 
       index++;
@@ -456,9 +463,12 @@ function startStory() {
 
         setTimeout(() => {
 
-          text.classList.remove(
-            "active"
-          );
+          text
+            .classList
+            .remove(
+              "active"
+            );
+
 
           startWalking();
 
@@ -476,8 +486,9 @@ function startStory() {
 }
 
 
+
 /* =================================
-   WALK + FLOWER
+   WALKING
 ================================= */
 
 function startWalking() {
@@ -488,25 +499,31 @@ function startWalking() {
     );
 
 
-  scene.classList.add(
-    "walking"
-  );
+  scene
+    .classList
+    .add(
+      "walking"
+    );
 
 
   setTimeout(() => {
 
-    scene.classList.add(
-      "together"
-    );
+    scene
+      .classList
+      .add(
+        "together"
+      );
 
   }, 300);
 
 
   setTimeout(() => {
 
-    scene.classList.remove(
-      "walking"
-    );
+    scene
+      .classList
+      .remove(
+        "walking"
+      );
 
   }, 2600);
 
@@ -518,6 +535,7 @@ function startWalking() {
   }, 4200);
 
 }
+
 
 
 /* =================================
@@ -537,14 +555,18 @@ function openFlowerQuestion() {
 
 
   section.scrollIntoView({
-    behavior: "smooth"
+
+    behavior:
+      "smooth"
+
   });
 
 }
 
 
+
 /* =================================
-   CLICK "GAK"
+   CLICK GAK
 ================================= */
 
 function rejectApology() {
@@ -571,24 +593,35 @@ function rejectApology() {
 
 
   /*
-    GAK MAKIN KECIL
+    Tombol GAK makin kecil,
+    tapi tetap ada.
   */
 
   const noScale =
     Math.max(
-      .25,
-      1 - noCount * .14
+
+      .3,
+
+      1 -
+      noCount *
+      .13
+
     );
 
 
   /*
-    MAAFIN MAKIN BESAR
+    Tombol MAAFIN makin besar.
   */
 
   const yesScale =
     Math.min(
-      2.25,
-      1 + noCount * .16
+
+      2.1,
+
+      1 +
+      noCount *
+      .15
+
     );
 
 
@@ -614,7 +647,7 @@ function rejectApology() {
 
     "aku masih nungguin nih 🥲",
 
-    "oke... tapi aku tetep minta maaf.",
+    "oke... aku tetep minta maaf.",
 
     "🌷♡"
 
@@ -623,8 +656,11 @@ function rejectApology() {
 
   const messageIndex =
     Math.min(
+
       noCount - 1,
+
       messages.length - 1
+
     );
 
 
@@ -639,25 +675,32 @@ function rejectApology() {
     [
 
       {
-        translate: "0 0"
+        translate:
+          "0 0"
       },
 
       {
-        translate: "-4px 0"
+        translate:
+          "-4px 0"
       },
 
       {
-        translate: "4px 0"
+        translate:
+          "4px 0"
       },
 
       {
-        translate: "0 0"
+        translate:
+          "0 0"
       }
 
     ],
 
     {
-      duration: 180
+
+      duration:
+        180
+
     }
 
   );
@@ -665,8 +708,9 @@ function rejectApology() {
 }
 
 
+
 /* =================================
-   CLICK "MAAFIN"
+   CLICK MAAFIN
 ================================= */
 
 function acceptApology() {
@@ -711,6 +755,7 @@ function acceptApology() {
 
   pinkFlash();
 
+
   heartBurst();
 
 
@@ -721,6 +766,7 @@ function acceptApology() {
   }, 1800);
 
 }
+
 
 
 /* =================================
@@ -740,16 +786,23 @@ function openLetter() {
 
 
   letter.scrollIntoView({
-    behavior: "smooth"
+
+    behavior:
+      "smooth"
+
   });
 
 
   setTimeout(
+
     revealLetter,
+
     700
+
   );
 
 }
+
 
 
 function revealLetter() {
@@ -761,6 +814,7 @@ function revealLetter() {
 
 
   paragraphs.forEach(
+
     (
       paragraph,
       index
@@ -777,9 +831,11 @@ function revealLetter() {
       }, index * 280);
 
     }
+
   );
 
 }
+
 
 
 /* =================================
@@ -799,7 +855,10 @@ function openBeforeEnd() {
 
 
   section.scrollIntoView({
-    behavior: "smooth"
+
+    behavior:
+      "smooth"
+
   });
 
 
@@ -812,6 +871,7 @@ function openBeforeEnd() {
 
 
     messages.forEach(
+
       (
         message,
         index
@@ -828,6 +888,7 @@ function openBeforeEnd() {
         }, index * 600);
 
       }
+
     );
 
   }, 700);
@@ -835,10 +896,207 @@ function openBeforeEnd() {
 }
 
 
+
 /* =================================
    FINAL
 ================================= */
 
+function openFinal() {
+
+  const final =
+    document.getElementById(
+      "final"
+    );
+
+
+  const scene =
+    document.getElementById(
+      "finalScene"
+    );
+
+
+  final.style.display =
+    "flex";
+
+
+  final.scrollIntoView({
+
+    behavior:
+      "smooth"
+
+  });
+
+
+  setTimeout(() => {
+
+    scene
+      .classList
+      .add(
+        "walking"
+      );
+
+  }, 900);
+
+
+  setTimeout(() => {
+
+    scene
+      .classList
+      .add(
+        "together"
+      );
+
+  }, 1200);
+
+
+  setTimeout(() => {
+
+    scene
+      .classList
+      .remove(
+        "walking"
+      );
+
+  }, 3500);
+
+
+  setTimeout(() => {
+
+    document
+      .querySelector(
+        ".final-message"
+      )
+      .classList
+      .add(
+        "visible"
+      );
+
+
+    heartBurst();
+
+  }, 4100);
+
+}
+
+
+
+/* =================================
+   PINK FLASH
+================================= */
+
+function pinkFlash() {
+
+  const flash =
+    document.getElementById(
+      "pinkFlash"
+    );
+
+
+  flash
+    .classList
+    .add(
+      "active"
+    );
+
+
+  setTimeout(() => {
+
+    flash
+      .classList
+      .remove(
+        "active"
+      );
+
+  }, 450);
+
+}
+
+
+
+/* =================================
+   HEART BURST
+================================= */
+
+function heartBurst() {
+
+  for (
+    let i = 0;
+    i < 50;
+    i++
+  ) {
+
+    setTimeout(() => {
+
+
+      const heart =
+        document.createElement(
+          "span"
+        );
+
+
+      heart.className =
+        "particle";
+
+
+      heart.textContent =
+        Math.random() > .3
+          ? "♥"
+          : "♡";
+
+
+      heart.style.left =
+        (
+          25 +
+          Math.random() *
+          50
+        ) +
+        "vw";
+
+
+      heart.style.bottom =
+        (
+          5 +
+          Math.random() *
+          20
+        ) +
+        "vh";
+
+
+      heart.style.fontSize =
+        (
+          Math.random() *
+          18 +
+          8
+        ) +
+        "px";
+
+
+      heart.style.animationDuration =
+        (
+          Math.random() *
+          3 +
+          3
+        ) +
+        "s";
+
+
+      particles.appendChild(
+        heart
+      );
+
+
+      setTimeout(() => {
+
+        heart.remove();
+
+      }, 7000);
+
+
+    }, i * 35);
+
+  }
+
+          }
 function openFinal() {
 
   const final =
