@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
   /* ==================================================
      ELEMENTS
@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const storyText =
     document.getElementById("storyText");
 
-
   const flowerSection =
     document.getElementById("flowerSection");
 
@@ -35,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const noMessage =
     document.getElementById("noMessage");
 
-
   const hugSection =
     document.getElementById("hugSection");
 
@@ -45,13 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const openLetterButton =
     document.getElementById("openLetterButton");
 
-
   const letter =
     document.getElementById("letter");
 
   const beforeEndButton =
     document.getElementById("beforeEndButton");
-
 
   const beforeEnd =
     document.getElementById("beforeEnd");
@@ -59,13 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const finalButton =
     document.getElementById("finalButton");
 
-
   const final =
     document.getElementById("final");
 
   const finalScene =
     document.getElementById("finalScene");
-
 
   const particles =
     document.getElementById("particles");
@@ -88,20 +82,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ==================================================
-     HELPERS
+     BASIC HELPERS
   ================================================== */
 
   function wait(ms) {
 
-    return new Promise(
-      resolve =>
-        setTimeout(resolve, ms)
-    );
+    return new Promise(function (resolve) {
+
+      setTimeout(resolve, ms);
+
+    });
 
   }
 
 
-  function scrollToElement(element) {
+  function smoothScroll(element) {
 
     if (!element) {
       return;
@@ -115,26 +110,90 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  /* ==================================================
+     WELCOME
+     DIBUAT SESIMPLE MUNGKIN BIAR TIDAK ERROR
+  ================================================== */
+
+  document.body.classList.add("locked");
+
+
+  if (enterButton && welcomeScreen) {
+
+    enterButton.addEventListener("click", function () {
+
+      /*
+        Hilangkan welcome.
+      */
+
+      welcomeScreen.classList.add("hide");
+
+
+      /*
+        Buka scroll.
+      */
+
+      document.body.classList.remove("locked");
+
+
+      /*
+        Setelah animasi selesai,
+        benar-benar hilangkan overlay.
+      */
+
+      setTimeout(function () {
+
+        welcomeScreen.style.display =
+          "none";
+
+      }, 800);
+
+
+      /*
+        Scroll ke awal halaman.
+      */
+
+      setTimeout(function () {
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      }, 250);
+
+    });
+
+  }
+
+
+  /* ==================================================
+     STORY TEXT
+  ================================================== */
+
   function showStoryText(text) {
 
     if (!storyText) {
       return;
     }
 
+
     storyText.classList.remove(
       "active"
     );
 
-    setTimeout(() => {
+
+    setTimeout(function () {
 
       storyText.textContent =
         text;
+
 
       storyText.classList.add(
         "active"
       );
 
-    }, 220);
+    }, 200);
 
   }
 
@@ -145,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+
     storyText.classList.remove(
       "active"
     );
@@ -152,17 +212,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  /* ==================================================
+     PINK FLASH
+  ================================================== */
+
   function flashPink() {
 
     if (!pinkFlash) {
       return;
     }
 
+
     pinkFlash.classList.remove(
       "flash"
     );
 
+
     void pinkFlash.offsetWidth;
+
 
     pinkFlash.classList.add(
       "flash"
@@ -172,49 +239,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ==================================================
-     WELCOME
-  ================================================== */
-
-  document.body.classList.add(
-    "locked"
-  );
-
-
-  enterButton?.addEventListener(
-    "click",
-    async () => {
-
-      welcomeScreen?.classList.add(
-        "hide"
-      );
-
-      document.body.classList.remove(
-        "locked"
-      );
-
-      createHeartBurst(
-        window.innerWidth / 2,
-        window.innerHeight / 2,
-        10
-      );
-
-      await wait(500);
-
-      scrollToElement(
-        opening
-      );
-
-    }
-  );
-
-
-  /* ==================================================
-     BACKGROUND PARTICLES
+     PARTICLES
   ================================================== */
 
   function createParticle() {
 
     if (!particles) {
+      return;
+    }
+
+
+    /*
+      Biar DOM tidak dipenuhi partikel
+      sampai browser HP minta pensiun.
+    */
+
+    if (
+      particles.children.length > 25
+    ) {
       return;
     }
 
@@ -225,9 +267,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const symbols = [
       "♡",
-      "♥",
       "♡",
-      "♡"
+      "♥"
     ];
 
 
@@ -245,28 +286,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     particle.style.left =
-      `${Math.random() * 100}%`;
+      Math.random() * 100 + "%";
 
 
     particle.style.fontSize =
-      `${
+      (
         9 +
-        Math.random() * 12
-      }px`;
+        Math.random() * 11
+      ) + "px";
 
 
     particle.style.animationDuration =
-      `${
+      (
         7 +
-        Math.random() * 5
-      }s`;
-
-
-    particle.style.opacity =
-      `${
-        0.25 +
-        Math.random() * 0.45
-      }`;
+        Math.random() * 4
+      ) + "s";
 
 
     particles.appendChild(
@@ -274,30 +308,30 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-    setTimeout(() => {
+    setTimeout(function () {
 
       particle.remove();
 
-    }, 12500);
+    }, 12000);
 
   }
 
 
   setInterval(
     createParticle,
-    850
+    900
   );
 
 
   for (
     let i = 0;
-    i < 7;
+    i < 6;
     i++
   ) {
 
     setTimeout(
       createParticle,
-      i * 250
+      i * 300
     );
 
   }
@@ -310,14 +344,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function createHeartBurst(
     x,
     y,
-    amount = 14
+    amount
   ) {
 
-    const symbols = [
-      "♡",
-      "♥",
-      "♡"
-    ];
+    if (!amount) {
+      amount = 12;
+    }
 
 
     for (
@@ -335,12 +367,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       heart.textContent =
-        symbols[
-          Math.floor(
-            Math.random() *
-            symbols.length
-          )
-        ];
+        i % 3 === 0
+          ? "♥"
+          : "♡";
+
+
+      heart.style.left =
+        x + "px";
+
+
+      heart.style.top =
+        y + "px";
 
 
       document.body.appendChild(
@@ -357,7 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const distance =
         65 +
-        Math.random() * 95;
+        Math.random() * 85;
 
 
       const moveX =
@@ -370,64 +407,83 @@ document.addEventListener("DOMContentLoaded", () => {
         distance;
 
 
-      heart.style.left =
-        `${x}px`;
-
-      heart.style.top =
-        `${y}px`;
+      const rotation =
+        -30 +
+        Math.random() * 60;
 
 
-      heart.animate(
+      const scale =
+        0.8 +
+        Math.random() * 0.5;
 
-        [
+
+      /*
+        Web Animations API.
+        Kalau tidak tersedia,
+        hati tetap dihapus dan web
+        tidak ikut mati.
+      */
+
+      if (heart.animate) {
+
+        heart.animate(
+
+          [
+            {
+              transform:
+                "translate(-50%, -50%) scale(0.3)",
+
+              opacity: 0
+            },
+
+            {
+              transform:
+                "translate(-50%, -50%) scale(1)",
+
+              opacity: 1,
+
+              offset: 0.18
+            },
+
+            {
+              transform:
+                "translate(" +
+                "calc(-50% + " +
+                moveX +
+                "px), " +
+                "calc(-50% + " +
+                moveY +
+                "px)" +
+                ") " +
+                "scale(" +
+                scale +
+                ") " +
+                "rotate(" +
+                rotation +
+                "deg)",
+
+              opacity: 0
+            }
+          ],
+
           {
-            transform:
-              "translate(-50%, -50%) scale(0.3)",
+            duration:
+              950 +
+              Math.random() * 450,
 
-            opacity: 0
-          },
+            easing:
+              "cubic-bezier(.17,.67,.35,1)",
 
-          {
-            opacity: 1,
-
-            offset: 0.18
-          },
-
-          {
-            transform:
-              `translate(
-                calc(-50% + ${moveX}px),
-                calc(-50% + ${moveY}px)
-              )
-              scale(${
-                0.8 +
-                Math.random() * 0.7
-              })
-              rotate(${
-                -30 +
-                Math.random() * 60
-              }deg)`,
-
-            opacity: 0
+            fill:
+              "forwards"
           }
-        ],
 
-        {
-          duration:
-            900 +
-            Math.random() * 550,
+        );
 
-          easing:
-            "cubic-bezier(.17,.67,.35,1)",
-
-          fill:
-            "forwards"
-        }
-
-      );
+      }
 
 
-      setTimeout(() => {
+      setTimeout(function () {
 
         heart.remove();
 
@@ -442,132 +498,153 @@ document.addEventListener("DOMContentLoaded", () => {
      START STORY
   ================================================== */
 
-  startButton?.addEventListener(
-    "click",
-    async () => {
+  if (startButton) {
 
-      if (storyStarted) {
-        return;
-      }
+    startButton.addEventListener(
+      "click",
+      async function () {
 
-
-      storyStarted = true;
-
-
-      startButton.disabled =
-        true;
+        if (storyStarted) {
+          return;
+        }
 
 
-      startButton.style.opacity =
-        "0.55";
+        storyStarted = true;
 
 
-      startButton.style.pointerEvents =
-        "none";
+        startButton.disabled =
+          true;
 
 
-      scrollToElement(
-        openingScene
-      );
+        startButton.style.opacity =
+          "0.55";
 
 
-      await wait(500);
+        smoothScroll(
+          openingScene
+        );
 
 
-      showStoryText(
-        "jadi... aku datang bawa sesuatu kecil buat kamu."
-      );
+        await wait(450);
 
 
-      await wait(1500);
+        showStoryText(
+          "jadi... aku datang bawa sesuatu kecil buat kamu."
+        );
 
 
-      openingScene?.classList.add(
-        "walking"
-      );
+        await wait(1500);
 
 
-      showStoryText(
-        "bentar, aku kesana dulu..."
-      );
+        if (openingScene) {
+
+          openingScene.classList.add(
+            "walking"
+          );
+
+        }
 
 
-      await wait(450);
+        showStoryText(
+          "bentar, aku kesana dulu..."
+        );
 
 
-      openingScene?.classList.add(
-        "together"
-      );
+        await wait(400);
 
 
-      await wait(1200);
+        if (openingScene) {
+
+          openingScene.classList.add(
+            "together"
+          );
+
+        }
 
 
-      openingScene?.classList.remove(
-        "walking"
-      );
+        await wait(1200);
 
 
-      showStoryText(
-        "ini buat kamu 🌷"
-      );
+        if (openingScene) {
+
+          openingScene.classList.remove(
+            "walking"
+          );
+
+        }
 
 
-      openingScene?.classList.add(
-        "giving-flower"
-      );
+        showStoryText(
+          "ini buat kamu 🌷"
+        );
 
 
-      await wait(1200);
+        if (openingScene) {
+
+          openingScene.classList.add(
+            "giving-flower"
+          );
+
+        }
 
 
-      const sceneRect =
-        openingScene?.getBoundingClientRect();
+        await wait(1200);
 
 
-      if (sceneRect) {
+        if (openingScene) {
 
-        createHeartBurst(
-          sceneRect.left +
-          sceneRect.width / 2,
+          const rect =
+            openingScene
+              .getBoundingClientRect();
 
-          sceneRect.top +
-          sceneRect.height / 2,
 
-          8
+          createHeartBurst(
+            rect.left +
+            rect.width / 2,
+
+            rect.top +
+            rect.height / 2,
+
+            8
+          );
+
+        }
+
+
+        await wait(1300);
+
+
+        showStoryText(
+          "terus... ada satu hal lagi."
+        );
+
+
+        await wait(1300);
+
+
+        hideStoryText();
+
+
+        if (flowerSection) {
+
+          flowerSection.classList.add(
+            "show"
+          );
+
+        }
+
+
+        await wait(250);
+
+
+        smoothScroll(
+          flowerSection
         );
 
       }
+    );
 
-
-      await wait(1400);
-
-
-      showStoryText(
-        "terus... ada satu hal lagi."
-      );
-
-
-      await wait(1400);
-
-
-      hideStoryText();
-
-
-      flowerSection?.classList.add(
-        "show"
-      );
-
-
-      await wait(250);
-
-
-      scrollToElement(
-        flowerSection
-      );
-
-    }
-  );
+  }
 
 
   /* ==================================================
@@ -584,127 +661,552 @@ document.addEventListener("DOMContentLoaded", () => {
 
     "bunganya masih aku pegang 🌷",
 
-    "maafinnya makin gede tuh 😭",
-
-    "oke... tombol gak-nya mulai menyerah.",
-
-    "udah kalah dia."
+    "maafinnya udah gede banget 😭"
 
   ];
 
 
-  noButton?.addEventListener(
-    "click",
-    () => {
+  if (
+    noButton &&
+    yesButton
+  ) {
 
-      if (
-        apologyAccepted ||
-        noButtonRemoved
-      ) {
-        return;
-      }
+    noButton.addEventListener(
+      "click",
+      function () {
 
-
-      noCount++;
-
-
-      const yesScale =
-        Math.min(
-          2.55,
-          1 + noCount * 0.28
-        );
+        if (
+          apologyAccepted ||
+          noButtonRemoved
+        ) {
+          return;
+        }
 
 
-      const noScale =
-        Math.max(
-          0.45,
-          1 - noCount * 0.11
-        );
+        noCount++;
 
 
-      yesButton.style.transform =
-        `scale(${yesScale})`;
+        /*
+          YES membesar bertahap.
+        */
+
+        const yesScale =
+          Math.min(
+            2.55,
+            1 +
+            noCount * 0.3
+          );
 
 
-      noButton.style.transform =
-        `scale(${noScale})`;
+        /*
+          NO mengecil.
+        */
 
-
-      const messageIndex =
-        Math.min(
-          noCount - 1,
-          noMessages.length - 1
-        );
-
-
-      noMessage.textContent =
-        noMessages[
-          messageIndex
-        ];
-
-
-      if (noCount === 2) {
-
-        noButton.style.opacity =
-          "0.82";
-
-      }
-
-
-      if (noCount === 3) {
-
-        noButton.style.opacity =
-          "0.65";
-
-      }
-
-
-      if (noCount === 4) {
-
-        noButton.style.opacity =
-          "0.45";
-
-      }
-
-
-      /*
-        Setelah YES sudah sangat besar,
-        tombol NO menyerah.
-      */
-
-      if (noCount >= 5) {
-
-        noButtonRemoved =
-          true;
-
-
-        noMessage.textContent =
-          "oke... pilihan satunya menyerah 😭";
-
-
-        noButton.classList.add(
-          "disappear"
-        );
+        const noScale =
+          Math.max(
+            0.48,
+            1 -
+            noCount * 0.11
+          );
 
 
         yesButton.style.transform =
-          "scale(2.55)";
+          "scale(" +
+          yesScale +
+          ")";
 
 
-        setTimeout(() => {
+        noButton.style.transform =
+          "scale(" +
+          noScale +
+          ")";
 
-          noButton.style.display =
-            "none";
 
-        }, 450);
+        if (noMessage) {
+
+          const index =
+            Math.min(
+              noCount - 1,
+              noMessages.length - 1
+            );
+
+
+          noMessage.textContent =
+            noMessages[index];
+
+        }
+
+
+        /*
+          NO makin pudar.
+        */
+
+        if (noCount === 2) {
+
+          noButton.style.opacity =
+            "0.82";
+
+        }
+
+
+        if (noCount === 3) {
+
+          noButton.style.opacity =
+            "0.65";
+
+        }
+
+
+        if (noCount === 4) {
+
+          noButton.style.opacity =
+            "0.45";
+
+        }
+
+
+        /*
+          Setelah 5x ditolak:
+          YES sudah mentok besar,
+          NO menghilang.
+        */
+
+        if (noCount >= 5) {
+
+          noButtonRemoved =
+            true;
+
+
+          yesButton.style.transform =
+            "scale(2.55)";
+
+
+          noButton.classList.add(
+            "disappear"
+          );
+
+
+          if (noMessage) {
+
+            noMessage.textContent =
+              "oke... tombol gak-nya menyerah 😭";
+
+          }
+
+
+          setTimeout(function () {
+
+            noButton.style.display =
+              "none";
+
+          }, 450);
+
+        }
 
       }
+    );
 
-    }
-  );
+  }
 
 
   /* ==================================================
+     YES BUTTON
+  ================================================== */
+
+  if (yesButton) {
+
+    yesButton.addEventListener(
+      "click",
+      async function () {
+
+        if (apologyAccepted) {
+          return;
+        }
+
+
+        apologyAccepted =
+          true;
+
+
+        yesButton.disabled =
+          true;
+
+
+        /*
+          NO langsung hilang kalau
+          belum menghilang sebelumnya.
+        */
+
+        if (
+          noButton &&
+          !noButtonRemoved
+        ) {
+
+          noButtonRemoved =
+            true;
+
+
+          noButton.classList.add(
+            "disappear"
+          );
+
+
+          setTimeout(function () {
+
+            noButton.style.display =
+              "none";
+
+          }, 400);
+
+        }
+
+
+        /*
+          Balikin YES agar transisi
+          berikutnya tidak kelewat besar.
+        */
+
+        yesButton.style.transform =
+          "scale(1.08)";
+
+
+        yesButton.textContent =
+          "makasih ♡";
+
+
+        if (noMessage) {
+
+          noMessage.textContent =
+            "makasih udah mau dengerin aku :)";
+
+        }
+
+
+        flashPink();
+
+
+        const rect =
+          yesButton
+            .getBoundingClientRect();
+
+
+        createHeartBurst(
+          rect.left +
+          rect.width / 2,
+
+          rect.top +
+          rect.height / 2,
+
+          18
+        );
+
+
+        await wait(900);
+
+
+        if (hugSection) {
+
+          hugSection.classList.add(
+            "show"
+          );
+
+        }
+
+
+        await wait(250);
+
+
+        smoothScroll(
+          hugSection
+        );
+
+
+        await wait(700);
+
+
+        if (hugScene) {
+
+          hugScene.classList.add(
+            "hugging"
+          );
+
+        }
+
+
+        await wait(900);
+
+
+        if (hugScene) {
+
+          const hugRect =
+            hugScene
+              .getBoundingClientRect();
+
+
+          createHeartBurst(
+            hugRect.left +
+            hugRect.width / 2,
+
+            hugRect.top +
+            hugRect.height * 0.45,
+
+            12
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* ==================================================
+     OPEN LETTER
+  ================================================== */
+
+  if (openLetterButton) {
+
+    openLetterButton.addEventListener(
+      "click",
+      async function () {
+
+        openLetterButton.disabled =
+          true;
+
+
+        flashPink();
+
+
+        if (letter) {
+
+          letter.classList.add(
+            "show"
+          );
+
+        }
+
+
+        await wait(250);
+
+
+        smoothScroll(
+          letter
+        );
+
+
+        await wait(500);
+
+
+        const paragraphs =
+          document.querySelectorAll(
+            ".letter-card p"
+          );
+
+
+        paragraphs.forEach(
+          function (
+            paragraph,
+            index
+          ) {
+
+            setTimeout(
+              function () {
+
+                paragraph.classList.add(
+                  "reveal"
+                );
+
+              },
+              index * 250
+            );
+
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ==================================================
+     BEFORE END
+  ================================================== */
+
+  if (beforeEndButton) {
+
+    beforeEndButton.addEventListener(
+      "click",
+      async function () {
+
+        beforeEndButton.disabled =
+          true;
+
+
+        if (beforeEnd) {
+
+          beforeEnd.classList.add(
+            "show"
+          );
+
+        }
+
+
+        await wait(250);
+
+
+        smoothScroll(
+          beforeEnd
+        );
+
+
+        await wait(450);
+
+
+        const lines =
+          document.querySelectorAll(
+            ".message-line"
+          );
+
+
+        lines.forEach(
+          function (
+            line,
+            index
+          ) {
+
+            setTimeout(
+              function () {
+
+                line.classList.add(
+                  "reveal"
+                );
+
+              },
+              index * 450
+            );
+
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ==================================================
+     FINAL
+  ================================================== */
+
+  if (finalButton) {
+
+    finalButton.addEventListener(
+      "click",
+      async function () {
+
+        finalButton.disabled =
+          true;
+
+
+        flashPink();
+
+
+        if (final) {
+
+          final.classList.add(
+            "show"
+          );
+
+        }
+
+
+        await wait(250);
+
+
+        smoothScroll(
+          final
+        );
+
+
+        await wait(700);
+
+
+        if (finalScene) {
+
+          finalScene.classList.add(
+            "final-together"
+          );
+
+        }
+
+
+        await wait(900);
+
+
+        if (finalScene) {
+
+          const rect =
+            finalScene
+              .getBoundingClientRect();
+
+
+          createHeartBurst(
+            rect.left +
+            rect.width / 2,
+
+            rect.top +
+            rect.height * 0.45,
+
+            14
+          );
+
+        }
+
+
+        await wait(500);
+
+
+        const finalMessage =
+          document.querySelector(
+            ".final-message"
+          );
+
+
+        if (finalMessage) {
+
+          finalMessage.classList.add(
+            "reveal"
+          );
+
+        }
+
+
+        await wait(850);
+
+
+        const signature =
+          document.querySelector(
+            ".signature"
+          );
+
+
+        if (signature) {
+
+          signature.classList.add(
+            "reveal"
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+});* ==================================================
      YES / ACCEPT APOLOGY
   ================================================== */
 
