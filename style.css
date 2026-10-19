@@ -1,11 +1,20 @@
 :root {
   --pink: #ff4fa3;
-  --pink-light: #ff83bd;
-  --pink-soft: #ffc4e0;
+  --pink-light: #ff86c0;
+  --pink-soft: #ffc5e1;
+
+  --skin: #ffe7dc;
+  --skin-shadow: #f2c8b8;
+
   --dark: #080508;
   --text: #fff7fb;
-  --muted: #cbb9c2;
+  --muted: #cdbac4;
 }
+
+
+/* ================================
+   RESET
+================================ */
 
 * {
   margin: 0;
@@ -13,15 +22,20 @@
   box-sizing: border-box;
 }
 
+
 html {
   scroll-behavior: smooth;
 }
 
+
 body {
   min-height: 100vh;
+
   overflow-x: hidden;
 
-  font-family: "Poppins", sans-serif;
+  font-family:
+    "Poppins",
+    sans-serif;
 
   color: var(--text);
 
@@ -31,153 +45,482 @@ body {
       rgba(255, 62, 157, .18),
       transparent 35%
     ),
+    radial-gradient(
+      circle at 10% 80%,
+      rgba(255, 40, 140, .07),
+      transparent 30%
+    ),
     #080508;
 }
+
 
 button {
   font-family: inherit;
 }
 
 
-/* ===================================
+/* ================================
    BACKGROUND
-=================================== */
+================================ */
 
 .background {
   position: fixed;
+
   inset: 0;
 
   overflow: hidden;
 
   pointer-events: none;
 
-  z-index: -5;
+  z-index: -10;
 }
+
 
 .orb {
   position: absolute;
 
   border-radius: 50%;
 
-  filter: blur(100px);
+  filter: blur(110px);
 
   opacity: .22;
 
   animation:
-    orbFloat 10s ease-in-out infinite alternate;
+    orbFloat 10s
+    ease-in-out
+    infinite alternate;
 }
+
 
 .orb-one {
   width: 350px;
   height: 350px;
 
-  left: -160px;
-  top: -100px;
+  top: -150px;
+  left: -130px;
 
   background: #ff248d;
 }
+
 
 .orb-two {
   width: 450px;
   height: 450px;
 
   right: -250px;
-  bottom: -150px;
+  bottom: -160px;
 
-  background: #d72b87;
+  background: #c92179;
 
-  animation-delay: -4s;
+  animation-delay: -5s;
 }
 
+
 @keyframes orbFloat {
+
   to {
     transform:
       translate(60px, 40px)
       scale(1.2);
   }
+
 }
 
 
-/* ===================================
-   LOADER
-=================================== */
+/* ================================
+   WELCOME SCREEN
+================================ */
 
-#loader {
+#welcomeScreen {
   position: fixed;
+
   inset: 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: #070407;
 
   z-index: 9999;
 
-  transition: 1s ease;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(255, 79, 163, .18),
+      transparent 40%
+    ),
+    rgba(6, 3, 6, .97);
+
+  backdrop-filter:
+    blur(25px);
+
+  transition:
+    opacity .8s ease,
+    visibility .8s ease;
 }
 
-#loader.hide {
+
+#welcomeScreen.hide {
   opacity: 0;
+
   visibility: hidden;
+
+  pointer-events: none;
 }
 
-.loader-content {
+
+.welcome-card {
+  position: relative;
+
+  width:
+    min(
+      430px,
+      100%
+    );
+
+  padding:
+    45px 30px;
+
+  overflow: hidden;
+
   text-align: center;
+
+  border:
+    1px solid
+    rgba(255, 119, 185, .25);
+
+  border-radius: 30px;
+
+  background:
+    rgba(255, 255, 255, .04);
+
+  box-shadow:
+    0 30px 100px
+    rgba(0, 0, 0, .55),
+
+    0 0 70px
+    rgba(255, 79, 163, .08);
 }
 
-.loader-heart {
-  color: var(--pink);
 
-  font-size: 36px;
+.welcome-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 200px;
+  height: 200px;
+
+  top: -120px;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 79, 163, .25);
+
+  filter: blur(60px);
+
+  pointer-events: none;
+}
+
+
+.welcome-heart {
+  position: relative;
+
+  margin-bottom: 10px;
+
+  color: var(--pink-light);
+
+  font-size: 42px;
 
   text-shadow:
-    0 0 15px var(--pink),
-    0 0 40px rgba(255, 79, 163, .6);
+    0 0 15px
+    rgba(255, 79, 163, .8),
+
+    0 0 35px
+    rgba(255, 79, 163, .4);
 
   animation:
-    heartbeat 1.2s infinite;
+    welcomeBeat 1.4s
+    ease-in-out infinite;
 }
 
-.loader-content p {
-  margin-top: 15px;
 
-  color: #c9a9b8;
+@keyframes welcomeBeat {
+
+  50% {
+    transform:
+      scale(1.18);
+  }
+
+}
+
+
+.welcome-card h1 {
+  margin-top: 10px;
+
+  font-size:
+    clamp(
+      42px,
+      12vw,
+      65px
+    );
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+.welcome-text {
+  margin-top: 24px;
+
+  color: #eadbe2;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+.welcome-small {
+  margin-top: 6px;
+
+  color: #a9929d;
+
+  font-size: 11px;
+}
+
+
+.welcome-button {
+  margin-top: 30px;
+
+  padding:
+    14px 22px;
+
+  border: 0;
+
+  border-radius: 999px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4fa3,
+      #d63284
+    );
+
+  box-shadow:
+    0 0 30px
+    rgba(255, 79, 163, .25);
+
+  cursor: pointer;
+
+  transition: .3s ease;
+}
+
+
+.welcome-button:hover {
+  transform:
+    translateY(-3px)
+    scale(1.02);
+
+  box-shadow:
+    0 0 40px
+    rgba(255, 79, 163, .4);
+}
+
+
+.welcome-button span {
+  margin-right: 5px;
+}
+
+
+.audio-error {
+  min-height: 18px;
+
+  margin-top: 14px;
+
+  color: #ff9bc9;
 
   font-size: 10px;
-
-  letter-spacing: 4px;
 }
 
 
-/* ===================================
+/* ================================
+   MUSIC PLAYER
+================================ */
+
+.music-player {
+  position: fixed;
+
+  top: 15px;
+  right: 15px;
+
+  z-index: 800;
+
+  opacity: 0;
+
+  transform:
+    translateY(-10px);
+
+  pointer-events: none;
+
+  transition: .5s ease;
+}
+
+
+.music-player.show {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+
+  pointer-events: auto;
+}
+
+
+.music-button {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding:
+    8px 13px
+    8px 9px;
+
+  border:
+    1px solid
+    rgba(255, 119, 185, .22);
+
+  border-radius: 999px;
+
+  color: white;
+
+  background:
+    rgba(15, 7, 12, .78);
+
+  backdrop-filter:
+    blur(18px);
+
+  cursor: pointer;
+}
+
+
+#musicIcon {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4fa3,
+      #c42d78
+    );
+
+  box-shadow:
+    0 0 15px
+    rgba(255, 79, 163, .3);
+}
+
+
+.music-info {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+}
+
+
+.music-title {
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+
+.music-status {
+  color: #b9a2ad;
+
+  font-size: 8px;
+}
+
+
+.music-player.playing
+#musicIcon {
+  animation:
+    musicBeat 1.2s
+    ease-in-out infinite;
+}
+
+
+@keyframes musicBeat {
+
+  50% {
+    transform:
+      scale(1.13);
+
+    box-shadow:
+      0 0 28px
+      rgba(255, 79, 163, .65);
+  }
+
+}
+
+
+/* ================================
    PARTICLES
-=================================== */
+================================ */
 
 #particles {
   position: fixed;
+
   inset: 0;
+
+  z-index: 700;
 
   overflow: hidden;
 
   pointer-events: none;
-
-  z-index: 100;
 }
+
 
 .particle {
   position: absolute;
 
   bottom: -40px;
 
-  color: rgba(255, 115, 183, .6);
+  color:
+    rgba(255, 120, 185, .65);
 
   text-shadow:
-    0 0 12px rgba(255, 79, 163, .8);
+    0 0 12px
+    rgba(255, 79, 163, .8);
 
   animation:
-    floatParticle linear forwards;
+    floatParticle
+    linear forwards;
 }
+
 
 @keyframes floatParticle {
 
@@ -186,13 +529,15 @@ button {
 
     transform:
       translateY(0)
-      rotate(0deg)
+      rotate(0)
       scale(.7);
   }
+
 
   15% {
     opacity: .8;
   }
+
 
   100% {
     opacity: 0;
@@ -207,25 +552,26 @@ button {
 }
 
 
-/* ===================================
+/* ================================
    GENERAL
-=================================== */
+================================ */
 
 section {
-  min-height: 100vh;
+  position: relative;
 
   width: 100%;
+
+  min-height: 100vh;
 
   padding:
     65px 20px;
 
   display: flex;
 
-  justify-content: center;
   align-items: center;
-
-  position: relative;
+  justify-content: center;
 }
+
 
 .tiny {
   color: var(--pink-light);
@@ -239,18 +585,63 @@ section {
   text-transform: uppercase;
 }
 
+
 .pink,
 .important-text {
   color: var(--pink-light);
 
   text-shadow:
-    0 0 10px rgba(255, 79, 163, .7);
+    0 0 10px
+    rgba(255, 79, 163, .65);
 }
 
 
-/* ===================================
+/* ================================
+   MAIN BUTTON
+================================ */
+
+.main-button {
+  margin-top: 30px;
+
+  padding:
+    14px 25px;
+
+  border:
+    1px solid
+    rgba(255, 106, 180, .45);
+
+  border-radius: 999px;
+
+  color: white;
+
+  background:
+    rgba(255, 79, 163, .08);
+
+  backdrop-filter:
+    blur(15px);
+
+  cursor: pointer;
+
+  transition: .35s ease;
+}
+
+
+.main-button:hover {
+  transform:
+    translateY(-3px);
+
+  background:
+    rgba(255, 79, 163, .16);
+
+  box-shadow:
+    0 0 30px
+    rgba(255, 79, 163, .25);
+}
+
+
+/* ================================
    OPENING
-=================================== */
+================================ */
 
 #opening {
   flex-direction: column;
@@ -258,22 +649,29 @@ section {
   text-align: center;
 }
 
+
 .opening-content {
   position: relative;
 
   z-index: 5;
 }
 
+
 .opening-content h1 {
   margin-top: 12px;
 
   font-size:
-    clamp(45px, 11vw, 85px);
+    clamp(
+      45px,
+      11vw,
+      85px
+    );
 
   line-height: 1;
 
   font-weight: 500;
 }
+
 
 .opening-description {
   max-width: 480px;
@@ -289,64 +687,24 @@ section {
 }
 
 
-/* ===================================
-   BUTTON
-=================================== */
-
-.main-button {
-  margin-top: 30px;
-
-  padding:
-    14px 25px;
-
-  border:
-    1px solid rgba(255, 106, 180, .45);
-
-  border-radius: 999px;
-
-  color: white;
-
-  background:
-    rgba(255, 79, 163, .08);
-
-  backdrop-filter:
-    blur(15px);
-
-  cursor: pointer;
-
-  transition:
-    .35s ease;
-
-  box-shadow:
-    0 0 20px rgba(255, 79, 163, .08);
-}
-
-.main-button:hover {
-  transform:
-    translateY(-3px);
-
-  background:
-    rgba(255, 79, 163, .16);
-
-  box-shadow:
-    0 0 30px rgba(255, 79, 163, .25);
-}
-
-
-/* ===================================
-   CHARACTER SCENE
-=================================== */
+/* ================================
+   SCENE
+================================ */
 
 .scene {
   position: relative;
 
   width:
-    min(700px, 100%);
+    min(
+      700px,
+      100%
+    );
 
   height: 250px;
 
   margin-top: 45px;
 }
+
 
 .ground {
   position: absolute;
@@ -369,13 +727,14 @@ section {
     );
 
   box-shadow:
-    0 0 15px rgba(255, 79, 163, .6);
+    0 0 15px
+    rgba(255, 79, 163, .6);
 }
 
 
-/* ===================================
-   CHARACTERS
-=================================== */
+/* ================================
+   PERSON
+================================ */
 
 .person {
   position: absolute;
@@ -386,16 +745,22 @@ section {
   height: 165px;
 
   transition:
-    left 2.2s cubic-bezier(.65, 0, .35, 1),
-    right 2.2s cubic-bezier(.65, 0, .35, 1);
+    left 2.2s
+    cubic-bezier(.65, 0, .35, 1),
+
+    right 2.2s
+    cubic-bezier(.65, 0, .35, 1);
 
   animation:
-    characterIdle 3s ease-in-out infinite;
+    idle 3s
+    ease-in-out infinite;
 }
+
 
 .husen {
   left: 7%;
 }
+
 
 .ike {
   right: 7%;
@@ -403,7 +768,8 @@ section {
   animation-delay: -.7s;
 }
 
-@keyframes characterIdle {
+
+@keyframes idle {
 
   50% {
     transform:
@@ -413,24 +779,22 @@ section {
 }
 
 
-/* NAME */
-
 .name {
   position: absolute;
 
-  width: 100%;
-
   top: -18px;
 
-  color: #d3bec9;
+  width: 100%;
+
+  color: #d4c0ca;
 
   font-size: 10px;
 
   letter-spacing: 1px;
+
+  text-align: center;
 }
 
-
-/* CHARACTER */
 
 .character {
   position: relative;
@@ -440,67 +804,144 @@ section {
 }
 
 
-/* SKIN */
+/* ================================
+   HEAD
+================================ */
 
 .head {
   position: absolute;
 
-  width: 53px;
-  height: 56px;
-
   top: 8px;
   left: 16px;
 
-  border-radius: 48%;
+  width: 53px;
+  height: 56px;
+
+  border-radius:
+    48% 48%
+    46% 46%;
 
   background:
     linear-gradient(
       135deg,
-      #ffe8dc,
-      #f4c8b6
+      #fff0e8,
+      #ffe0d1,
+      #f5c7b6
     );
 
-  box-shadow:
-    inset -5px -5px 8px
-    rgba(157, 85, 75, .07);
-
-  z-index: 3;
+  z-index: 10;
 }
 
 
-/* HAIR */
+/* ================================
+   HUSEN HAIR
+================================ */
 
-.hair {
+.husen-hair {
   position: absolute;
-
-  width: 59px;
-  height: 34px;
 
   top: 2px;
   left: 13px;
 
+  width: 59px;
+  height: 34px;
+
+  border-radius:
+    45px 45px
+    15px 15px;
+
   background:
     linear-gradient(
       135deg,
-      #3a2530,
-      #190f15
+      #3c2831,
+      #190f14
     );
 
-  border-radius:
-    45px 45px 15px 15px;
-
-  z-index: 4;
-}
-
-.ike .hair {
-  height: 69px;
-
-  border-radius:
-    45px 45px 27px 27px;
+  z-index: 11;
 }
 
 
-/* EYES */
+/* ================================
+   IKE HAIR + FACE
+================================ */
+
+.ike .character {
+  isolation: isolate;
+}
+
+
+.ike-back-hair {
+  position: absolute;
+
+  top: 0;
+  left: 8px;
+
+  width: 69px;
+  height: 90px;
+
+  border-radius:
+    40px 40px
+    25px 25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #49303a,
+      #2d1a23,
+      #160c11
+    );
+
+  z-index: 1;
+}
+
+
+/*
+   INI WAJAH IKE.
+
+   Dibikin terang dan layernya
+   jauh di atas rambut belakang.
+*/
+
+.ike-head {
+  background:
+    linear-gradient(
+      135deg,
+      #fff3ec 0%,
+      #ffe6da 55%,
+      #f5cbbb 100%
+    ) !important;
+
+  z-index: 10 !important;
+}
+
+
+.ike-bangs {
+  position: absolute;
+
+  top: -2px;
+  left: 2px;
+
+  width: 49px;
+  height: 14px;
+
+  border-radius:
+    30px 30px
+    10px 10px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #49303a,
+      #211319
+    );
+
+  z-index: 11;
+}
+
+
+/* ================================
+   FACE
+================================ */
 
 .eye {
   position: absolute;
@@ -510,85 +951,120 @@ section {
   width: 4px;
   height: 5px;
 
-  background: #432a33;
-
   border-radius: 50%;
+
+  background: #50323d;
+
+  z-index: 12;
 }
+
 
 .eye-left {
   left: 15px;
 }
+
 
 .eye-right {
   right: 15px;
 }
 
 
-/* BLUSH */
-
 .blush {
   position: absolute;
+
+  top: 38px;
 
   width: 8px;
   height: 3px;
 
-  top: 38px;
+  border-radius: 50%;
 
   background:
-    rgba(255, 117, 154, .35);
+    rgba(255, 110, 148, .32);
 
-  border-radius: 50%;
+  z-index: 12;
 }
+
 
 .blush-left {
   left: 7px;
 }
+
 
 .blush-right {
   right: 7px;
 }
 
 
-/* ===================================
+.mouth {
+  position: absolute;
+
+  left: 50%;
+  top: 43px;
+
+  width: 7px;
+  height: 3px;
+
+  transform:
+    translateX(-50%);
+
+  border-bottom:
+    1px solid
+    rgba(100, 50, 60, .6);
+
+  border-radius: 50%;
+
+  z-index: 12;
+}
+
+
+/* ================================
    COUPLE OUTFIT
-=================================== */
+================================ */
 
 .body {
   position: absolute;
 
-  width: 57px;
-  height: 77px;
-
   top: 59px;
   left: 14px;
 
+  width: 57px;
+  height: 77px;
+
   border-radius:
-    22px 22px 13px 13px;
+    22px 22px
+    13px 13px;
 
   background:
     linear-gradient(
       180deg,
-      #ff76b7,
-      #ca347d
+      #ff7fbb,
+      #ed559c,
+      #c72f79
     );
 
   border:
-    1px solid rgba(255, 211, 232, .22);
+    1px solid
+    rgba(255, 215, 234, .28);
 
   box-shadow:
-    0 0 18px rgba(255, 79, 163, .14);
+    0 0 18px
+    rgba(255, 79, 163, .14);
 
-  z-index: 2;
+  z-index: 3;
 }
+
 
 .ike .body {
   background:
     linear-gradient(
       180deg,
-      #ff91c6,
-      #d8478c
+      #ff7fbb,
+      #ed559c,
+      #c72f79
     );
 }
+
 
 .body span {
   position: absolute;
@@ -608,26 +1084,32 @@ section {
 }
 
 
-/* ARMS */
+/* ================================
+   ARMS
+================================ */
 
 .arm {
   position: absolute;
 
+  top: 67px;
+
   width: 13px;
   height: 55px;
-
-  top: 67px;
 
   border-radius: 10px;
 
   background:
     linear-gradient(
-      #ff81bd 55%,
-      #f5cbbb 55%
+      to bottom,
+      #ff7fbb 0%,
+      #ff7fbb 54%,
+      #ffe5d8 55%,
+      #f4c8b8 100%
     );
 
-  z-index: 1;
+  z-index: 2;
 }
+
 
 .arm-left {
   left: 8px;
@@ -635,6 +1117,7 @@ section {
   transform:
     rotate(7deg);
 }
+
 
 .arm-right {
   right: 8px;
@@ -644,39 +1127,50 @@ section {
 }
 
 
-/* LEGS */
+/* ================================
+   LEGS
+================================ */
 
 .leg {
   position: absolute;
 
+  top: 128px;
+
   width: 15px;
   height: 38px;
 
-  top: 128px;
-
   border-radius:
-    8px 8px 4px 4px;
+    8px 8px
+    4px 4px;
 
   background: #382431;
+
+  z-index: 2;
 }
+
 
 .leg-left {
   left: 24px;
 }
+
 
 .leg-right {
   right: 24px;
 }
 
 
-/* ===================================
+/* ================================
    WALK
-=================================== */
+================================ */
 
-.scene.walking .husen {
+.scene.walking
+.husen {
   animation:
-    walking .32s ease-in-out infinite alternate;
+    walking .32s
+    ease-in-out
+    infinite alternate;
 }
+
 
 @keyframes walking {
 
@@ -686,6 +1180,7 @@ section {
       rotate(-1deg);
   }
 
+
   to {
     transform:
       translateY(-7px)
@@ -694,18 +1189,24 @@ section {
 
 }
 
-.scene.together .husen {
+
+.scene.together
+.husen {
   left:
     calc(50% - 95px);
 }
 
-.scene.together .ike {
+
+.scene.together
+.ike {
   right:
     calc(50% - 95px);
 }
 
 
-/* FLOWER */
+/* ================================
+   FLOWER
+================================ */
 
 .flower {
   position: absolute;
@@ -725,10 +1226,12 @@ section {
   transition:
     1s ease 1.4s;
 
-  z-index: 10;
+  z-index: 20;
 }
 
-.scene.together .flower {
+
+.scene.together
+.flower {
   opacity: 1;
 
   transform:
@@ -738,7 +1241,9 @@ section {
 }
 
 
-/* HEART BETWEEN */
+/* ================================
+   HEART
+================================ */
 
 .heart-between {
   position: absolute;
@@ -757,13 +1262,16 @@ section {
   opacity: 0;
 
   text-shadow:
-    0 0 20px var(--pink);
+    0 0 20px
+    var(--pink);
 
   transition:
     1s ease 1.7s;
 }
 
-.scene.together .heart-between {
+
+.scene.together
+.heart-between {
   opacity: 1;
 
   transform:
@@ -771,10 +1279,13 @@ section {
     scale(1);
 
   animation:
-    heartbeat 1.3s infinite 2.5s;
+    heartBetween
+    1.3s infinite
+    2.5s;
 }
 
-@keyframes heartbeat {
+
+@keyframes heartBetween {
 
   50% {
     transform:
@@ -785,17 +1296,17 @@ section {
 }
 
 
-/* ===================================
-   STORY TEXT
-=================================== */
+/* ================================
+   STORY
+================================ */
 
 .story-text {
   position: absolute;
 
-  width: 100%;
-
   top: -10px;
   left: 50%;
+
+  width: 100%;
 
   transform:
     translateX(-50%)
@@ -807,9 +1318,9 @@ section {
 
   opacity: 0;
 
-  transition:
-    .6s ease;
+  transition: .6s ease;
 }
+
 
 .story-text.active {
   opacity: 1;
@@ -820,9 +1331,9 @@ section {
 }
 
 
-/* ===================================
-   FLOWER QUESTION
-=================================== */
+/* ================================
+   QUESTION
+================================ */
 
 #flowerSection {
   display: none;
@@ -830,15 +1341,20 @@ section {
   text-align: center;
 }
 
+
 .question-card {
   width:
-    min(420px, 100%);
+    min(
+      430px,
+      100%
+    );
 
   padding:
     40px 25px;
 
   border:
-    1px solid rgba(255, 111, 181, .2);
+    1px solid
+    rgba(255, 111, 181, .2);
 
   border-radius: 28px;
 
@@ -849,24 +1365,498 @@ section {
     blur(20px);
 
   box-shadow:
-    0 25px 90px rgba(0, 0, 0, .4);
+    0 25px 90px
+    rgba(0, 0, 0, .4);
 }
+
 
 .big-flower {
   margin:
-    20px 0 10px;
+    18px 0 8px;
 
-  font-size: 55px;
+  font-size: 58px;
 
   animation:
-    flowerFloat 2.5s ease-in-out infinite;
+    flowerFloat
+    2.4s
+    ease-in-out
+    infinite;
 }
+
 
 @keyframes flowerFloat {
 
   50% {
     transform:
       translateY(-7px)
+      rotate(5deg);
+  }
+
+}
+
+
+.question-card h2 {
+  font-size: 35px;
+
+  font-weight: 500;
+}
+
+
+.question-description {
+  margin-top: 5px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+
+.small-apology {
+  max-width: 330px;
+
+  margin:
+    22px auto;
+
+  color: #e0d0d8;
+
+  font-size: 12px;
+
+  line-height: 1.9;
+}
+
+
+.question-card h3 {
+  font-size: 21px;
+
+  font-weight: 500;
+}
+
+
+/* ================================
+   YES NO
+================================ */
+
+.choice-buttons {
+  min-height: 130px;
+
+  margin-top: 15px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 13px;
+}
+
+
+.yes-button,
+.no-button {
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transform-origin: center;
+
+  transition:
+    transform .35s
+    cubic-bezier(.16, 1, .3, 1),
+
+    opacity .35s,
+
+    box-shadow .35s;
+}
+
+
+.yes-button {
+  padding:
+    13px 22px;
+
+  border: 0;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4fa3,
+      #ff7dbc
+    );
+
+  box-shadow:
+    0 0 25px
+    rgba(255, 79, 163, .25);
+}
+
+
+.no-button {
+  padding:
+    12px 20px;
+
+  color: #d0bdc6;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, .1);
+
+  background:
+    rgba(255, 255, 255, .05);
+}
+
+
+.no-message {
+  min-height: 22px;
+
+  color: #bda8b2;
+
+  font-size: 11px;
+}
+
+
+/* ================================
+   LETTER
+================================ */
+
+#letter {
+  display: none;
+}
+
+
+.letter-container {
+  width:
+    min(
+      650px,
+      100%
+    );
+
+  text-align: center;
+}
+
+
+.letter-title {
+  margin-bottom: 30px;
+}
+
+
+.letter-title h2 {
+  margin-top: 10px;
+
+  font-size:
+    clamp(
+      28px,
+      7vw,
+      45px
+    );
+
+  font-weight: 500;
+}
+
+
+.letter-card {
+  padding: 35px;
+
+  text-align: left;
+
+  border:
+    1px solid
+    rgba(255, 111, 181, .2);
+
+  border-radius: 27px;
+
+  background:
+    rgba(255, 255, 255, .035);
+
+  backdrop-filter:
+    blur(20px);
+
+  box-shadow:
+    0 25px 90px
+    rgba(0, 0, 0, .35);
+}
+
+
+.letter-card p {
+  margin-bottom: 22px;
+
+  color: #dfd1d8;
+
+  font-size: 13px;
+
+  line-height: 2;
+
+  opacity: 0;
+
+  transform:
+    translateY(15px);
+
+  transition: .8s ease;
+}
+
+
+.letter-card p.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* ================================
+   BEFORE END
+================================ */
+
+#beforeEnd {
+  display: none;
+
+  text-align: center;
+}
+
+
+.before-container {
+  width:
+    min(
+      620px,
+      100%
+    );
+}
+
+
+.before-container h2 {
+  margin-top: 12px;
+
+  font-size:
+    clamp(
+      28px,
+      7vw,
+      48px
+    );
+
+  font-weight: 500;
+}
+
+
+.small-messages {
+  margin-top: 45px;
+}
+
+
+.message-line {
+  max-width: 530px;
+
+  margin:
+    25px auto;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  line-height: 1.9;
+
+  opacity: 0;
+
+  transform:
+    translateY(20px);
+
+  transition: .8s ease;
+}
+
+
+.message-line.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* ================================
+   FINAL
+================================ */
+
+#final {
+  display: none;
+
+  text-align: center;
+}
+
+
+.final-container {
+  width:
+    min(
+      650px,
+      100%
+    );
+}
+
+
+.final-container h2 {
+  margin-top: 10px;
+
+  font-size:
+    clamp(
+      35px,
+      9vw,
+      60px
+    );
+
+  font-weight: 500;
+}
+
+
+.final-description {
+  margin-top: 15px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+}
+
+
+.final-message {
+  opacity: 0;
+
+  transform:
+    translateY(20px);
+
+  transition: 1s ease;
+}
+
+
+.final-message.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+.final-message h3 {
+  color: var(--pink-light);
+
+  font-size: 21px;
+
+  font-weight: 500;
+
+  text-shadow:
+    0 0 20px
+    rgba(255, 79, 163, .4);
+}
+
+
+.final-message p {
+  margin-top: 8px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+
+.signature {
+  margin-top: 50px;
+
+  color: #917e88;
+
+  font-size: 11px;
+
+  line-height: 2;
+
+  letter-spacing: 1px;
+}
+
+
+.signature span {
+  color: var(--pink-light);
+}
+
+
+/* ================================
+   FLASH
+================================ */
+
+#pinkFlash {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 900;
+
+  background:
+    rgba(255, 79, 163, .15);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: .4s;
+}
+
+
+#pinkFlash.active {
+  opacity: 1;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width: 520px) {
+
+  section {
+    padding:
+      55px 17px;
+  }
+
+
+  .welcome-card {
+    padding:
+      40px 20px;
+  }
+
+
+  .welcome-text {
+    font-size: 13px;
+  }
+
+
+  .welcome-button {
+    width: 100%;
+
+    padding:
+      14px 12px;
+
+    font-size: 12px;
+  }
+
+
+  .music-player {
+    top: 10px;
+    right: 10px;
+  }
+
+
+  .music-button {
+    padding:
+      6px 9px;
+  }
+
+
+  #musicIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+
+  .music-title {
+    font-size: 8px;
+  }
+
+
+  .scene {
+    height: 225px;
+
+    margin-top: 40px;    translateY(-7px)
       rotate(5deg);
   }
 
