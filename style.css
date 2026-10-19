@@ -1,28 +1,28 @@
+/* =========================================================
+   FOR IKE ♡
+   STYLE.CSS V30
+========================================================= */
+
 :root {
   --bg: #080508;
-  --bg-soft: #120912;
+  --bg-soft: #110911;
 
   --pink: #ff4fa3;
-  --pink-bright: #ff72b7;
+  --pink-bright: #ff73b8;
   --pink-light: #ffb0d5;
-  --pink-soft: #ffd4e8;
 
   --text: #fff8fb;
-  --muted: #cdb9c4;
+  --muted: #cbb8c2;
 
   --skin: #ffd9ca;
-  --skin-shadow: #eeb6a7;
-
-  --glass: rgba(255, 255, 255, 0.055);
-  --glass-strong: rgba(255, 255, 255, 0.075);
 
   --border: rgba(255, 120, 184, 0.16);
 }
 
 
-/* =====================================================
+/* =========================================================
    RESET
-===================================================== */
+========================================================= */
 
 * {
   margin: 0;
@@ -45,8 +45,8 @@ body {
   background:
     radial-gradient(
       circle at 50% -10%,
-      rgba(255, 79, 163, 0.16),
-      transparent 35%
+      rgba(255, 79, 163, 0.17),
+      transparent 36%
     ),
     radial-gradient(
       circle at 0% 90%,
@@ -77,9 +77,9 @@ button:focus-visible {
 }
 
 
-/* =====================================================
+/* =========================================================
    BACKGROUND
-===================================================== */
+========================================================= */
 
 .background {
   position: fixed;
@@ -132,6 +132,7 @@ button:focus-visible {
 }
 
 @keyframes glowMove {
+
   from {
     transform:
       translate3d(0, 0, 0)
@@ -143,12 +144,13 @@ button:focus-visible {
       translate3d(45px, 35px, 0)
       scale(1.15);
   }
+
 }
 
 
-/* =====================================================
+/* =========================================================
    PARTICLES
-===================================================== */
+========================================================= */
 
 #particles {
   position: fixed;
@@ -169,7 +171,8 @@ button:focus-visible {
   color: rgba(255, 130, 190, 0.55);
 
   text-shadow:
-    0 0 14px rgba(255, 79, 163, 0.5);
+    0 0 14px
+    rgba(255, 79, 163, 0.5);
 
   pointer-events: none;
 
@@ -180,6 +183,7 @@ button:focus-visible {
 }
 
 @keyframes particleUp {
+
   0% {
     opacity: 0;
 
@@ -199,12 +203,13 @@ button:focus-visible {
       translate3d(30px, -115vh, 0)
       rotate(140deg);
   }
+
 }
 
 
-/* =====================================================
+/* =========================================================
    FLASH
-===================================================== */
+========================================================= */
 
 #flash {
   position: fixed;
@@ -228,6 +233,7 @@ button:focus-visible {
 }
 
 @keyframes flashAnimation {
+
   0% {
     opacity: 0;
   }
@@ -239,25 +245,40 @@ button:focus-visible {
   100% {
     opacity: 0;
   }
+
 }
 
 
-/* =====================================================
-   GLOBAL
-===================================================== */
+/* =========================================================
+   GLOBAL SECTION
+========================================================= */
+
+main {
+  position: relative;
+
+  width: 100%;
+}
 
 .section {
   position: relative;
 
   width: 100%;
   min-height: 100vh;
+  min-height: 100svh;
 
-  padding: 90px 20px;
+  padding:
+    90px 20px;
 
   display: flex;
 
   align-items: center;
   justify-content: center;
+}
+
+.section-content {
+  width: min(650px, 100%);
+
+  text-align: center;
 }
 
 .hidden-section {
@@ -271,17 +292,18 @@ button:focus-visible {
 
   animation:
     sectionShow
-    0.9s
+    0.85s
     ease
     forwards;
 }
 
 @keyframes sectionShow {
+
   from {
     opacity: 0;
 
     transform:
-      translateY(25px);
+      translateY(24px);
   }
 
   to {
@@ -290,13 +312,13 @@ button:focus-visible {
     transform:
       translateY(0);
   }
+
 }
 
-.section-content {
-  width: min(650px, 100%);
 
-  text-align: center;
-}
+/* =========================================================
+   GLASS
+========================================================= */
 
 .glass-card {
   border:
@@ -312,12 +334,22 @@ button:focus-visible {
     );
 
   box-shadow:
-    0 30px 90px rgba(0, 0, 0, 0.42),
-    0 0 70px rgba(255, 79, 163, 0.06);
+    0 30px 90px
+      rgba(0, 0, 0, 0.42),
+
+    0 0 70px
+      rgba(255, 79, 163, 0.06);
 
   backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
 }
+
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
 
 .eyebrow {
   margin-bottom: 12px;
@@ -340,21 +372,33 @@ h3 {
 
 h1 {
   font-size:
-    clamp(2.15rem, 8vw, 4.3rem);
+    clamp(
+      2.15rem,
+      8vw,
+      4.3rem
+    );
 
   font-weight: 600;
 }
 
 h2 {
   font-size:
-    clamp(1.8rem, 6vw, 3rem);
+    clamp(
+      1.8rem,
+      6vw,
+      3rem
+    );
 
   font-weight: 600;
 }
 
 h3 {
   font-size:
-    clamp(1.1rem, 4vw, 1.4rem);
+    clamp(
+      1.1rem,
+      4vw,
+      1.4rem
+    );
 
   font-weight: 500;
 }
@@ -367,7 +411,8 @@ h3 span,
   color: var(--pink-light);
 
   text-shadow:
-    0 0 18px rgba(255, 79, 163, 0.28);
+    0 0 18px
+    rgba(255, 79, 163, 0.28);
 }
 
 .description {
@@ -392,9 +437,9 @@ h3 span,
 }
 
 
-/* =====================================================
-   BUTTONS
-===================================================== */
+/* =========================================================
+   BUTTON
+========================================================= */
 
 .primary-btn,
 .yes-btn,
@@ -421,7 +466,8 @@ h3 span,
   color: white;
 
   border:
-    1px solid rgba(255, 165, 207, 0.25);
+    1px solid
+    rgba(255, 165, 207, 0.25);
 
   background:
     linear-gradient(
@@ -431,8 +477,11 @@ h3 span,
     );
 
   box-shadow:
-    0 13px 38px rgba(255, 79, 163, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    0 13px 38px
+      rgba(255, 79, 163, 0.20),
+
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.22);
 }
 
 .primary-btn:hover,
@@ -441,7 +490,8 @@ h3 span,
     translateY(-2px);
 
   box-shadow:
-    0 17px 45px rgba(255, 79, 163, 0.3);
+    0 17px 45px
+    rgba(255, 79, 163, 0.30);
 }
 
 .primary-btn:active,
@@ -457,9 +507,9 @@ h3 span,
 }
 
 
-/* =====================================================
+/* =========================================================
    WELCOME
-===================================================== */
+========================================================= */
 
 #welcome {
   position: fixed;
@@ -481,14 +531,16 @@ h3 span,
     rgba(7, 4, 7, 0.97);
 
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+
+  -webkit-backdrop-filter:
+    blur(20px);
 
   z-index: 9999;
 
   transition:
-    opacity 0.75s ease,
-    visibility 0.75s ease,
-    transform 0.75s ease;
+    opacity 0.7s ease,
+    visibility 0.7s ease,
+    transform 0.7s ease;
 }
 
 #welcome.hide {
@@ -505,17 +557,19 @@ h3 span,
 .welcome-card {
   width: min(440px, 100%);
 
-  padding: 45px 28px;
+  padding:
+    45px 28px;
 
   text-align: center;
 
   animation:
     welcomeAppear
-    0.9s
+    0.85s
     cubic-bezier(.2, .8, .2, 1);
 }
 
 @keyframes welcomeAppear {
+
   from {
     opacity: 0;
 
@@ -531,6 +585,7 @@ h3 span,
       translateY(0)
       scale(1);
   }
+
 }
 
 .welcome-heart {
@@ -541,7 +596,8 @@ h3 span,
   font-size: 2.8rem;
 
   text-shadow:
-    0 0 25px rgba(255, 79, 163, 0.5);
+    0 0 25px
+    rgba(255, 79, 163, 0.5);
 
   animation:
     heartBeat
@@ -551,18 +607,23 @@ h3 span,
 }
 
 @keyframes heartBeat {
+
   0%,
   100% {
-    transform: scale(1);
+    transform:
+      scale(1);
   }
 
   45% {
-    transform: scale(1.15);
+    transform:
+      scale(1.15);
   }
 
   55% {
-    transform: scale(1.08);
+    transform:
+      scale(1.08);
   }
+
 }
 
 .welcome-card .description {
@@ -574,9 +635,9 @@ h3 span,
 }
 
 
-/* =====================================================
+/* =========================================================
    OPENING
-===================================================== */
+========================================================= */
 
 .opening-section {
   flex-direction: column;
@@ -593,9 +654,9 @@ h3 span,
 }
 
 
-/* =====================================================
+/* =========================================================
    CHARACTER SCENE
-===================================================== */
+========================================================= */
 
 .character-scene {
   position: relative;
@@ -626,13 +687,14 @@ h3 span,
       90deg,
       transparent,
       rgba(255, 111, 178, 0.18),
-      rgba(255, 111, 178, 0.4),
+      rgba(255, 111, 178, 0.40),
       rgba(255, 111, 178, 0.18),
       transparent
     );
 
   box-shadow:
-    0 0 20px rgba(255, 79, 163, 0.15);
+    0 0 20px
+    rgba(255, 79, 163, 0.15);
 }
 
 .story-text {
@@ -671,9 +733,9 @@ h3 span,
 }
 
 
-/* =====================================================
+/* =========================================================
    PERSON
-===================================================== */
+========================================================= */
 
 .person {
   position: absolute;
@@ -684,8 +746,12 @@ h3 span,
   height: 185px;
 
   transition:
-    left 1.6s cubic-bezier(.2, .8, .2, 1),
-    right 1.6s cubic-bezier(.2, .8, .2, 1),
+    left 1.6s
+    cubic-bezier(.2, .8, .2, 1),
+
+    right 1.6s
+    cubic-bezier(.2, .8, .2, 1),
+
     transform 0.7s ease;
 }
 
@@ -706,7 +772,8 @@ h3 span,
   transform:
     translateX(-50%);
 
-  color: rgba(255, 220, 236, 0.65);
+  color:
+    rgba(255, 220, 236, 0.65);
 
   font-size: 0.62rem;
 
@@ -727,6 +794,11 @@ h3 span,
   transform:
     translateX(-50%);
 }
+
+
+/* =========================================================
+   HEAD
+========================================================= */
 
 .head {
   position: absolute;
@@ -755,6 +827,779 @@ h3 span,
     rgba(224, 159, 142, 0.12);
 
   z-index: 5;
+}
+
+
+/* =========================================================
+   HAIR
+========================================================= */
+
+.hair {
+  position: absolute;
+
+  z-index: 7;
+}
+
+.husen-hair {
+  top: 19px;
+  left: 50%;
+
+  width: 64px;
+  height: 32px;
+
+  transform:
+    translateX(-50%);
+
+  border-radius:
+    50% 50% 30% 30%;
+
+  background:
+    #23181f;
+
+  clip-path:
+    polygon(
+      0 35%,
+      15% 5%,
+      33% 16%,
+      48% 0,
+      65% 15%,
+      84% 4%,
+      100% 40%,
+      92% 100%,
+      7% 100%
+    );
+}
+
+.ike-hair {
+  top: 18px;
+  left: 50%;
+
+  width: 69px;
+  height: 83px;
+
+  transform:
+    translateX(-50%);
+
+  border-radius:
+    48% 48% 42% 42%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2c1a26,
+      #1d1219
+    );
+
+  z-index: 3;
+}
+
+.ike-bangs {
+  position: absolute;
+
+  top: -7px;
+  left: -2px;
+
+  width: 62px;
+  height: 25px;
+
+  border-radius:
+    50% 50% 35% 35%;
+
+  background:
+    #2b1924;
+
+  clip-path:
+    polygon(
+      0 0,
+      100% 0,
+      95% 75%,
+      76% 55%,
+      60% 90%,
+      43% 52%,
+      23% 85%,
+      7% 62%
+    );
+
+  z-index: 10;
+}
+
+
+/* =========================================================
+   FACE
+========================================================= */
+
+.eyes {
+  position: absolute;
+
+  top: 28px;
+  left: 50%;
+
+  width: 34px;
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  transform:
+    translateX(-50%);
+}
+
+.eyes i {
+  width: 5px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background:
+    #35252d;
+
+  animation:
+    blink
+    4.5s
+    infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  45%,
+  49%,
+  100% {
+    transform:
+      scaleY(1);
+  }
+
+  47% {
+    transform:
+      scaleY(0.1);
+  }
+
+}
+
+.blush {
+  position: absolute;
+
+  top: 39px;
+
+  width: 11px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 116, 154, 0.26);
+}
+
+.blush.left {
+  left: 7px;
+}
+
+.blush.right {
+  right: 7px;
+}
+
+.mouth {
+  position: absolute;
+
+  left: 50%;
+  bottom: 8px;
+
+  width: 11px;
+  height: 5px;
+
+  transform:
+    translateX(-50%);
+
+  border-bottom:
+    2px solid
+    rgba(116, 61, 79, 0.65);
+
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.body {
+  position: absolute;
+
+  top: 82px;
+  left: 50%;
+
+  width: 51px;
+  height: 58px;
+
+  transform:
+    translateX(-50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius:
+    15px 15px 10px 10px;
+
+  color: white;
+
+  font-size: 17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ff68ad,
+      #d83883
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.22);
+
+  z-index: 4;
+}
+
+.arm {
+  position: absolute;
+
+  top: 87px;
+
+  width: 13px;
+  height: 51px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #f14d98 0 62%,
+      var(--skin) 62%
+    );
+
+  transform-origin:
+    top center;
+
+  z-index: 3;
+
+  transition:
+    transform 0.6s ease;
+}
+
+.left-arm {
+  left: 13px;
+
+  transform:
+    rotate(9deg);
+}
+
+.right-arm {
+  right: 13px;
+
+  transform:
+    rotate(-9deg);
+}
+
+.leg {
+  position: absolute;
+
+  top: 134px;
+
+  width: 15px;
+  height: 31px;
+
+  border-radius:
+    0 0 7px 7px;
+
+  background:
+    #bc2c70;
+
+  transform-origin:
+    top center;
+
+  z-index: 2;
+}
+
+.left-leg {
+  left: 28px;
+}
+
+.right-leg {
+  right: 28px;
+}
+
+
+/* =========================================================
+   FLOWER
+========================================================= */
+
+.flower {
+  position: absolute;
+
+  top: 93px;
+  right: -1px;
+
+  font-size: 23px;
+
+  transform:
+    rotate(-12deg)
+    scale(0);
+
+  transform-origin:
+    bottom center;
+
+  transition:
+    transform 0.65s
+    cubic-bezier(.2, 1.4, .4, 1);
+
+  z-index: 10;
+}
+
+
+/* =========================================================
+   HEART BETWEEN CHARACTER
+========================================================= */
+
+.scene-heart {
+  position: absolute;
+
+  left: 50%;
+  top: 112px;
+
+  color:
+    var(--pink-bright);
+
+  font-size: 24px;
+
+  opacity: 0;
+
+  transform:
+    translateX(-50%)
+    scale(0);
+
+  text-shadow:
+    0 0 20px
+    rgba(255, 79, 163, 0.7);
+
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s
+    cubic-bezier(.2, 1.4, .4, 1);
+}
+
+
+/* =========================================================
+   WALKING ANIMATION
+========================================================= */
+
+.character-scene.walking
+.person.husen
+.character {
+  animation:
+    bodyWalk
+    0.42s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+.character-scene.walking
+.person.husen
+.left-leg {
+  animation:
+    legWalkLeft
+    0.42s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+.character-scene.walking
+.person.husen
+.right-leg {
+  animation:
+    legWalkRight
+    0.42s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+.character-scene.walking
+.person.husen
+.left-arm {
+  animation:
+    armWalkLeft
+    0.42s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+.character-scene.walking
+.person.husen
+.right-arm {
+  animation:
+    armWalkRight
+    0.42s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+@keyframes bodyWalk {
+
+  from {
+    transform:
+      translateX(-50%)
+      translateY(0);
+  }
+
+  to {
+    transform:
+      translateX(-50%)
+      translateY(-4px);
+  }
+
+}
+
+@keyframes legWalkLeft {
+
+  from {
+    transform:
+      rotate(11deg);
+  }
+
+  to {
+    transform:
+      rotate(-11deg);
+  }
+
+}
+
+@keyframes legWalkRight {
+
+  from {
+    transform:
+      rotate(-11deg);
+  }
+
+  to {
+    transform:
+      rotate(11deg);
+  }
+
+}
+
+@keyframes armWalkLeft {
+
+  from {
+    transform:
+      rotate(16deg);
+  }
+
+  to {
+    transform:
+      rotate(-14deg);
+  }
+
+}
+
+@keyframes armWalkRight {
+
+  from {
+    transform:
+      rotate(-16deg);
+  }
+
+  to {
+    transform:
+      rotate(14deg);
+  }
+
+}
+
+
+/* =========================================================
+   OPENING CHARACTERS TOGETHER
+========================================================= */
+
+#openingScene.together
+.person.husen {
+  left:
+    calc(50% - 105px);
+}
+
+#openingScene.together
+.person.ike {
+  right:
+    calc(50% - 105px);
+}
+
+#openingScene.together
+.scene-heart {
+  opacity: 0.65;
+
+  transform:
+    translateX(-50%)
+    scale(1);
+}
+
+
+/* =========================================================
+   GIVE FLOWER
+========================================================= */
+
+#openingScene.give-flower
+.person.husen
+.right-arm {
+  transform:
+    rotate(-55deg);
+}
+
+#openingScene.give-flower
+.person.husen
+.flower {
+  transform:
+    translate(12px, -8px)
+    rotate(10deg)
+    scale(1);
+}
+
+#openingScene.give-flower
+.person.ike
+.character {
+  animation:
+    shyReaction
+    0.7s
+    ease-in-out
+    2;
+}
+
+#openingScene.give-flower
+.person.ike
+.blush {
+  background:
+    rgba(255, 96, 145, 0.48);
+}
+
+@keyframes shyReaction {
+
+  0%,
+  100% {
+    transform:
+      translateX(-50%)
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateX(-50%)
+      translateY(-5px);
+  }
+
+}
+
+
+/* =========================================================
+   APOLOGY
+========================================================= */
+
+.apology-card {
+  width: min(520px, 100%);
+
+  padding:
+    42px 25px;
+
+  text-align: center;
+}
+
+.big-flower {
+  margin:
+    7px 0 15px;
+
+  font-size: 4.2rem;
+
+  filter:
+    drop-shadow(
+      0 0 20px
+      rgba(255, 79, 163, 0.2)
+    );
+
+  animation:
+    flowerFloat
+    2.8s
+    ease-in-out
+    infinite;
+}
+
+@keyframes flowerFloat {
+
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      rotate(-4deg);
+  }
+
+  50% {
+    transform:
+      translateY(-7px)
+      rotate(4deg);
+  }
+
+}
+
+.apology-text {
+  max-width: 400px;
+
+  margin:
+    20px auto;
+
+  color:
+    #e2d1da;
+
+  font-size: 0.88rem;
+
+  line-height: 1.9;
+}
+
+.apology-card h3 {
+  margin-top: 28px;
+}
+
+.choice-area {
+  min-height: 185px;
+
+  margin-top: 25px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 13px;
+}
+
+.yes-btn {
+  position: relative;
+
+  z-index: 5;
+
+  transform-origin: center;
+
+  white-space: nowrap;
+}
+
+.no-btn {
+  position: relative;
+
+  z-index: 4;
+
+  color: #e5d2dc;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.09);
+
+  background:
+    rgba(255, 255, 255, 0.055);
+
+  transform-origin: center;
+}
+
+.no-btn.disappear {
+  opacity: 0 !important;
+
+  transform:
+    scale(0) !important;
+
+  pointer-events: none;
+}
+
+.reject-text {
+  min-height: 28px;
+
+  color:
+    var(--pink-light);
+
+  font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   HUG
+========================================================= */
+
+#hug .primary-btn {
+  margin-top: 38px;
+}
+
+.hug-scene
+.person.husen {
+  left: 16%;
+}
+
+.hug-scene
+.person.ike {
+  right: 16%;
+}
+
+.hug-scene.hugging
+.person.husen {
+  left:
+    calc(50% - 74px);
+
+  transform:
+    rotate(3deg);
+}
+
+.hug-scene.hugging
+.person.ike {
+  right:
+    calc(50% - 74px);
+
+  transform:
+    rotate(-3deg);
+}
+
+.hug-scene.hugging
+.person.husen
+.right-arm {
+  transform:
+    rotate(-68deg);
+}
+
+.hug-scene.hugging
+.person.ike
+.left-arm {
+  transform:
+    rotate(68deg);
+}
+
+.hug-scene.hugging
+.scene-heart {
+  opacity: 1;
+
+  transform:
+    translateX(-50%)
+    scale(1.25);
+}
+
+.floating-heart {
+  position: absolute;
+
+  color:
+    var(--pink-light);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  text-shadow:
+    0 0 15px
+    rgba(255, index: 5;
 }
 
 
