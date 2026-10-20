@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* =========================================================
+
+  "use strict";
+
+
+  /* =========================================
      HELPERS
-  ========================================================= */
+  ========================================= */
 
   const $ = (selector, root = document) =>
     root.querySelector(selector);
@@ -10,12 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
     [...root.querySelectorAll(selector)];
 
   const wait = (ms) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+    new Promise((resolve) => {
+      window.setTimeout(resolve, ms);
+    });
 
 
-  /* =========================================================
+  /* =========================================
      ELEMENTS
-  ========================================================= */
+  ========================================= */
 
   const scenes = $$(".scene");
 
@@ -25,13 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const particleLayer =
     $("#particleLayer");
 
-
-  /* =========================================================
-     INTRO
-  ========================================================= */
-
-  const flowerScene =
-    $("#flowerScene");
 
   const sceneCaption =
     $("#sceneCaption");
@@ -54,13 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const stageHeart =
     $("#stageHeart");
 
+  const characterStage =
+    $("#characterStage");
+
   const skipIntroButton =
     $("#skipIntroButton");
 
-
-  /* =========================================================
-     QUESTION
-  ========================================================= */
 
   const yesButton =
     $("#yesButton");
@@ -72,17 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#noMessage");
 
 
-  /* =========================================================
-     ACCEPTED
-  ========================================================= */
-
   const openEnvelopeSceneButton =
     $("#openEnvelopeSceneButton");
-
-
-  /* =========================================================
-     ENVELOPE
-  ========================================================= */
 
   const envelope =
     $("#envelope");
@@ -93,18 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const readLetterButton =
     $("#readLetterButton");
 
-
-  /* =========================================================
-     LETTER
-  ========================================================= */
-
   const memoryButton =
     $("#memoryButton");
-
-
-  /* =========================================================
-     THREE CARDS
-  ========================================================= */
 
   const memoryCards =
     $$(".memory-card");
@@ -115,70 +94,43 @@ document.addEventListener("DOMContentLoaded", () => {
   const finalButton =
     $("#finalButton");
 
-
-  /* =========================================================
-     FINAL
-  ========================================================= */
-
   const replayButton =
     $("#replayButton");
 
 
-  /* =========================================================
+  /* =========================================
      STATE
-  ========================================================= */
+  ========================================= */
 
   let currentSceneIndex = 0;
 
   let introRunId = 0;
 
-  let introFinished = false;
-
   let noClickCount = 0;
+
+  let envelopeOpened = false;
+
+  let yesLocked = false;
 
   const openedCards =
     new Set();
 
 
-  /* =========================================================
-     SCENE SYSTEM
-  ========================================================= */
-
-  function getSceneIndex(id) {
-    return scenes.findIndex(
-      (scene) => scene.id === id
-    );
-  }
-
-
-  function updateProgress(index) {
-    if (!progressBar) return;
-
-    const total =
-      scenes.length;
-
-    const progress =
-      ((index + 1) / total) * 100;
-
-    progressBar.style.width =
-      `${progress}%`;
-  }
-
+  /* =========================================
+     SCENES
+  ========================================= */
 
   function showScene(
     id,
-    options = {}
+    scroll = true
   ) {
-    const {
-      scroll = true
-    } = options;
 
     const target =
       document.getElementById(id);
 
     if (!target) {
-      console.warn(
-        `Scene "${id}" tidak ditemukan.`
+      console.error(
+        `Scene tidak ditemukan: ${id}`
       );
 
       return;
@@ -186,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     scenes.forEach((scene) => {
+
       const active =
         scene === target;
 
@@ -200,156 +153,162 @@ document.addEventListener("DOMContentLoaded", () => {
           ? "false"
           : "true"
       );
+
     });
 
 
     const index =
-      getSceneIndex(id);
+      scenes.indexOf(target);
 
-    if (index !== -1) {
+    if (index >= 0) {
+
       currentSceneIndex =
         index;
 
-      updateProgress(index);
+      if (progressBar) {
+
+        const progress =
+          ((index + 1) /
+            scenes.length) *
+          100;
+
+        progressBar.style.width =
+          `${progress}%`;
+      }
     }
 
 
     if (scroll) {
+
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: "smooth"
       });
+
     }
   }
 
 
-  /* =========================================================
+  /* =========================================
      PARTICLES
-  ========================================================= */
+  ========================================= */
 
-  function createHeartParticle(
+  function createHeart(
     x,
     y
   ) {
-    if (!particleLayer) return;
+
+    if (!particleLayer) {
+      return;
+    }
 
 
-    const particle =
+    const heart =
       document.createElement("span");
 
+    heart.className =
+      "particle";
 
-    particle.className =
-      "particle particle--heart";
-
-
-    particle.textContent =
+    heart.textContent =
       "♡";
 
 
-    particle.style.left =
+    heart.style.left =
       `${x}px`;
 
-    particle.style.top =
+    heart.style.top =
       `${y}px`;
 
 
-    const randomX =
-      (Math.random() - 0.5) * 160;
-
-    const randomY =
-      -40 -
-      Math.random() * 120;
-
-    const randomRotation =
-      (Math.random() - 0.5) * 100;
-
-
-    particle.style.setProperty(
-      "--particle-x",
-      `${randomX}px`
+    heart.style.setProperty(
+      "--x",
+      `${
+        (Math.random() - 0.5) *
+        150
+      }px`
     );
 
-    particle.style.setProperty(
-      "--particle-y",
-      `${randomY}px`
+    heart.style.setProperty(
+      "--y",
+      `${
+        -50 -
+        Math.random() * 120
+      }px`
     );
 
-    particle.style.setProperty(
-      "--particle-r",
-      `${randomRotation}deg`
+    heart.style.setProperty(
+      "--r",
+      `${
+        (Math.random() - 0.5) *
+        100
+      }deg`
     );
 
 
     particleLayer.appendChild(
-      particle
+      heart
     );
 
 
     window.setTimeout(() => {
-      particle.remove();
-    }, 850);
+      heart.remove();
+    }, 900);
+
   }
 
 
   function heartBurst(
-    x = window.innerWidth / 2,
-    y = window.innerHeight / 2,
+    x,
+    y,
     amount = 15
   ) {
+
     for (
       let i = 0;
       i < amount;
       i += 1
     ) {
+
       window.setTimeout(() => {
-        createHeartParticle(
+
+        createHeart(
           x,
           y
         );
+
       }, i * 18);
+
     }
   }
 
 
-  /* =========================================================
-     RESET INTRO
-  ========================================================= */
+  /* =========================================
+     INTRO RESET
+  ========================================= */
 
-  function resetIntroVisuals() {
+  function resetIntro() {
+
     husenCharacter?.classList.remove(
       "is-near"
     );
-
 
     ikeCharacter?.classList.remove(
       "is-happy"
     );
 
-
-    const ike =
-      $(".character--ike");
-
-    ike?.classList.remove(
-      "has-flower"
-    );
-
-
     husenFlowerArm?.classList.remove(
       "is-giving"
     );
-
 
     ikeFlowerArm?.classList.remove(
       "is-receiving"
     );
 
-
     giftFlower?.classList.remove(
       "is-moving",
       "is-given"
     );
-
 
     stageHeart?.classList.remove(
       "is-visible"
@@ -357,108 +316,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     if (sceneCaption) {
+
       sceneCaption.textContent =
         "tunggu sebentar...";
+
     }
   }
 
 
-  /* =========================================================
-     COMPLETE INTRO IMMEDIATELY
-  ========================================================= */
+  /* =========================================
+     INTRO
+  ========================================= */
 
-  function completeIntroImmediately() {
-    introRunId += 1;
+  async function runIntro() {
 
-    introFinished = true;
-
-
-    husenCharacter?.classList.add(
-      "is-near"
-    );
-
-
-    husenFlowerArm?.classList.add(
-      "is-giving"
-    );
-
-
-    giftFlower?.classList.add(
-      "is-moving",
-      "is-given"
-    );
-
-
-    const ike =
-      $(".character--ike");
-
-
-    ike?.classList.add(
-      "has-flower"
-    );
-
-
-    ikeCharacter?.classList.add(
-      "is-happy"
-    );
-
-
-    ikeFlowerArm?.classList.add(
-      "is-receiving"
-    );
-
-
-    stageHeart?.classList.add(
-      "is-visible"
-    );
-
-
-    if (sceneCaption) {
-      sceneCaption.textContent =
-        "buat kamu 🌷";
-    }
-  }
-
-
-  /* =========================================================
-     INTRO ANIMATION
-  ========================================================= */
-
-  async function runIntroAnimation() {
     const runId =
       ++introRunId;
 
 
-    introFinished =
-      false;
+    resetIntro();
 
 
-    resetIntroVisuals();
+    await wait(600);
 
-
-    if (sceneCaption) {
-      sceneCaption.textContent =
-        "tunggu sebentar...";
-    }
-
-
-    /*
-      1. Diam sebentar.
-    */
-
-    await wait(700);
-
-
-    if (
-      runId !== introRunId
-    ) {
+    if (runId !== introRunId) {
       return;
     }
 
-
-    /*
-      2. Husen mulai mendekat.
-    */
 
     if (sceneCaption) {
       sceneCaption.textContent =
@@ -471,42 +355,23 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-    await wait(1450);
+    await wait(1300);
 
-
-    if (
-      runId !== introRunId
-    ) {
+    if (runId !== introRunId) {
       return;
     }
 
-
-    /*
-      3. Tangan Husen maju.
-    */
 
     husenFlowerArm?.classList.add(
       "is-giving"
     );
 
 
-    await wait(300);
+    await wait(450);
 
-
-    if (
-      runId !== introRunId
-    ) {
+    if (runId !== introRunId) {
       return;
     }
-
-
-    /*
-      4. Bunga bergerak menuju Ike.
-    */
-
-    giftFlower?.classList.add(
-      "is-moving"
-    );
 
 
     if (sceneCaption) {
@@ -515,52 +380,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    await wait(950);
+    giftFlower?.classList.add(
+      "is-moving"
+    );
 
 
-    if (
-      runId !== introRunId
-    ) {
+    await wait(900);
+
+    if (runId !== introRunId) {
       return;
     }
 
-
-    /*
-      5. Ike mengangkat tangan.
-    */
 
     ikeFlowerArm?.classList.add(
       "is-receiving"
     );
 
 
-    await wait(350);
+    await wait(400);
 
-
-    if (
-      runId !== introRunId
-    ) {
+    if (runId !== introRunId) {
       return;
     }
 
 
-    /*
-      6. Bunga sekarang diterima Ike.
-    */
-
     giftFlower?.classList.add(
       "is-given"
     );
-
-
-    const ike =
-      $(".character--ike");
-
-
-    ike?.classList.add(
-      "has-flower"
-    );
-
 
     ikeCharacter?.classList.add(
       "is-happy"
@@ -573,60 +419,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    await wait(400);
-
-
-    if (
-      runId !== introRunId
-    ) {
-      return;
-    }
-
-
-    /*
-      7. Heart kecil muncul.
-    */
-
     stageHeart?.classList.add(
       "is-visible"
     );
 
 
-    const stageRect =
-      $("#characterStage")
-        ?.getBoundingClientRect();
+    if (characterStage) {
 
+      const rect =
+        characterStage
+          .getBoundingClientRect();
 
-    if (stageRect) {
       heartBurst(
-        stageRect.left +
-          stageRect.width * 0.56,
+        rect.left +
+          rect.width * 0.57,
 
-        stageRect.top +
-          stageRect.height * 0.36,
+        rect.top +
+          rect.height * 0.36,
 
-        7
+        8
       );
     }
 
 
-    await wait(1200);
+    await wait(1300);
 
-
-    if (
-      runId !== introRunId
-    ) {
+    if (runId !== introRunId) {
       return;
     }
 
-
-    introFinished =
-      true;
-
-
-    /*
-      8. Masuk pertanyaan.
-    */
 
     showScene(
       "questionScene"
@@ -634,30 +455,69 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /* =========================================================
+  /* =========================================
      SKIP INTRO
-  ========================================================= */
+  ========================================= */
+
+  function skipIntro() {
+
+    /*
+      Membatalkan runIntro yang sedang
+      menunggu di await.
+    */
+
+    introRunId += 1;
+
+
+    husenCharacter?.classList.add(
+      "is-near"
+    );
+
+    husenFlowerArm?.classList.add(
+      "is-giving"
+    );
+
+    ikeFlowerArm?.classList.add(
+      "is-receiving"
+    );
+
+    giftFlower?.classList.add(
+      "is-moving",
+      "is-given"
+    );
+
+    ikeCharacter?.classList.add(
+      "is-happy"
+    );
+
+    stageHeart?.classList.add(
+      "is-visible"
+    );
+
+
+    if (sceneCaption) {
+      sceneCaption.textContent =
+        "buat kamu 🌷";
+    }
+
+
+    showScene(
+      "questionScene"
+    );
+  }
+
 
   skipIntroButton?.addEventListener(
     "click",
-    () => {
-      completeIntroImmediately();
-
-
-      window.setTimeout(() => {
-        showScene(
-          "questionScene"
-        );
-      }, 250);
-    }
+    skipIntro
   );
 
 
-  /* =========================================================
-     NO BUTTON
-  ========================================================= */
+  /* =========================================
+     NO
+  ========================================= */
 
-  const noButtonTexts = [
+  const noTexts = [
     "yakin?",
     "serius?",
     "masih gak?",
@@ -667,79 +527,80 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   const noMessages = [
-    "",
     "hmm...",
     "aku masih nunggu 😭",
     "tombol satunya makin gede tuh",
-    "oke tombol ini menyerah."
+    "masih yakin?",
+    "oke, tombol ini menyerah."
   ];
 
 
-  function handleNoButton() {
+  function handleNo() {
+
     noClickCount += 1;
 
 
-    const textIndex =
-      Math.min(
-        noClickCount - 1,
-        noButtonTexts.length - 1
-      );
-
-
     if (noButton) {
-      noButton.textContent =
-        noButtonTexts[textIndex];
 
-
-      const noScale =
-        Math.max(
-          0.12,
-          1 -
-            noClickCount * 0.18
+      const index =
+        Math.min(
+          noClickCount - 1,
+          noTexts.length - 1
         );
 
+      noButton.textContent =
+        noTexts[index];
+
+
+      const scale =
+        Math.max(
+          0,
+          1 -
+            noClickCount *
+            0.19
+        );
 
       noButton.style.transform =
-        `scale(${noScale})`;
+        `scale(${scale})`;
+
     }
 
 
     if (yesButton) {
-      const yesScale =
+
+      const scale =
         Math.min(
           1.65,
           1 +
-            noClickCount * 0.13
+            noClickCount *
+            0.13
         );
 
-
       yesButton.style.transform =
-        `scale(${yesScale})`;
+        `scale(${scale})`;
+
     }
 
 
     if (noMessage) {
-      const messageIndex =
+
+      const index =
         Math.min(
           noClickCount - 1,
           noMessages.length - 1
         );
 
-
       noMessage.textContent =
-        noMessages[messageIndex];
+        noMessages[index];
+
     }
 
-
-    /*
-      Setelah beberapa kali,
-      tombol "gak" benar-benar hilang.
-    */
 
     if (
       noClickCount >= 5 &&
       noButton
     ) {
+
       noButton.style.opacity =
         "0";
 
@@ -748,58 +609,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
       noButton.style.transform =
         "scale(0)";
+
     }
   }
 
 
   noButton?.addEventListener(
     "click",
-    handleNoButton
+    handleNo
   );
 
 
-  /* =========================================================
-     YES BUTTON
-  ========================================================= */
+  /* =========================================
+     YES
+  ========================================= */
 
   yesButton?.addEventListener(
     "click",
     (event) => {
-      /*
-        Cegah klik berkali-kali.
-      */
 
-      if (
-        yesButton.dataset.clicked ===
-        "true"
-      ) {
+      if (yesLocked) {
         return;
       }
 
 
-      yesButton.dataset.clicked =
-        "true";
+      yesLocked =
+        true;
 
 
       yesButton.disabled =
         true;
 
-
-      noButton?.setAttribute(
-        "disabled",
-        ""
-      );
+      if (noButton) {
+        noButton.disabled =
+          true;
+      }
 
 
       const rect =
-        yesButton.getBoundingClientRect();
+        yesButton
+          .getBoundingClientRect();
 
 
       const x =
         event.clientX ||
         rect.left +
           rect.width / 2;
-
 
       const y =
         event.clientY ||
@@ -819,51 +674,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       window.setTimeout(() => {
+
         showScene(
           "acceptedScene"
         );
 
+        yesLocked =
+          false;
 
         yesButton.disabled =
           false;
 
+      }, 650);
 
-        yesButton.dataset.clicked =
-          "false";
-      }, 700);
     }
   );
 
 
-  /* =========================================================
-     ACCEPTED -> ENVELOPE
-  ========================================================= */
+  /* =========================================
+     ACCEPTED
+  ========================================= */
 
   openEnvelopeSceneButton
     ?.addEventListener(
       "click",
       () => {
+
         showScene(
           "envelopeScene"
         );
+
       }
     );
 
 
-  /* =========================================================
+  /* =========================================
      ENVELOPE
-  ========================================================= */
-
-  let envelopeOpened =
-    false;
-
+  ========================================= */
 
   envelope?.addEventListener(
     "click",
     () => {
-      if (
-        envelopeOpened
-      ) {
+
+      if (envelopeOpened) {
         return;
       }
 
@@ -875,7 +728,6 @@ document.addEventListener("DOMContentLoaded", () => {
       envelope.classList.add(
         "is-open"
       );
-
 
       envelope.setAttribute(
         "aria-expanded",
@@ -890,105 +742,104 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       window.setTimeout(() => {
+
         readLetterButton
           ?.classList.remove(
-            "primary-button--hidden"
+            "is-hidden"
           );
-      }, 700);
+
+      }, 650);
+
     }
   );
 
-
-  /* =========================================================
-     ENVELOPE -> LETTER
-  ========================================================= */
 
   readLetterButton
     ?.addEventListener(
       "click",
       () => {
+
         showScene(
           "letterScene"
         );
+
       }
     );
 
 
-  /* =========================================================
-     LETTER -> THREE MESSAGES
-  ========================================================= */
+  /* =========================================
+     LETTER
+  ========================================= */
 
   memoryButton
     ?.addEventListener(
       "click",
       () => {
+
         showScene(
           "memoryScene"
         );
+
       }
     );
 
 
-  /* =========================================================
+  /* =========================================
      MEMORY CARDS
-  ========================================================= */
+  ========================================= */
 
-  function updateMemoryProgress() {
-    const total =
-      memoryCards.length;
-
+  function updateCards() {
 
     const opened =
       openedCards.size;
 
+    const total =
+      memoryCards.length;
 
-    if (!memoryHint) {
-      return;
+
+    if (memoryHint) {
+
+      if (opened < total) {
+
+        memoryHint.textContent =
+          `${opened} dari ${total} pesan sudah dibuka`;
+
+      } else {
+
+        memoryHint.textContent =
+          "udah kebuka semua ♡";
+
+      }
     }
 
 
-    if (total === 0) {
-      memoryHint.textContent =
-        "";
+    if (
+      total > 0 &&
+      opened === total
+    ) {
 
-      return;
+      finalButton
+        ?.classList.remove(
+          "is-hidden"
+        );
+
+
+      heartBurst(
+        window.innerWidth / 2,
+        window.innerHeight * 0.75,
+        8
+      );
+
     }
-
-
-    if (opened < total) {
-      memoryHint.textContent =
-        `${opened} dari ${total} pesan sudah dibuka`;
-
-      return;
-    }
-
-
-    memoryHint.textContent =
-      "udah kebuka semua ♡";
-
-
-    finalButton?.classList.remove(
-      "primary-button--hidden"
-    );
-
-
-    heartBurst(
-      window.innerWidth / 2,
-      window.innerHeight * 0.75,
-      8
-    );
   }
 
 
   memoryCards.forEach(
     (card, index) => {
+
       card.addEventListener(
         "click",
         () => {
-          /*
-            Setelah dibuka,
-            kartu tetap terbuka.
-          */
 
           if (
             card.classList.contains(
@@ -1003,7 +854,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "is-flipped"
           );
 
-
           card.setAttribute(
             "aria-pressed",
             "true"
@@ -1015,47 +865,58 @@ document.addEventListener("DOMContentLoaded", () => {
           );
 
 
-          updateMemoryProgress();
+          updateCards();
+
         }
       );
+
     }
   );
 
 
-  /* =========================================================
-     MEMORY -> FINAL
-  ========================================================= */
+  /* =========================================
+     FINAL
+  ========================================= */
 
   finalButton
     ?.addEventListener(
       "click",
       () => {
+
         showScene(
           "finalScene"
         );
 
 
         window.setTimeout(() => {
+
           heartBurst(
             window.innerWidth / 2,
-            window.innerHeight * 0.38,
-            15
+            window.innerHeight * 0.4,
+            18
           );
-        }, 400);
+
+        }, 350);
+
       }
     );
 
 
-  /* =========================================================
-     RESET QUESTION
-  ========================================================= */
+  /* =========================================
+     RESET
+  ========================================= */
 
   function resetQuestion() {
+
     noClickCount =
       0;
 
+    yesLocked =
+      false;
+
 
     if (noButton) {
+
       noButton.textContent =
         "gak";
 
@@ -1070,10 +931,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       noButton.disabled =
         false;
+
     }
 
 
     if (yesButton) {
+
       yesButton.textContent =
         "maafin ♡";
 
@@ -1083,23 +946,20 @@ document.addEventListener("DOMContentLoaded", () => {
       yesButton.disabled =
         false;
 
-      yesButton.dataset.clicked =
-        "false";
     }
 
 
     if (noMessage) {
+
       noMessage.textContent =
         "";
+
     }
   }
 
 
-  /* =========================================================
-     RESET ENVELOPE
-  ========================================================= */
-
   function resetEnvelope() {
+
     envelopeOpened =
       false;
 
@@ -1108,7 +968,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "is-open"
     );
 
-
     envelope?.setAttribute(
       "aria-expanded",
       "false"
@@ -1116,82 +975,81 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     if (envelopeHint) {
+
       envelopeHint.textContent =
         "tekan amplopnya";
+
     }
 
 
     readLetterButton
       ?.classList.add(
-        "primary-button--hidden"
+        "is-hidden"
       );
   }
 
 
-  /* =========================================================
-     RESET CARDS
-  ========================================================= */
+  function resetCards() {
 
-  function resetMemoryCards() {
     openedCards.clear();
 
 
     memoryCards.forEach(
       (card) => {
+
         card.classList.remove(
           "is-flipped"
         );
-
 
         card.setAttribute(
           "aria-pressed",
           "false"
         );
+
       }
     );
 
 
     if (memoryHint) {
+
       memoryHint.textContent =
         "buka ketiga pesan";
+
     }
 
 
-    finalButton?.classList.add(
-      "primary-button--hidden"
-    );
+    finalButton
+      ?.classList.add(
+        "is-hidden"
+      );
   }
 
 
-  /* =========================================================
+  /* =========================================
      REPLAY
-  ========================================================= */
+  ========================================= */
 
   replayButton?.addEventListener(
     "click",
     () => {
+
       /*
-        Batalkan animasi intro
-        yang mungkin masih hidup.
+        Membatalkan intro lama kalau
+        masih ada timeout/await hidup.
       */
 
       introRunId += 1;
 
 
       resetQuestion();
-
       resetEnvelope();
-
-      resetMemoryCards();
-
-      resetIntroVisuals();
+      resetCards();
+      resetIntro();
 
 
       showScene(
         "flowerScene",
-        {
-          scroll: false
-        }
+        false
       );
 
 
@@ -1203,106 +1061,101 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       window.setTimeout(() => {
-        runIntroAnimation();
-      }, 400);
+
+        runIntro();
+
+      }, 300);
+
     }
   );
 
 
-  /* =========================================================
-     OPTIONAL CLICK PARTICLE
-  ========================================================= */
+  /* =========================================
+     BUTTON PARTICLES
+  ========================================= */
 
   document.addEventListener(
     "pointerdown",
     (event) => {
-      const target =
-        event.target;
 
-
-      /*
-        Particle kecil hanya untuk
-        elemen interaktif.
-      */
-
-      if (
-        target.closest(
+      const button =
+        event.target.closest(
           "button"
-        )
-      ) {
-        createHeartParticle(
-          event.clientX,
-          event.clientY
         );
-      }
-    }
-  );
 
 
-  /* =========================================================
-     KEYBOARD SUPPORT
-  ========================================================= */
-
-  document.addEventListener(
-    "keydown",
-    (event) => {
-      /*
-        Escape tidak melakukan apa-apa.
-        Sengaja supaya scene tidak
-        lompat-lompat aneh.
-      */
-
-      if (
-        event.key === "Escape"
-      ) {
+      if (!button) {
         return;
       }
-    }
-  );
-/* =========================================================
-   INITIAL STATE
-========================================================= */
 
-scenes.forEach(
-  (scene, index) => {
-    const active =
-      scene.classList.contains(
-        "scene--active"
+
+      createHeart(
+        event.clientX,
+        event.clientY
       );
 
-    scene.setAttribute(
-      "aria-hidden",
-      active
-        ? "false"
-        : "true"
-    );
-
-    if (active) {
-      currentSceneIndex =
-        index;
     }
+  );
+
+
+  /* =========================================
+     INITIALIZE
+  ========================================= */
+
+  scenes.forEach(
+    (scene, index) => {
+
+      const active =
+        scene.classList.contains(
+          "scene--active"
+        );
+
+
+      scene.setAttribute(
+        "aria-hidden",
+        active
+          ? "false"
+          : "true"
+      );
+
+
+      if (active) {
+
+        currentSceneIndex =
+          index;
+
+      }
+
+    }
+  );
+
+
+  resetQuestion();
+  resetEnvelope();
+  resetCards();
+  resetIntro();
+
+
+  if (progressBar) {
+
+    progressBar.style.width =
+      `${
+        ((currentSceneIndex + 1) /
+          scenes.length) *
+        100
+      }%`;
+
   }
-);
-
-updateProgress(
-  currentSceneIndex
-);
-
-resetQuestion();
-
-resetEnvelope();
-
-resetMemoryCards();
-
-resetIntroVisuals();
 
 
-/* =========================================================
-   START
-========================================================= */
+  /* =========================================
+     START
+  ========================================= */
 
-window.setTimeout(() => {
-  runIntroAnimation();
-}, 350);
+  window.setTimeout(() => {
+
+    runIntro();
+
+  }, 350);
 
 });
